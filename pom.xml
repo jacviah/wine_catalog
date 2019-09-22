@@ -3,19 +3,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                     http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>by.jacviah.winery</groupId>
     <artifactId>root</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-
     <modules>
         <module>dao</module>
         <module>service</module>
         <module>web</module>
         <module>model</module>
     </modules>
-
     <properties>
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -23,7 +20,6 @@
         <cobertura-maven-plugin.version>${cobertura-maven-plugin2.version}</cobertura-maven-plugin.version>
         <cobertura-maven-plugin2.version>2.7</cobertura-maven-plugin2.version>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -37,7 +33,6 @@
             <version>${cobertura-maven-plugin.version}</version>
         </dependency>
     </dependencies>
-
     <reporting>
         <plugins>
             <plugin>
