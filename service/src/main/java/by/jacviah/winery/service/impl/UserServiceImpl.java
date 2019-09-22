@@ -18,7 +18,6 @@ public class UserServiceImpl implements UserService {
         List<User> all = userDAO.getAll();
         for (User record : all) {
             if (record.getUsername().equals(name)) {
-                System.out.println("true: " + record.toString());
                 return record;
             }
         }
@@ -31,7 +30,6 @@ public class UserServiceImpl implements UserService {
         UserDAO userDAO = provider.getUserDAO();
         User user = new User(name, password);
         if (findUser(user.getUsername()) == null) {
-            System.out.println(userDAO.addUser(user).getUsername() + " UserServiceImpl.createUser()");
             return userDAO.addUser(user);
         } else {
             return null;
