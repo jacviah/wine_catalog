@@ -3,7 +3,6 @@ package by.jacviah.winery.dao;
 import by.jacviah.winery.model.User;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
