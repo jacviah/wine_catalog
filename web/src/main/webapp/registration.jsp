@@ -13,21 +13,22 @@
 	</head>
 
 	<body>
-		<form action="registration" method="post">
-	        <div class="field">
-                Please enter your username
-                <input type="text" name="username"/><br>
-            </div>
-	        <div class="field">
-                Please enter your username
-                <input type="text" name="pass1"/><br>
-            </div>
-	        <div class="field">
-                Please enter your username
-                <input type="text" name="pass2"/><br>
-            </div>
-			<input type="submit" value="submit">
-
+		 <form action="registration" method="post">
+		    <div>
+                <div class="field">
+                    Please enter your username
+                    <input type="text" name="username"/><br>
+                </div>
+                <div class="field">
+                    Please enter your username
+                    <input type="text" name="pass1"/><br>
+                </div>
+                <div class="field">
+                    Please enter your username
+                    <input type="text" name="pass2"/><br>
+                </div>
+                <input type="submit" value="submit">
+	        </div>
                 <%if(request.getAttribute("errorMessage")!=null) {
                     out.println((String)request.getAttribute("errorMessage"));
                 }%>

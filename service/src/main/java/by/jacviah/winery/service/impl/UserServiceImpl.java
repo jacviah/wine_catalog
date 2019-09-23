@@ -13,7 +13,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUser(String name) throws IOException {
-
         DAOProvider provider = DAOProvider.getInstance();
         UserDAO userDAO = provider.getUserDAO();
         List<User> all = userDAO.getAll();
@@ -27,7 +26,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UUID getUserUUID(String name) throws IOException {
-
         DAOProvider provider = DAOProvider.getInstance();
         UserDAO userDAO = provider.getUserDAO();
         return userDAO.getUUID(findUser(name));
