@@ -13,12 +13,18 @@
 	</head>
 
 	<body>
+
 		<form action="login" method="post">
+		<div>
 	        <div class="field">
                 Please enter your username
                 <input type="text" name="username"/><br>
             </div>
-
+            <div class="field">
+                 Please enter your password
+                 <input type="text" name="pass"/><br>
+            </div>
+        </div>
 			<input type="submit" value="submit">
 
                 <%if(request.getAttribute("errorMessage")!=null) {
