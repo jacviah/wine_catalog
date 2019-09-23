@@ -7,6 +7,7 @@ import by.jacviah.winery.service.UserService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 public class UserServiceImpl implements UserService {
 
@@ -22,6 +23,14 @@ public class UserServiceImpl implements UserService {
             }
         }
         return null;
+    }
+
+    @Override
+    public UUID getUserUUID(String name) throws IOException {
+
+        DAOProvider provider = DAOProvider.getInstance();
+        UserDAO userDAO = provider.getUserDAO();
+        return userDAO.getUUID(findUser(name));
     }
 
     @Override
