@@ -43,13 +43,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
-    public void login() {
-        DAOProvider provider = DAOProvider.getInstance();
-        UserDAO userDAO = provider.getUserDAO();
-        userDAO.init();
-    }
-
     @Override
     public void init() {
         DAOProvider provider = DAOProvider.getInstance();
