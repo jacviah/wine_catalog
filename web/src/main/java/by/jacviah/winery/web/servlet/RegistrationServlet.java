@@ -50,10 +50,7 @@ public class RegistrationServlet extends HttpServlet {
             req.getRequestDispatcher("/registration.jsp").forward(req, resp);
         } else {
             service.createUser(name, pass1);
-            req.setAttribute("user", name);
-            Cookie cookie = new Cookie("_user", service.findUser(name).getUsername());
-            cookie.setMaxAge(3600);
-            cookie.setPath("/winery");
+            Cookie cookie = new Cookie("_user_wine_catalog", service.findUser(name).getUsername());
             resp.addCookie(cookie);
             req.getRequestDispatcher("/home.jsp").forward(req, resp);
         }

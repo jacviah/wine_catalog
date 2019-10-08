@@ -53,13 +53,7 @@ public class LoginServlet extends HttpServlet {
                 req.setAttribute("Error_Message", errorMessage);
                 req.getRequestDispatcher("/login.jsp").forward(req, resp);
             } else {
-                Cookie cookieName = new Cookie("_user", service.findUser(name).getUsername());
                 Cookie cookieUUID = new Cookie("_uuid", service.getUserUUID(name).toString());
-                cookieName.setMaxAge(3600);
-                cookieName.setPath("/winery");
-                resp.addCookie(cookieName);
-                cookieName.setMaxAge(3600);
-                cookieName.setPath("/winery");
                 resp.addCookie(cookieUUID);
                 req.getRequestDispatcher("/home.jsp").forward(req, resp);
             }

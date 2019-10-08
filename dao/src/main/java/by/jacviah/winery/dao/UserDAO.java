@@ -1,5 +1,6 @@
 package by.jacviah.winery.dao;
 
+import by.jacviah.winery.dao.dto.UserDTO;
 import by.jacviah.winery.model.User;
 
 import java.io.IOException;
