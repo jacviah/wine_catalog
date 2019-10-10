@@ -1,10 +1,9 @@
 package by.jacviah.winery.web.servlet;
 
+import by.jacviah.winery.model.User;
 import by.jacviah.winery.service.ServiceFactory;
 import by.jacviah.winery.service.UserService;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet(name = "RegServlet", urlPatterns = {"/registration"})
 public class RegistrationServlet extends HttpServlet {
@@ -26,7 +24,6 @@ public class RegistrationServlet extends HttpServlet {
 
         ServiceFactory factory = ServiceFactory.getInstance();
         UserService service = factory.getUserService();
-        service.init();
 
         String errorMessage = "";
 
@@ -49,8 +46,8 @@ public class RegistrationServlet extends HttpServlet {
             req.setAttribute("Error_Message", errorMessage);
             req.getRequestDispatcher("/registration.jsp").forward(req, resp);
         } else {
-            service.createUser(name, pass1);
-            Cookie cookie = new Cookie("_user_wine_catalog", service.findUser(name).getUsername());
+            User user = service.createUser(name, pass1);
+            Cookie cookie = new Cookie("_user_wine_catalog", user.getUuid().toString());
             resp.addCookie(cookie);
             req.getRequestDispatcher("/home.jsp").forward(req, resp);
         }

@@ -3,11 +3,15 @@ package by.jacviah.winery.dao.impl;
 import by.jacviah.winery.dao.UserDAO;
 import by.jacviah.winery.model.User;
 import org.junit.Assert;
+import org.junit.Ignore;
+
+import java.util.UUID;
 
 /**
  * Created by jacviah on 08.10.2019.
  */
 public class DefaultUserDAOTest {
+    @Ignore
     @org.junit.Test
     public void testAddUser001() throws Exception {
 
@@ -16,7 +20,7 @@ public class DefaultUserDAOTest {
         dao.addUser(user);
         Assert.assertTrue(1==1);
     }
-
+    @Ignore
     @org.junit.Test
     public void testAddUser002() throws Exception {
         UserDAO dao = DefaultUserDAO.getInstance();

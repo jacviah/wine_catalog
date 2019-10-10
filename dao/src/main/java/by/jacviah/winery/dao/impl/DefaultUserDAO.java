@@ -2,29 +2,21 @@ package by.jacviah.winery.dao.impl;
 
 import by.jacviah.winery.dao.DataSource;
 import by.jacviah.winery.dao.UserDAO;
-import by.jacviah.winery.dao.dto.UserDTO;
+import by.jacviah.winery.model.Role;
 import by.jacviah.winery.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.List;
-import java.util.ResourceBundle;
 import java.util.UUID;
 
 public class DefaultUserDAO implements UserDAO {
 
     private static final Logger log = LoggerFactory.getLogger(DefaultUserDAO.class);
-    private final String url;
-    private final String user;
-    private final String pass;
+
 
     private DefaultUserDAO() {
-        ResourceBundle resource = ResourceBundle.getBundle("db");
-        url = resource.getString("url");
-        user = resource.getString("user");
-        pass = resource.getString("password");
     }
 
 
@@ -36,14 +28,33 @@ public class DefaultUserDAO implements UserDAO {
         return SingletonHolder.HOLDER_INSTANCE;
     }
 
-
-    @Override
-    public void init() {
+    private Connection getConnection() throws SQLException {
+        return DataSource.getInstance().getConnection();
     }
 
     @Override
-    public List<User> getAll() throws IOException {
-        return null;
+    public User findUser(String login) throws IOException {
+        try (Connection connection = getConnection();
+             PreparedStatement find_user = connection.prepareStatement("select " +
+                     "u.login, u.role, a.uuid from user u inner join auth_user a on u.id = a.auth_id where u.login = ?")) {
+
+            User user = new User();
+            find_user.setString(1, login);
+
+            ResultSet rs = find_user.executeQuery();
+            if (rs.next()) {
+                user.setUsername(rs.getString(1));
+                user.setRole(Role.asRole(rs.getString(2)));
+                user.setUuid(UUID.fromString(rs.getString(3)));
+            } else {
+               return null;
+            }
+            log.info("user:{} founded", user.toString());
+            return user;
+        } catch (SQLException e) {
+            log.error("fail to find user:{}", login, e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -51,27 +62,39 @@ public class DefaultUserDAO implements UserDAO {
         return null;
     }
 
-    private Connection getConnection() throws SQLException {
-        return DataSource.getInstance().getConnection();
-    }
-
     @Override
     public User addUser(User user) {
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement("insert into user(login, password) values (?,?)",
-                     Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, user.getUsername());
-            statement.setString(2, user.getPassword());
-            statement.executeUpdate();
+             PreparedStatement user_insert = connection.prepareStatement("insert into user(login, password, role) values (?,?,?)",
+                     Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement auth_user_insert = connection.prepareStatement("insert into auth_user(auth_id,login, uuid) values (?,?,?)")) {
 
+            connection.setAutoCommit(false);
+            user_insert.setString(1, user.getUsername());
+            user_insert.setString(2, user.getPassword());
+            user_insert.setString(3, user.getRole().toString());
+            int id = user_insert.executeUpdate();
+            ResultSet rs = user_insert.getGeneratedKeys();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+            System.out.println(id);
+            auth_user_insert.setString(1, String.valueOf(id));
+            auth_user_insert.setString(2, user.getUsername());
+            auth_user_insert.setString(3, user.getUuid().toString());
+            auth_user_insert.executeUpdate();
+
+            connection.commit();
+            user.setId(id);
             return user;
+        } catch (SQLIntegrityConstraintViolationException e) {
+            log.info("user {} is exist", user.getUsername());
+            return null;
         } catch (SQLException e) {
-            log.error("fail to save salary:{}", user, e);
+            log.error("fail to save user:{}", user.toString(), e);
             throw new RuntimeException(e);
         }
     }
-
-
 
 
 }

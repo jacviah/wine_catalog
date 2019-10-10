@@ -1,6 +1,5 @@
 package by.jacviah.winery.dao;
 
-import by.jacviah.winery.dao.dto.UserDTO;
 import by.jacviah.winery.model.User;
 
 import java.io.IOException;
@@ -9,8 +8,7 @@ import java.util.UUID;
 
 public interface UserDAO {
 
-    public void init();
-    public List<User> getAll() throws IOException;
+    public User findUser(String login) throws IOException;
     public User addUser(User user) throws IOException;
     public UUID getUUID(User user);
 }

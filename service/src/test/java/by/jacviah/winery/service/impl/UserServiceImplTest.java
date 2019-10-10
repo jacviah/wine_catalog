@@ -9,25 +9,20 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by jacviah on 23.09.2019.
- */
 public class UserServiceImplTest {
 
     @Test
     public void testFindUser() throws Exception {
         ServiceFactory factory = ServiceFactory.getInstance();
         UserService service = factory.getUserService();
-        service.init();
-        User user = new User("player", "123");
-        Assert.assertEquals(service.findUser("player"), user);
+        User user = new User("gamer", "qwerty");
+        Assert.assertEquals(service.findUser("gamer"), user);
     }
 
     @Test
     public void testCreateUser() throws Exception {
         ServiceFactory factory = ServiceFactory.getInstance();
         UserService service = factory.getUserService();
-        service.init();
         Assert.assertNull(service.createUser("player", "123"));
     }
 

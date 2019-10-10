@@ -27,7 +27,6 @@ public class LoginServlet extends HttpServlet {
 
             ServiceFactory factory = ServiceFactory.getInstance();
             UserService service = factory.getUserService();
-            service.init();
 
             String errorMessage = "";
 
