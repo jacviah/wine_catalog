@@ -58,8 +58,8 @@ public class DefaultUserDAO implements UserDAO {
     }
 
     @Override
-    public UUID getUUID(User user) {
-        return null;
+    public UUID getUUID(String user) throws IOException {
+        return findUser(user).getUuid();
     }
 
     @Override

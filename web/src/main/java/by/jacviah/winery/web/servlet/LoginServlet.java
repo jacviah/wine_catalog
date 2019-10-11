@@ -52,8 +52,8 @@ public class LoginServlet extends HttpServlet {
                 req.setAttribute("Error_Message", errorMessage);
                 req.getRequestDispatcher("/login.jsp").forward(req, resp);
             } else {
-                Cookie cookieUUID = new Cookie("_uuid", service.getUserUUID(name).toString());
-                resp.addCookie(cookieUUID);
+                //Cookie cookieUUID = new Cookie("_uuid", service.getUserUUID(name).toString());
+                //resp.addCookie(cookieUUID);
                 req.getRequestDispatcher("/home.jsp").forward(req, resp);
             }
         }
