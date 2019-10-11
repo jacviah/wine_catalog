@@ -13,24 +13,25 @@
 	</head>
 
 	<body>
-		<form action="registration" method="post">
-	        <div class="field">
-                Please enter your username
-                <input type="text" name="username"/><br>
-            </div>
-	        <div class="field">
-                Please enter your username
-                <input type="text" name="pass1"/><br>
-            </div>
-	        <div class="field">
-                Please enter your username
-                <input type="text" name="pass2"/><br>
-            </div>
-			<input type="submit" value="submit">
-
-                <%if(request.getAttribute("errorMessage")!=null) {
-                    out.println((String)request.getAttribute("errorMessage"));
-                }%>
+		 <form action="registration" method="post">
+		    <div>
+                <div class="field">
+                    Please enter your username
+                    <input type="text" name="username"/><br>
+                </div>
+                <div class="field">
+                    Please enter your username
+                    <input type="text" name="pass1"/><br>
+                </div>
+                <div class="field">
+                    Please enter your username
+                    <input type="text" name="pass2"/><br>
+                </div>
+                <input type="submit" value="submit">
+	        </div>
+            <c:if test="${not empty Error_Message}">
+                <c:out value='${requestScope.Error_Message}'/>
+            </c:if>
 		</form>
 	</body>
 </html>
