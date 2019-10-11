@@ -1,10 +1,9 @@
 package by.jacviah.winery.web.servlet;
 
+import by.jacviah.winery.model.User;
 import by.jacviah.winery.service.ServiceFactory;
 import by.jacviah.winery.service.UserService;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet(name = "RegServlet", urlPatterns = {"/registration"})
 public class RegistrationServlet extends HttpServlet {
@@ -26,7 +24,6 @@ public class RegistrationServlet extends HttpServlet {
 
         ServiceFactory factory = ServiceFactory.getInstance();
         UserService service = factory.getUserService();
-        service.init();
 
         String errorMessage = "";
 
@@ -42,12 +39,24 @@ public class RegistrationServlet extends HttpServlet {
             errorMessage = "Your password and confirmation password do not match, please try again.";
         }
 
+        if (service.findUser(name)!=null) {
+            errorMessage = "Username already exists";
+        }
         if (!errorMessage.equals("")) {
+<<<<<<< HEAD
             req.setAttribute("errorMessage", errorMessage);
             req.getRequestDispatcher("/registration.jsp").forward(req, resp);
         } else {
             req.setAttribute("user", service.createUser(name, pass1).getUsername());
             Cookie cookie = new Cookie("user", service.findUser(name).getUsername());
+=======
+            req.setAttribute("Error_Message", errorMessage);
+            req.getRequestDispatcher("/registration.jsp").forward(req, resp);
+        } else {
+            User user = service.createUser(name, pass1);
+            Cookie cookie = new Cookie("_user_wine_catalog", user.getUuid().toString());
+            resp.addCookie(cookie);
+>>>>>>> ba343f3601e14bffe32b6e3169f92439d2553bb9
             req.getRequestDispatcher("/home.jsp").forward(req, resp);
         }
     }

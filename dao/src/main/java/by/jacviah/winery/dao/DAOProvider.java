@@ -1,11 +1,11 @@
 package by.jacviah.winery.dao;
 
-import by.jacviah.winery.dao.impl.MapUserDAO;
+import by.jacviah.winery.dao.impl.DefaultUserDAO;
 
 public class DAOProvider {
     private static final DAOProvider instance = new DAOProvider();
 
-    private UserDAO userDAO = new MapUserDAO();
+    private UserDAO userDAO = DefaultUserDAO.getInstance();
 
     private DAOProvider() {}
 

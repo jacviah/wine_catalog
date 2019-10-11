@@ -1,16 +1,32 @@
 package by.jacviah.winery.model;
 
-/**
- * Created by jacviah on 21.09.2019.
- */
+import java.util.UUID;
+
 public class User {
+    private int id;
     private String username;
     private String password;
-    //private Role role;
+    private UUID uuid;
+    private Role role;
+
+    public User() {
+        this.id = -1;
+    }
 
     public User(String username, String password) {
+        this.id = -1;
         this.username = username;
         this.password = password;
+        this.uuid = UUID.randomUUID();
+        this.role = Role.FREE_USER;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -29,6 +45,20 @@ public class User {
         this.password = password;
     }
 
+    public Role getRole() {
+        return role;
+    }
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,9 +66,7 @@ public class User {
 
         User user = (User) o;
 
-        if (getUsername() != null ? !getUsername().equals(user.getUsername()) : user.getUsername() != null)
-            return false;
-        return getPassword() != null ? getPassword().equals(user.getPassword()) : user.getPassword() == null;
+        return getUsername() != null ? getUsername().equals(user.getUsername()) : user.getUsername() == null;
 
     }
 
@@ -53,7 +81,6 @@ public class User {
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 '}';
     }
 }

@@ -8,8 +8,7 @@ import java.util.UUID;
 
 public interface UserDAO {
 
-    public void init();
-    public List<User> getAll() throws IOException;
+    public User findUser(String login) throws IOException;
     public User addUser(User user) throws IOException;
     public UUID getUUID(User user);
 }

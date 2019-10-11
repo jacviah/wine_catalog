@@ -29,9 +29,9 @@
                 </div>
                 <input type="submit" value="submit">
 	        </div>
-                <%if(request.getAttribute("errorMessage")!=null) {
-                    out.println((String)request.getAttribute("errorMessage"));
-                }%>
+            <c:if test="${not empty Error_Message}">
+                <c:out value='${requestScope.Error_Message}'/>
+            </c:if>
 		</form>
 	</body>
 </html>
