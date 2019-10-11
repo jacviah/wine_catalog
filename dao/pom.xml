@@ -24,8 +24,6 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.17</version>
         </dependency>
-<<<<<<< HEAD
-=======
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -36,6 +34,5 @@
             <artifactId>c3p0</artifactId>
             <version>0.9.5.4</version>
         </dependency>
->>>>>>> ba343f3601e14bffe32b6e3169f92439d2553bb9
     </dependencies>
 </project>

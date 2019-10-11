@@ -43,20 +43,12 @@ public class RegistrationServlet extends HttpServlet {
             errorMessage = "Username already exists";
         }
         if (!errorMessage.equals("")) {
-<<<<<<< HEAD
             req.setAttribute("errorMessage", errorMessage);
-            req.getRequestDispatcher("/registration.jsp").forward(req, resp);
-        } else {
-            req.setAttribute("user", service.createUser(name, pass1).getUsername());
-            Cookie cookie = new Cookie("user", service.findUser(name).getUsername());
-=======
-            req.setAttribute("Error_Message", errorMessage);
             req.getRequestDispatcher("/registration.jsp").forward(req, resp);
         } else {
             User user = service.createUser(name, pass1);
             Cookie cookie = new Cookie("_user_wine_catalog", user.getUuid().toString());
             resp.addCookie(cookie);
->>>>>>> ba343f3601e14bffe32b6e3169f92439d2553bb9
             req.getRequestDispatcher("/home.jsp").forward(req, resp);
         }
     }
