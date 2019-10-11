@@ -5,15 +5,23 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DataSource {
 
     private final ComboPooledDataSource pool;
-
+    private static final Logger log = LoggerFactory.getLogger(DataSource.class);
     public DataSource() {
         pool = new ComboPooledDataSource();
         ResourceBundle resource = ResourceBundle.getBundle("db");
+        try {
+            Class.forName(resource.getString("driver"));
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("исправь эту обработку");
+        }
         String url = resource.getString("url");
+        log.trace("url:{}", url);
         String user = resource.getString("user");
         String pass = resource.getString("password");
         pool.setJdbcUrl(url);

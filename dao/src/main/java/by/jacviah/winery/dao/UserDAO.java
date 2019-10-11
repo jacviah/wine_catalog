@@ -10,5 +10,5 @@ public interface UserDAO {
 
     public User findUser(String login) throws IOException;
     public User addUser(User user) throws IOException;
-    public UUID getUUID(User user);
+    public UUID getUUID(String login) throws IOException;
 }
