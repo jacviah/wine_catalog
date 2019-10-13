@@ -1,0 +1,11 @@
+package by.jacviah.winery.dao;
+
+import by.jacviah.winery.model.Bottle;
+import by.jacviah.winery.model.Wine;
+import by.jacviah.winery.dao.exception.DaoException;
+
+public interface WineDAO {
+    public Wine findWine(String name, String winery) throws DaoException;
+    public <List>Bottle getAllBottles(String name) throws DaoException;
+    public boolean addBottle(Bottle bottle, String login, int user_id) throws DaoException;
+}
