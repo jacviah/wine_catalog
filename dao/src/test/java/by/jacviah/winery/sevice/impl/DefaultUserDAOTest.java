@@ -4,50 +4,52 @@ import by.jacviah.winery.dao.UserDAO;
 import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.dao.impl.DefaultUserDAO;
 import by.jacviah.winery.model.User;
-import org.junit.Assert;
+import org.junit.*;
 import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.rules.ExpectedException;
+
+import java.time.Instant;
 
 
 public class DefaultUserDAOTest {
+    UserDAO dao = DefaultUserDAO.getInstance();
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    @Ignore
-    @org.junit.Test
+
+
+    @Test
     public void testAddUser001() throws Exception {
-        UserDAO dao = DefaultUserDAO.getInstance();
-        User user = new User("gamer", "qwerty");
+        User user = new User("gamer " + Instant.now().toString(), "qwerty");
         User result = dao.addUser(user);
         Assert.assertTrue(result.getId()>0);
     }
-    @Ignore
-    @org.junit.Test
+
+    @Test
     public void testAddUser002() throws Exception {
 
-        UserDAO dao = DefaultUserDAO.getInstance();
-        User user = new User("gamer", "qwerty");
+        User user = new User("user", "user");
         thrown.expect(DaoException.class);
         dao.addUser(user);
     }
-    @Ignore
-    @org.junit.Test
+
+    @Test
     public void testFindUser001() throws Exception {
-        UserDAO dao = DefaultUserDAO.getInstance();
-        User user = dao.findUser("gamer");
+
+        User user = dao.findUser("user");
         Assert.assertNotNull(user.getUuid());
     }
-    @Ignore
-    @org.junit.Test
+
+    @Test
     public void testDeleteUser001() throws Exception {
-        UserDAO dao = DefaultUserDAO.getInstance();
-        Assert.assertNotNull(dao.removeUser("gamer")==true);
+        dao.addUser(new User("user_for_delete", "1"));
+        Assert.assertNotNull(dao.removeUser("user_for_delete")==true);
     }
-    @Ignore
-    @org.junit.Test
+
+    @Test
     public void testDeleteUser002() throws Exception {
-        UserDAO dao = DefaultUserDAO.getInstance();
-        Assert.assertTrue(dao.removeUser("gamer")==false);
+
+        Assert.assertTrue(dao.removeUser("user_for_delete")==false);
     }
 }
