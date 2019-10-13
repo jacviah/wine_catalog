@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class UserServiceImplTest {
+public class DefaultUserServiceTest {
     @Ignore
     @Test
     public void testFindUser() throws Exception {

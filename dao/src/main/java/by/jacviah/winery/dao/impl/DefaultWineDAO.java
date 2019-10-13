@@ -2,6 +2,7 @@ package by.jacviah.winery.dao.impl;
 
 import by.jacviah.winery.dao.DataSource;
 import by.jacviah.winery.dao.WineDAO;
+import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.Bottle;
 import by.jacviah.winery.model.Wine;
 import org.slf4j.Logger;
@@ -30,14 +31,12 @@ public class DefaultWineDAO implements WineDAO {
     }
 
     @Override
-    public Wine findWine(String name) throws IOException {
+    public Wine findWine(String name, String winery) throws DaoException {
         try (Connection connection = getConnection();
              PreparedStatement find_wine = connection.prepareStatement("select " +
-                     "* from wine w where w.name = ?")) {
-
-
+                     "* from wine w where w.name = ? and w.winery = ?")) {
             find_wine.setString(1, name);
-
+            find_wine.setString(2, winery);
             ResultSet rs = find_wine.executeQuery();
             if (rs.next()) {
                 Wine wine = new Wine();
@@ -46,6 +45,7 @@ public class DefaultWineDAO implements WineDAO {
                 wine.setGrape(rs.getString(3));
                 wine.setName(rs.getString(4));
                 wine.setWinery(rs.getString(5));
+                wine.setRate(rs.getInt(6));
                 log.info("wine:{} founded", wine.toString());
                 return wine;
             } else {
@@ -53,7 +53,7 @@ public class DefaultWineDAO implements WineDAO {
             }
         } catch (SQLException e) {
             log.error("fail to find wine:{}", name, e);
-            throw new RuntimeException(e);
+            throw new DaoException(DaoException._SQL_ERROR);
         }
     }
 

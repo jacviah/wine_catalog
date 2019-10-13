@@ -20,8 +20,8 @@
                      Please enter your password
                      <input type="text" name="pass"/><br>
                 </div>
-            </div>
-			<input type="submit" value="submit">
+			    <input type="submit" value="submit">
+			</div>
             <c:if test="${not empty Error_Message}">
                 <c:out value='${requestScope.Error_Message}'/>
             </c:if>

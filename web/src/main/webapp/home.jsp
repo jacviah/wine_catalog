@@ -10,6 +10,6 @@
 		<title>Home Page</title>
 	</head>
 	<body
-        <p>Hello ${cookie._user.value}. You are login</p>
+        <p>Hello, ${sessionScope.name}. You are login</p>
 	</body>
 </html>

@@ -2,12 +2,12 @@ package by.jacviah.winery.dao.impl;
 
 import by.jacviah.winery.dao.DataSource;
 import by.jacviah.winery.dao.UserDAO;
+import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.Role;
 import by.jacviah.winery.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.UUID;
 
@@ -33,37 +33,38 @@ public class DefaultUserDAO implements UserDAO {
     }
 
     @Override
-    public User findUser(String login) throws IOException {
+    public User findUser(String login) throws DaoException {
         try (Connection connection = getConnection();
              PreparedStatement find_user = connection.prepareStatement("select " +
-                     "u.login, u.role, a.uuid from user u inner join auth_user a on u.id = a.auth_id where u.login = ?")) {
+                     "u.login, u.password, u.role, a.uuid from user u inner join auth_user a on u.id = a.auth_id where u.login = ?")) {
 
             User user = new User();
             find_user.setString(1, login);
-
             ResultSet rs = find_user.executeQuery();
             if (rs.next()) {
                 user.setUsername(rs.getString(1));
-                user.setRole(Role.asRole(rs.getString(2)));
-                user.setUuid(UUID.fromString(rs.getString(3)));
+                user.setPassword(rs.getString(2));
+                user.setRole(Role.asRole(rs.getString(3)));
+                user.setUuid(UUID.fromString(rs.getString(4)));
             } else {
-               return null;
+                log.info("user:{} not founded", user.toString());
+                return null;
             }
             log.info("user:{} founded", user.toString());
             return user;
         } catch (SQLException e) {
             log.error("fail to find user:{}", login, e);
-            throw new RuntimeException(e);
+            throw new DaoException(DaoException._SQL_ERROR);
         }
     }
 
     @Override
-    public UUID getUUID(String user) throws IOException {
-        return findUser(user).getUuid();
+    public UUID getUUID(String name) throws DaoException {
+        return findUser(name).getUuid();
     }
 
     @Override
-    public User addUser(User user) {
+    public User addUser(User user) throws DaoException {
         try (Connection connection = getConnection();
              PreparedStatement user_insert = connection.prepareStatement("insert into user(login, password, role) values (?,?,?)",
                      Statement.RETURN_GENERATED_KEYS);
@@ -73,12 +74,11 @@ public class DefaultUserDAO implements UserDAO {
             user_insert.setString(1, user.getUsername());
             user_insert.setString(2, user.getPassword());
             user_insert.setString(3, user.getRole().toString());
-            int id = user_insert.executeUpdate();
+            user_insert.executeUpdate();
             ResultSet rs = user_insert.getGeneratedKeys();
-            if (rs.next()) {
-                id = rs.getInt(1);
-            }
-            System.out.println(id);
+            rs.next();
+            int id = rs.getInt(1);
+
             auth_user_insert.setString(1, String.valueOf(id));
             auth_user_insert.setString(2, user.getUsername());
             auth_user_insert.setString(3, user.getUuid().toString());
@@ -89,12 +89,31 @@ public class DefaultUserDAO implements UserDAO {
             return user;
         } catch (SQLIntegrityConstraintViolationException e) {
             log.info("user {} is exist", user.getUsername());
-            return null;
+            throw new DaoException(DaoException._FAIL_TO_INSERT);
         } catch (SQLException e) {
             log.error("fail to save user:{}", user.toString(), e);
-            throw new RuntimeException(e);
+            throw new DaoException(DaoException._SQL_ERROR);
         }
     }
 
+    @Override
+    public boolean removeUser(String login) throws DaoException {
+        try (Connection connection = getConnection();
+             PreparedStatement delete_auth_user = connection.prepareStatement("delete from wine_catalog.auth_user where login = ?");
+             PreparedStatement delete_user = connection.prepareStatement("delete from wine_catalog.user where login = ?")) {
+
+            connection.setAutoCommit(false);
+            delete_auth_user.setString(1, login);
+            delete_user.setString(1, login);
+            delete_auth_user.executeUpdate();
+            int i = delete_user.executeUpdate();
+            connection.commit();
+            if (i>0) return true;
+            return false;
+        } catch (SQLException e) {
+            log.error("fail to delete user:{}", login, e);
+            throw new DaoException(DaoException._SQL_ERROR);
+        }
+    }
 
 }

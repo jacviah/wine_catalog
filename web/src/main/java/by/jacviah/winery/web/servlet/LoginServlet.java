@@ -1,5 +1,8 @@
 package by.jacviah.winery.web.servlet;
 
+import by.jacviah.winery.dao.exception.DaoException;
+import by.jacviah.winery.model.Role;
+import by.jacviah.winery.model.User;
 import by.jacviah.winery.service.ServiceFactory;
 import by.jacviah.winery.service.UserService;
 
@@ -41,10 +44,14 @@ public class LoginServlet extends HttpServlet {
                 errorMessage = "Empty password, please enter your password.";
             }
 
-            if (service.findUser(name) == null) {
-                errorMessage = "This user does not exist, please check the login.";
-            } else if (service.findUser(name).getPassword() != pass) {
-                    errorMessage = "This password does not match.";
+            try {
+                if (service.findUser(name) == null) {
+                    errorMessage = "This user does not exist, please check the login.";
+                } else if (!service.findUser(name).getPassword().equals(pass)) {
+                        errorMessage = "This password does not match. - " + service.findUser(name).getPassword();
+                }
+            } catch (DaoException e) {
+                e.printStackTrace();
             }
 
 
@@ -52,9 +59,19 @@ public class LoginServlet extends HttpServlet {
                 req.setAttribute("Error_Message", errorMessage);
                 req.getRequestDispatcher("/login.jsp").forward(req, resp);
             } else {
-                //Cookie cookieUUID = new Cookie("_uuid", service.getUserUUID(name).toString());
-                //resp.addCookie(cookieUUID);
-                req.getRequestDispatcher("/home.jsp").forward(req, resp);
+                try {
+                    User user =  service.findUser(name);
+                    Cookie cookieName = new Cookie("_name",user.getUsername());
+                    Cookie cookieUUID = new Cookie("_uuid", user.getUuid().toString());
+                    resp.addCookie(cookieName);
+                    resp.addCookie(cookieUUID);
+                    if (user.getRole()== Role.FREE_USER) {
+                        req.getRequestDispatcher("/userview/findwine.jsp").forward(req, resp);
+                    }
+                } catch (DaoException e) {
+                    e.printStackTrace();
+                }
+                req.getServletContext().getRequestDispatcher("/home.jsp").forward(req, resp);
             }
         }
     }

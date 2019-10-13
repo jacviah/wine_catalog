@@ -1,13 +1,15 @@
 package by.jacviah.winery.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Wine {
+public class Wine implements Serializable{
     int id;
     String region;
     String grape;
     String name;
     String winery;
+    int rate;
 
     public int getId() {
         return id;
@@ -47,6 +49,14 @@ public class Wine {
 
     public void setWinery(String winery) {
         this.winery = winery;
+    }
+
+    public int getRate() {
+        return rate;
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
     }
 
     @Override
