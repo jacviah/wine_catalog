@@ -1,5 +1,6 @@
 package by.jacviah.winery.service;
 
+import by.jacviah.winery.service.impl.DefaultSommService;
 import by.jacviah.winery.service.impl.DefaultUserService;
 import by.jacviah.winery.service.impl.DefaultWineService;
 
@@ -10,6 +11,7 @@ public class ServiceFactory {
 
     private UserService userService = new DefaultUserService();
     private WineService wineService = new DefaultWineService();
+    private SommService sommService = new DefaultSommService();
 
     public static ServiceFactory getInstance() {
         return instance;
@@ -23,4 +25,7 @@ public class ServiceFactory {
         return wineService;
     }
 
+    public SommService getSommService() {
+        return sommService;
+    }
 }

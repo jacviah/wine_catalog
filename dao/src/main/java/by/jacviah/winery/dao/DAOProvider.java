@@ -1,5 +1,6 @@
 package by.jacviah.winery.dao;
 
+import by.jacviah.winery.dao.impl.DefaultSommDAO;
 import by.jacviah.winery.dao.impl.DefaultUserDAO;
 import by.jacviah.winery.dao.impl.DefaultWineDAO;
 
@@ -8,6 +9,7 @@ public class DAOProvider {
 
     private UserDAO userDAO = DefaultUserDAO.getInstance();
     private WineDAO wineDAO = DefaultWineDAO.getInstance();
+    private SommDAO sommDAO = DefaultSommDAO.getInstance();
 
     private DAOProvider() {}
 
@@ -22,5 +24,9 @@ public class DAOProvider {
 
     public WineDAO getWineDAO() {
         return wineDAO;
+    }
+
+    public SommDAO getSommDAO() {
+        return sommDAO;
     }
 }

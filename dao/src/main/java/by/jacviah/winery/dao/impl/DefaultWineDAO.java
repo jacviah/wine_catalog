@@ -9,7 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class DefaultWineDAO implements WineDAO {
 
@@ -58,12 +61,31 @@ public class DefaultWineDAO implements WineDAO {
     }
 
     @Override
-    public <List> Bottle getAllBottles(String name) throws IOException {
+    public <List> Bottle getAllBottles(String name) throws DaoException {
         return null;
     }
 
     @Override
-    public boolean addBottle(Bottle bottle, String login) throws IOException {
-        return false;
+    public boolean addBottle(Bottle bottle, String login, int user_id) throws DaoException {
+        try (Connection connection = getConnection();
+             PreparedStatement add_bottle = connection.prepareStatement("insert " +
+                     "into bottle (wine_id, user_id, year)values (?, ?, ?)")) {
+            Wine wine = findWine(bottle.getWine().getName(), bottle.getWine().getWinery());
+            if (wine != null) {
+                connection.setAutoCommit(false);
+                add_bottle.setInt(1, wine.getId());
+                add_bottle.setInt(2, user_id);
+                add_bottle.setString(3, bottle.getYear().toString());
+                int i = add_bottle.executeUpdate();
+                connection.commit();
+                if (i>0) return true;
+                return false;
+            }
+            return false;
+
+        } catch (SQLException e) {
+            log.error("fail to find wine:{}", e);
+            throw new DaoException(DaoException._SQL_ERROR);
+        }
     }
 }

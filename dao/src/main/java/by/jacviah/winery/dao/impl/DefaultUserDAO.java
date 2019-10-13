@@ -36,16 +36,17 @@ public class DefaultUserDAO implements UserDAO {
     public User findUser(String login) throws DaoException {
         try (Connection connection = getConnection();
              PreparedStatement find_user = connection.prepareStatement("select " +
-                     "u.login, u.password, u.role, a.uuid from user u inner join auth_user a on u.id = a.auth_id where u.login = ?")) {
+                     "u.id, u.login, u.password, u.role, a.uuid from user u inner join auth_user a on u.id = a.auth_id where u.login = ?")) {
 
             User user = new User();
             find_user.setString(1, login);
             ResultSet rs = find_user.executeQuery();
             if (rs.next()) {
-                user.setUsername(rs.getString(1));
-                user.setPassword(rs.getString(2));
-                user.setRole(Role.asRole(rs.getString(3)));
-                user.setUuid(UUID.fromString(rs.getString(4)));
+                user.setId(rs.getInt(1));
+                user.setUsername(rs.getString(2));
+                user.setPassword(rs.getString(3));
+                user.setRole(Role.asRole(rs.getString(4)));
+                user.setUuid(UUID.fromString(rs.getString(5)));
             } else {
                 log.info("user:{} not founded", user.toString());
                 return null;

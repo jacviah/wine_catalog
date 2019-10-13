@@ -18,7 +18,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.uuid = UUID.randomUUID();
-        this.role = Role.FREE_USER;
+        this.role = Role.USER;
     }
 
     public int getId() {

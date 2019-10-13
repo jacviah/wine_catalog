@@ -15,12 +15,11 @@ import javax.servlet.ServletContext;
 import java.io.IOException;
 import java.util.UUID;
 
-@WebFilter(servletNames = "FindWineServlet")
-public class AuthFilter implements Filter {
-    //private FilterConfig filterConfig;
+@WebFilter(urlPatterns = "/userview/*")
+public class AuthUserFilter implements Filter {
 
     public void init(final FilterConfig filterConfig) throws ServletException {
-        //this.filterConfig = filterConfig;
+
     }
 
     @Override
@@ -31,7 +30,6 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
-        String errorMessage = "";
         User user = null;
         UUID cookieUuid = null;
 
@@ -52,17 +50,12 @@ public class AuthFilter implements Filter {
             }
 
             if (user != null) {
-                if (user.getUuid().equals(cookieUuid) & user.getRole() == Role.FREE_USER) {
+                if (user.getUuid().equals(cookieUuid) & user.getRole() == Role.USER) {
+                    req.getSession().setAttribute("user_id", user.getId());
                     filterChain.doFilter(req, resp);
-                } else {
-                    errorMessage = "You need to login again";
                 }
-            } else {
-                errorMessage = "No such user found";
             }
-            req.setAttribute("Error_Message", errorMessage);
-            req.getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
-
+            resp.sendRedirect("/login");
         }
     }
 

@@ -65,7 +65,7 @@ public class LoginServlet extends HttpServlet {
                     Cookie cookieUUID = new Cookie("_uuid", user.getUuid().toString());
                     resp.addCookie(cookieName);
                     resp.addCookie(cookieUUID);
-                    if (user.getRole()== Role.FREE_USER) {
+                    if (user.getRole()== Role.USER) {
                         req.getRequestDispatcher("/userview/findwine.jsp").forward(req, resp);
                     }
                 } catch (DaoException e) {
