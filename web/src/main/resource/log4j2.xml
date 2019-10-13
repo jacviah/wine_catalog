@@ -15,8 +15,8 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="by.jacviah.winery" level="debug" additivity="true">
-            <appender-ref ref="fileLogger" level="debug" />
+        <Logger name="by.jacviah.winery" level="info" additivity="true">
+            <appender-ref ref="fileLogger" level="info" />
         </Logger>
         <Root level="info" additivity="false">
             <appender-ref ref="console" />
