@@ -18,7 +18,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.uuid = UUID.randomUUID();
-        this.role = Role.FREE_USER;
+        this.role = Role.USER;
     }
 
     public int getId() {
@@ -48,6 +48,7 @@ public class User {
     public Role getRole() {
         return role;
     }
+
     public void setRole(Role role) {
         this.role = role;
     }
@@ -59,14 +60,13 @@ public class User {
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
-
         User user = (User) o;
-
-        return getUsername() != null ? getUsername().equals(user.getUsername()) : user.getUsername() == null;
+        return getUsername().equals(user.getUsername());
 
     }
 

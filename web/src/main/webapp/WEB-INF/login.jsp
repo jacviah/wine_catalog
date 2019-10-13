@@ -1,10 +1,10 @@
-<%@ page language="java"
-    contentType="text/html; charset=windows-1256"
-    pageEncoding="windows-1256"
-%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>Login Page</title>
 	</head>
 
@@ -20,8 +20,8 @@
                      Please enter your password
                      <input type="text" name="pass"/><br>
                 </div>
-            </div>
-			<input type="submit" value="submit">
+			    <input type="submit" value="submit">
+			</div>
             <c:if test="${not empty Error_Message}">
                 <c:out value='${requestScope.Error_Message}'/>
             </c:if>
