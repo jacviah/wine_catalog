@@ -68,12 +68,13 @@ public class LoginServlet extends HttpServlet {
                     resp.addCookie(cookieName);
                     resp.addCookie(cookieUUID);
                     if (user.getRole()== Role.USER) {
+                        log.info("user {} logged as {}", user.getUsername(), user.getRole().toString());
                         req.getServletContext().getRequestDispatcher("/WEB-INF/userview/findwine.jsp").forward(req, resp);
                     }
                     if (user.getRole()== Role.SOMMELIER) {
+                        log.info("user {} logged as {}", user.getUsername(), user.getRole().toString());
                         req.getServletContext().getRequestDispatcher("/WEB-INF/sommelierview/setassomm.jsp").forward(req, resp);
                     }
-                    log.info("user {} logged as {}", user.getUsername(), user.getRole().toString());
                 } catch (DaoException e) {
                     e.printStackTrace();
                 }
