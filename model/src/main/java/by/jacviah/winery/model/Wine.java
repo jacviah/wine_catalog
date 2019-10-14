@@ -5,11 +5,22 @@ import java.util.Objects;
 
 public class Wine implements Serializable{
     int id;
+    String country;
     String region;
     String grape;
     String name;
     String winery;
     int rate;
+
+    public Wine() {
+    }
+
+    public Wine(String region, String grape, String name, String winery) {
+        this.region = region;
+        this.grape = grape;
+        this.name = name;
+        this.winery = winery;
+    }
 
     public int getId() {
         return id;
@@ -57,6 +68,14 @@ public class Wine implements Serializable{
 
     public void setRate(int rate) {
         this.rate = rate;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     @Override

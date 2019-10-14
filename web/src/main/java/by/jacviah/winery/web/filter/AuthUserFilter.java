@@ -5,6 +5,7 @@ import by.jacviah.winery.model.Role;
 import by.jacviah.winery.model.User;
 import by.jacviah.winery.sevice.ServiceFactory;
 import by.jacviah.winery.sevice.UserService;
+import by.jacviah.winery.web.WebUtils;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -37,10 +38,10 @@ public class AuthUserFilter implements Filter {
         if (cookies != null) {
             for (Cookie ck : cookies) {
                 try {
-                    if ("_name".equals(ck.getName())) {
+                    if ("name".equals(ck.getName())) {
                         user = service.findUser(URLDecoder.decode(ck.getValue(), "UTF-8"));
                     }
-                    if ("_uuid".equals(ck.getName())) {
+                    if ("uuid".equals(ck.getName())) {
                         cookieUuid = UUID.fromString(URLDecoder.decode(ck.getValue(), "UTF-8"));
                     }
 
@@ -52,10 +53,14 @@ public class AuthUserFilter implements Filter {
             if (user != null) {
                 if (user.getUuid().equals(cookieUuid) & user.getRole() == Role.USER) {
                     req.getSession().setAttribute("user_id", user.getId());
+                    req.getSession().setAttribute("user_name", user.getUsername());
                     filterChain.doFilter(req, resp);
+                } else {
+                    WebUtils.redirect("/login", req, resp);
                 }
+            } else {
+                WebUtils.redirect("/login", req, resp);
             }
-            resp.sendRedirect("/login");
         }
     }
 

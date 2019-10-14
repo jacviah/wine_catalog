@@ -14,7 +14,6 @@
             <PatternLayout   pattern=" %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] [%-5level] %c{1} - %msg%n" />
         </Console>
     </Appenders>
-
     <Loggers>
         <Logger name="by.jacviah.winery" level="info" additivity="true">
             <appender-ref ref="fileLogger" level="info" />

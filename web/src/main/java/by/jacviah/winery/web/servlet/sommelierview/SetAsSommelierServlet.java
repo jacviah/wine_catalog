@@ -3,6 +3,7 @@ package by.jacviah.winery.web.servlet.sommelierview;
 import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.sevice.ServiceFactory;
 import by.jacviah.winery.sevice.SommService;
+import by.jacviah.winery.web.WebUtils;
 import by.jacviah.winery.web.servlet.LoginServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ public class SetAsSommelierServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getServletContext().getRequestDispatcher("/WEB-INF/sommelierview/setassomm.jsp").forward(req, resp);
+        WebUtils.forward("/sommelierview/setassomm", req, resp);
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,7 +37,7 @@ public class SetAsSommelierServlet extends HttpServlet {
             }
             if (!errorMessage.equals("")) {
                 req.setAttribute("Error_Message", errorMessage);
-                req.getServletContext().getRequestDispatcher("/WEB-INF/sommelierview/setassomm.jsp").forward(req, resp);
+                WebUtils.forward("/sommelierview/setassomm", req, resp);
             } else {
                 try {
                     if (service.setUserAsSommelier(name)) {
@@ -44,9 +45,10 @@ public class SetAsSommelierServlet extends HttpServlet {
                         req.setAttribute("sommelier", "Ok, " + name + " is sommelier now");
                     }
                 } catch (DaoException e) {
-                    e.printStackTrace();
+                    log.error("error - method  service.setUserAsSommelier() call");
+                    resp.setStatus(503);
                 }
-                req.getServletContext().getRequestDispatcher("/WEB-INF/sommelierview/setassomm.jsp").forward(req, resp);
+                WebUtils.forward("/sommelierview/setassomm", req, resp);
             }
         }
     }
