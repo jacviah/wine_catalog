@@ -21,5 +21,21 @@
 - [x] не должно быть пустых методов
 
 
+неавторизованному пользователю доступны страницы:
+логина - http://localhost:8080/winery/login
+регистрации - http://localhost:8080/winery/registration
+после регистрации пользователь попадает на 
+домашнюю - http://localhost:8080/winery/home
+
+обычному пользователю доступны страницы:
+добавить вино - http://localhost:8080/winery/userview/addwine
+найти вино - http://localhost:8080/winery/userview/findwine
+
+сомелье доступна страница:
+сменить роль пользователя с обычной на сомелье - http://localhost:8080/winery/sommelierview/setassomm
+
+скрипты для базы данных тут:
+https://github.com/jacviah/wine_catalog/tree/dev/dao/src/main/db
+
 
 
