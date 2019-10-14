@@ -28,11 +28,11 @@
 3) домашнюю - http://localhost:8080/winery/home
 
 обычному пользователю доступны страницы:
-4) добавить вино - http://localhost:8080/winery/userview/addwine
-5) найти вино - http://localhost:8080/winery/userview/findwine
+1) добавить вино - http://localhost:8080/winery/userview/addwine
+2) найти вино - http://localhost:8080/winery/userview/findwine
 
 сомелье доступна страница:
-6) сменить роль пользователя с обычной на сомелье - http://localhost:8080/winery/sommelierview/setassomm
+1) сменить роль пользователя с обычной на сомелье - http://localhost:8080/winery/sommelierview/setassomm
 
 скрипты для базы данных тут:
 https://github.com/jacviah/wine_catalog/tree/dev/dao/src/main/db
