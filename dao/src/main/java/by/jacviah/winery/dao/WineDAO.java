@@ -6,6 +6,5 @@ import by.jacviah.winery.dao.exception.DaoException;
 
 public interface WineDAO {
     public Wine findWine(String name, String winery) throws DaoException;
-    public <List>Bottle getAllBottles(String name) throws DaoException;
-    public boolean addBottle(Bottle bottle, String login, int user_id) throws DaoException;
+    public boolean addWine(Wine wine)throws DaoException;
 }

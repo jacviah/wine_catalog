@@ -1,8 +1,7 @@
 package by.jacviah.winery.dao.impl;
 
-import by.jacviah.winery.dao.WineDAO;
+import by.jacviah.winery.dao.*;
 import by.jacviah.winery.dao.exception.DaoException;
-import by.jacviah.winery.dao.DataSource;
 import by.jacviah.winery.model.Bottle;
 import by.jacviah.winery.model.Wine;
 import org.slf4j.Logger;
@@ -61,31 +60,23 @@ public class DefaultWineDAO implements WineDAO {
     }
 
     @Override
-    public <List> Bottle getAllBottles(String name) throws DaoException {
-        return null;
-    }
-
-    @Override
-    public boolean addBottle(Bottle bottle, String login, int user_id) throws DaoException {
+    public boolean addWine(Wine wine) throws DaoException {
+        DAOProvider provider = DAOProvider.getInstance();
+        MetaDataDAO metaDAO = provider.getMetaDAO();
         try (Connection connection = getConnection();
-             PreparedStatement add_bottle = connection.prepareStatement("insert " +
-                     "into bottle (wine_id, user_id, year)values (?, ?, ?)")) {
-            Wine wine = findWine(bottle.getWine().getName(), bottle.getWine().getWinery());
-            if (wine != null) {
-                connection.setAutoCommit(false);
-                add_bottle.setInt(1, wine.getId());
-                add_bottle.setInt(2, user_id);
-                add_bottle.setString(3, bottle.getYear().toString());
-                int i = add_bottle.executeUpdate();
-                connection.commit();
-                if (i>0) return true;
-                return false;
-            }
-            log.warn("fail to find bottle:{} {}", bottle.getWine().toString(), bottle.getYear());
-            return false;
+             PreparedStatement add_wine = connection.prepareStatement("insert " +
+                     "into wine (region_id, grapes_id, name, winery) values (?, ?, ?, ?)")) {
+            add_wine.setInt(1, metaDAO.getRegionIdByName(wine.getRegion()));
+            add_wine.setInt(2, metaDAO.getGrapeIdByName(wine.getGrape()));
+            add_wine.setString(3, wine.getName());
+            add_wine.setString(4, wine.getWinery());
+            int i = add_wine.executeUpdate();
 
+            if (i > 0) return true;
+            log.warn("not added wine:{} {}", wine.getName(), wine.getWinery());
+            return false;
         } catch (SQLException e) {
-            log.error("fail to find bottle:{} {}", bottle.getWine().toString(), bottle.getYear());
+            log.warn("fail to add wine:{} {}", wine.getName(), wine.getWinery());
             throw new DaoException(DaoException._SQL_ERROR);
         }
     }

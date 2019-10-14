@@ -5,6 +5,7 @@ import by.jacviah.winery.model.Role;
 import by.jacviah.winery.model.User;
 import by.jacviah.winery.sevice.ServiceFactory;
 import by.jacviah.winery.sevice.UserService;
+import by.jacviah.winery.web.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +25,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
+        WebUtils.forward("login", req, resp);
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -53,30 +54,32 @@ public class LoginServlet extends HttpServlet {
                         errorMessage = "This password does not match. - " + service.findUser(name).getPassword();
                 }
             } catch (DaoException e) {
-                e.printStackTrace();
+                log.error("error - method  service.findUser() call");
+                resp.setStatus(503);
             }
 
 
             if (!errorMessage.equals("")) {
                 req.setAttribute("Error_Message", errorMessage);
-                req.getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
+                WebUtils.forward("login", req, resp);
             } else {
                 try {
                     User user =  service.findUser(name);
-                    Cookie cookieName = new Cookie("_name", URLEncoder.encode(user.getUsername(), "UTF-8"));
-                    Cookie cookieUUID = new Cookie("_uuid", URLEncoder.encode(user.getUuid().toString(), "UTF-8"));
+                    Cookie cookieName = new Cookie("name", URLEncoder.encode(user.getUsername(), "UTF-8"));
+                    Cookie cookieUUID = new Cookie("uuid", URLEncoder.encode(user.getUuid().toString(), "UTF-8"));
                     resp.addCookie(cookieName);
                     resp.addCookie(cookieUUID);
                     if (user.getRole()== Role.USER) {
                         log.info("user {} logged as {}", user.getUsername(), user.getRole().toString());
-                        req.getServletContext().getRequestDispatcher("/WEB-INF/userview/findwine.jsp").forward(req, resp);
+                        WebUtils.redirect("/userview/findwine", req, resp);
                     }
                     if (user.getRole()== Role.SOMMELIER) {
                         log.info("user {} logged as {}", user.getUsername(), user.getRole().toString());
-                        req.getServletContext().getRequestDispatcher("/WEB-INF/sommelierview/setassomm.jsp").forward(req, resp);
+                        WebUtils.redirect("/sommelierview/setassomm", req, resp);
                     }
                 } catch (DaoException e) {
-                    e.printStackTrace();
+                    log.error("error - method  service.findUser() call");
+                    resp.setStatus(503);
                 }
             }
         }

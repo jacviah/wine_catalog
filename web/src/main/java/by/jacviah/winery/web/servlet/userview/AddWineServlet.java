@@ -16,13 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/userview/findwine")
-public class FindWineServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/userview/addwine")
+public class AddWineServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        WebUtils.forward("/userview/findwine", req, resp);
+        WebUtils.forward("/userview/addwine", req, resp);
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,6 +35,8 @@ public class FindWineServlet extends HttpServlet {
 
             String name = req.getParameter("wine");
             String winery = req.getParameter("winery");
+            String region = req.getParameter("region");
+            String grape = req.getParameter("grape");
 
             if (name == null || name.isEmpty()) {
                 errorMessage = "Empty wine name, please enter name.";
@@ -44,12 +46,20 @@ public class FindWineServlet extends HttpServlet {
                 errorMessage = "Empty winery name, please enter winery.";
             }
 
+            if (region.isEmpty()) {
+                errorMessage = "Empty region, please enter.";
+            }
+
+            if (grape.isEmpty()) {
+                errorMessage = "Empty grape, please enter.";
+            }
+
             try {
-                if (service.findWine(name, winery) == null) {
-                    errorMessage = "No one has ever drunk such wine yet.";
+                if (service.findWine(name, winery) != null) {
+                    errorMessage = "Wine is exist";
                 }
             } catch (DaoException e) {
-                log.error("error - method  service.findWine() call");
+                log.error("error - method  service.addWine() call");
                 resp.setStatus(503);
             }
 
@@ -57,14 +67,18 @@ public class FindWineServlet extends HttpServlet {
                 req.setAttribute("Error_Message", errorMessage);
             } else {
                 try {
-                    Wine wine = service.findWine(name, winery);
-                    req.setAttribute("wine", wine);
+                    boolean wine = service.addWine(region, grape, name, winery);
+                    if (wine) {
+                        Wine created = service.findWine(name, winery);
+                        req.setAttribute("wine", created);
+                    }
                 } catch (DaoException e) {
-                    log.error("error - method  service.findWine() call");
+                    log.error("error - method  service.addWine() call");
                     resp.setStatus(503);
                 }
-                WebUtils.forward("/userview/findwine", req, resp);
             }
+            WebUtils.forward("/userview/addwine", req, resp);
         }
     }
 }
+

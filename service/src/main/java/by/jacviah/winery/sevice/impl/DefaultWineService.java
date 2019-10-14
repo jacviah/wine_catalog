@@ -2,12 +2,9 @@ package by.jacviah.winery.sevice.impl;
 
 import by.jacviah.winery.dao.DAOProvider;
 import by.jacviah.winery.dao.WineDAO;
-import by.jacviah.winery.model.Bottle;
 import by.jacviah.winery.model.Wine;
 import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.sevice.WineService;
-
-import java.util.List;
 
 public class DefaultWineService implements WineService {
     DAOProvider provider = DAOProvider.getInstance();
@@ -19,12 +16,7 @@ public class DefaultWineService implements WineService {
     }
 
     @Override
-    public List<Bottle> getAllBottles(String login) throws DaoException {
-        return null;
-    }
-
-    @Override
-    public Wine addBottle(Bottle bottle) throws DaoException {
-        return null;
+    public boolean addWine(String region, String grape, String name, String winery) throws DaoException {
+        return wineDAO.addWine(new Wine(region, grape, name, winery));
     }
 }

@@ -1,5 +1,7 @@
 package by.jacviah.winery.web.servlet;
 
+import by.jacviah.winery.web.WebUtils;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +13,6 @@ import java.io.IOException;
 public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/home.jsp").forward(req, resp);
+        WebUtils.forward("home", req, resp);
     }
 }
