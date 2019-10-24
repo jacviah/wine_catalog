@@ -63,8 +63,8 @@ public class FindWineServlet extends HttpServlet {
                     log.error("error - method  service.findWine() call");
                     resp.setStatus(503);
                 }
-                WebUtils.forward("/userview/findwine", req, resp);
             }
+            WebUtils.forward("/userview/findwine", req, resp);
         }
     }
 }

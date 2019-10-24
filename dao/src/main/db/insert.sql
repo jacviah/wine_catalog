@@ -36,19 +36,19 @@ values (1, 1, 'wine', 'chateau'),
 		(1, 1, 'wine', 'winery'),
 		(1, 2, 'wine', 'chateau2'),
         (1, 2, 'wine2', 'chateau');
-        
-insert into bottle (wine_id, user_id, year, rate, status, date)
-values (1, 1, 2011, 3, 1, '2019-09-11'),
-       (1, 1, 2012, 4, 1, '2019-09-12'),
-       (2, 3, 2010, 2, 1, '2019-09-11');
-       
+    
 insert into user (login, role, password)
 values ('sommelier', 'sommelier', 'sommelier'),
        ('user', 'user', 'user');
        
-insert into auth_user (auth_id, login, uuid)
-values (120, 'sommelier', uuid()),
-       (121, 'user', uuid());
+insert into auth_user (user_id, login, uuid)
+values (1, 'sommelier', uuid()),
+       (2, 'user', uuid());
+       
+insert into bottle (wine_id, user_id, year, rate, status, date)
+values (1, 1, 2011, 3, 1, '2019-09-11'),
+       (1, 1, 2012, 4, 1, '2019-09-12'),
+       (2, 2, 2010, 2, 1, '2019-09-11');
 
 SET SQL_SAFE_UPDATES = 0;   
 update wine_catalog.wine w

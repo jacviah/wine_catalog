@@ -17,8 +17,6 @@ public class DefaultUserDAOTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-
-
     @Test
     public void testAddUser001() throws Exception {
         User user = new User("gamer " + Instant.now().toString(), "qwerty");

@@ -36,7 +36,7 @@ public class DefaultUserDAO implements UserDAO {
     public User findUser(String login) throws DaoException {
         try (Connection connection = getConnection();
              PreparedStatement find_user = connection.prepareStatement("select " +
-                     "u.id, u.login, u.password, u.role, a.uuid from user u inner join auth_user a on u.id = a.auth_id where u.login = ?")) {
+                     "u.id, u.login, u.password, u.role, a.uuid from user u inner join auth_user a on u.id = a.user_id where u.login = ?")) {
 
             User user = new User();
             find_user.setString(1, login);
@@ -69,7 +69,7 @@ public class DefaultUserDAO implements UserDAO {
         try (Connection connection = getConnection();
              PreparedStatement user_insert = connection.prepareStatement("insert into user(login, password, role) values (?,?,?)",
                      Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement auth_user_insert = connection.prepareStatement("insert into auth_user(auth_id,login, uuid) values (?,?,?)")) {
+             PreparedStatement auth_user_insert = connection.prepareStatement("insert into auth_user(user_id,login, uuid) values (?,?,?)")) {
 
             connection.setAutoCommit(false);
             user_insert.setString(1, user.getUsername());
