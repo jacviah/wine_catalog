@@ -1,10 +1,18 @@
+drop table if exists wine_recomendation;
+drop table if exists recommendation;
+drop table if exists bottle;
+drop table if exists wine;
+drop table if exists region;
 drop table if exists country;
+drop table if exists grape;
+drop table if exists auth_user;
+drop table if exists user;
+
 create table country (
   id   int primary key auto_increment,
   name varchar(128) not null unique
 );
 
-drop table if exists region;
 create table region (
   id   int primary key auto_increment,
   country_id int not null,
@@ -12,26 +20,23 @@ create table region (
   constraint region_country_id_fk foreign key (country_id) references country (id)
 );
   
-drop table if exists grapes;
-create table grapes (
+create table grape (
   id   int primary key auto_increment,
   name varchar(128) not null unique
 );
 
-drop table if exists wine;
 create table wine (
   id   int primary key auto_increment,
   region_id int not null,
-  grapes_id int not null,
+  grape_id int not null,
   name varchar(128) not null,
   winery varchar(128) not null,
   avg_rate double,
   constraint UQ_wine_winery unique(name, winery),
   constraint wine_region_id_fk foreign key (region_id) references region (id),
-  constraint wine_grapes_id_fk foreign key (grapes_id) references grapes (id)  
+  constraint wine_grape_id_fk foreign key (grape_id) references grape (id)  
 );
 
-drop table if exists user;
 create table user (
   id   int primary key auto_increment,
   login varchar(64) not null unique,
@@ -39,7 +44,13 @@ create table user (
   password varchar(64) not null
 );
 
-drop table if exists bottle;
+create table auth_user (
+  user_id   int primary key,
+  login varchar(64) not null unique,
+  uuid varchar(64) not null,
+  constraint auth_user_user_id_fk foreign key (user_id) references user (id)
+);
+
 create table bottle (
   id   int primary key auto_increment,
   wine_id int not null,
@@ -53,7 +64,6 @@ create table bottle (
   constraint bottle_wine_id_fk foreign key (user_id) references user (id)
 );
 
-drop table if exists recommendation;
 create table recommendation (
   id   int primary key auto_increment,
   sommelier_id int not null,
@@ -63,7 +73,6 @@ create table recommendation (
   constraint user_recommendation_id_fk foreign key (user_id) references user (id)
 );
 
-drop table if exists wine_recomendation;
 create table wine_recomendation (
   id   int primary key auto_increment,
   recommendation_id int not null,

@@ -8,6 +8,6 @@
 		<title>Home Page</title>
 	</head>
 	<body
-        <p>Hello, ${cookie.name.getValue()}. You are login</p>
+        <p>Hello, ${sessionScope.user_name}. You are login</p>
 	</body>
 </html>

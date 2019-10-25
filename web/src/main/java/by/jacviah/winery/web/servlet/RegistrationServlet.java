@@ -65,6 +65,7 @@ public class RegistrationServlet extends HttpServlet {
             }
             Cookie cookieName = new Cookie("name",URLEncoder.encode(user.getUsername(), "UTF-8"));
             Cookie cookieUUID = new Cookie("uuid", URLEncoder.encode(user.getUuid().toString(), "UTF-8"));
+            req.getSession().setAttribute("user_name", user.getUsername());
             log.info("user {} registered", user.getUsername());
             resp.addCookie(cookieName);
             resp.addCookie(cookieUUID);
