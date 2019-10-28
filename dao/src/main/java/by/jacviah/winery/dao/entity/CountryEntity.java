@@ -5,19 +5,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "country")
 public class CountryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
-    int id;
+    Integer id;
 
     @Column(name = "name", unique = true)
     String name;
 
-    @OneToMany(mappedBy = "region", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RegionEntity> regions = new ArrayList<>();
 
     public CountryEntity() {
+    }
+
+    public CountryEntity(String name) {
+        this.name = name;
     }
 
     public CountryEntity(int id, String name, List<RegionEntity> regions) {
@@ -42,11 +48,11 @@ public class CountryEntity {
         this.name = name;
     }
 
-    public List<RegionEntity> getEmployees() {
+    public List<RegionEntity> getRegions() {
         return regions;
     }
 
-    public void setEmployees(List<RegionEntity> regions) {
+    public void setRegions(List<RegionEntity> regions) {
         this.regions= regions;
     }
 

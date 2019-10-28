@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "region")
 public class RegionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
-    int id;
+    Integer id;
 
     @Column(name = "name", unique = true)
     String name;
@@ -18,13 +20,17 @@ public class RegionEntity {
     @JoinColumn(name = "country_id")
     private CountryEntity country;
 
-    @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<WineEntity> wines = new ArrayList<>();
+    /*@OneToMany(mappedBy = "wine", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WineEntity> wines = new ArrayList<>();*/
 
     public RegionEntity() {
     }
 
-    public RegionEntity(int id, String name, CountryEntity country) {
+    public RegionEntity(String name) {
+        this.name = name;
+    }
+
+    public RegionEntity(Integer id, String name, CountryEntity country) {
         this.id = id;
         this.name = name;
         this.country = country;
