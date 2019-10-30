@@ -1,6 +1,8 @@
 package by.jacviah.winery.dao.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -10,9 +12,6 @@ public class WineEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
     private int id;
-    @ManyToOne
-    @JoinColumn(name = "country_id")
-    private CountryEntity country;
 
     @ManyToOne
     @JoinColumn(name = "region_id")
@@ -23,25 +22,28 @@ public class WineEntity {
     private GrapeEntity grape;
 
     @Column(name = "name", unique = true)
-    String name;
+    private String name;
 
     @Column(name = "winery")
-    String winery;
+    private String winery;
 
     @Column(name = "rate")
     private int rate;
 
+    @OneToMany(mappedBy = "bottle", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BottleEntity> bottle = new ArrayList<>();
+
     public WineEntity() {
     }
 
-    public WineEntity (int id, CountryEntity country, RegionEntity region, GrapeEntity grape, String name, String winery, int rate) {
+    public WineEntity (int id, RegionEntity region, GrapeEntity grape, String name, String winery, int rate, List<BottleEntity> bottle) {
         this.id = id;
-        this.country = country;
         this.region = region;
         this.grape = grape;
         this.name = name;
         this.winery = winery;
         this.rate = rate;
+        this.bottle = bottle;
     }
 
     public int getId() {
@@ -92,12 +94,12 @@ public class WineEntity {
         this.rate = rate;
     }
 
-    public CountryEntity getCountry() {
-        return country;
+    public List<BottleEntity> getBottle() {
+        return bottle;
     }
 
-    public void setCountry(CountryEntity country) {
-        this.country = country;
+    public void setBottle(List<BottleEntity> bottle) {
+        this.bottle = bottle;
     }
 
     @Override
