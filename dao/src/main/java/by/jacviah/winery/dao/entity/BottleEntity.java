@@ -1,12 +1,16 @@
 package by.jacviah.winery.dao.entity;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Year;
 
+@Entity
+@Table(name = "bottle")
 public class BottleEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "wine_id")

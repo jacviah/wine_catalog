@@ -5,6 +5,7 @@ import by.jacviah.winery.dao.entity.RegionEntity;
 
 import org.hibernate.Session;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 import by.jacviah.winery.dao.util.EMUtil;
 
@@ -29,15 +30,14 @@ public class CountryTest {
 
         RegionEntity forDelete = country.getRegions().iterator().next();
 
-        country.getRegions().remove(forDelete);
-        em.remove(country);
+        //country.getRegions().remove(forDelete);
+        //em.remove(country);
         em.getTransaction().commit();
     }
 
-/*    @Ignore
     @AfterClass
     public static void cleanUp() {
         EMUtil.closeEMFactory();
-    }*/
+    }
 }
 

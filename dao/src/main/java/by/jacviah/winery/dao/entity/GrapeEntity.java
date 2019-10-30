@@ -5,32 +5,39 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "grape")
 public class GrapeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
-    int id;
+    Long id;
 
     @Column(name = "name", unique = true)
     String name;
 
-    @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<WineEntity> regions = new ArrayList<>();
+    @OneToMany(mappedBy = "grape", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WineEntity> wines = new ArrayList<>();
 
     public GrapeEntity() {
     }
 
-    public GrapeEntity(int id, String name, List<WineEntity> regions) {
+    public GrapeEntity(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.regions = regions;
     }
 
-    public int getId() {
+    public GrapeEntity(Long id, String name, List<WineEntity> wines) {
+        this.id = id;
+        this.name = name;
+        this.wines = wines;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -42,12 +49,12 @@ public class GrapeEntity {
         this.name = name;
     }
 
-    public List<WineEntity> getRegions() {
-        return regions;
+    public List<WineEntity> getWines() {
+        return wines;
     }
 
-    public void setRegions(List<WineEntity> regions) {
-        this.regions = regions;
+    public void setRegions(List<WineEntity> wines) {
+        this.wines = wines;
     }
 
     @Override

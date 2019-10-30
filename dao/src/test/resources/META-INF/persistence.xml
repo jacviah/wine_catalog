@@ -7,6 +7,9 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>by.jacviah.winery.dao.entity.CountryEntity</class>
         <class>by.jacviah.winery.dao.entity.RegionEntity</class>
+        <class>by.jacviah.winery.dao.entity.WineEntity</class>
+        <class>by.jacviah.winery.dao.entity.BottleEntity</class>
+        <class>by.jacviah.winery.dao.entity.GrapeEntity</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

@@ -1,5 +1,7 @@
 package by.jacviah.winery.dao.entity;
 
+import by.jacviah.winery.model.Rate;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ public class WineEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
-    private int id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "region_id")
@@ -27,16 +29,16 @@ public class WineEntity {
     @Column(name = "winery")
     private String winery;
 
-    @Column(name = "rate")
+    @Column(name = "avg_rate")
     private int rate;
 
-    @OneToMany(mappedBy = "bottle", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BottleEntity> bottle = new ArrayList<>();
 
     public WineEntity() {
     }
 
-    public WineEntity (int id, RegionEntity region, GrapeEntity grape, String name, String winery, int rate, List<BottleEntity> bottle) {
+    public WineEntity (Long id, RegionEntity region, GrapeEntity grape, String name, String winery, int rate, List<BottleEntity> bottle) {
         this.id = id;
         this.region = region;
         this.grape = grape;
@@ -46,11 +48,11 @@ public class WineEntity {
         this.bottle = bottle;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
