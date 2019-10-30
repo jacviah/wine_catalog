@@ -1,4 +1,4 @@
-package by.jacviah.winery.sevice.impl;
+package by.jacviah.winery.dao.impl;
 
 import by.jacviah.winery.dao.WineDAO;
 import by.jacviah.winery.dao.impl.DefaultWineDAO;

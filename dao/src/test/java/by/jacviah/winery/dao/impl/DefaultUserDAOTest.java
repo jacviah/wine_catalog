@@ -1,4 +1,4 @@
-package by.jacviah.winery.sevice.impl;
+package by.jacviah.winery.dao.impl;
 
 import by.jacviah.winery.dao.UserDAO;
 import by.jacviah.winery.dao.exception.DaoException;
