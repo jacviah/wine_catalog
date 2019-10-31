@@ -11,7 +11,7 @@ public class CountryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
-    Integer id;
+    Long id;
 
     @Column(name = "name", unique = true)
     String name;
@@ -26,17 +26,17 @@ public class CountryEntity {
         this.name = name;
     }
 
-    public CountryEntity(int id, String name, List<RegionEntity> regions) {
+    public CountryEntity(Long id, String name, List<RegionEntity> regions) {
         this.id = id;
         this.name = name;
         this.regions = regions;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

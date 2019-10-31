@@ -10,81 +10,28 @@ public class BottleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
-    private final Long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "wine_id")
-    private final WineEntity wine;
-    //User user;
+    private WineEntity wine;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
     @Column(name = "year")
-    private final Year year;
+    private String year;
 
     @Column(name = "status")
-    private final boolean isDrunk;
+    private boolean isDrunk;
 
     @Column(name = "date")
-    private final LocalDate date;
+    private LocalDate date;
 
     @Column(name = "rate")
-    private final String rate;
+    private int rate;
 
-    public BottleEntity(Builder builder) {
-        this.id = builder.id;
-        this.wine = builder.wine;
-        this.year = builder.year;
-        this.isDrunk = builder.isDrunk;
-        this.date = builder.date;
-        this.rate = builder.rate;
-    }
-
-    public static class Builder {
-        private Long id;
-        private WineEntity wine;
-        //User user;
-        private Year year;
-        private boolean isDrunk;
-        private LocalDate date;
-        private String rate;
-
-
-        public static Builder newInstance() {
-            return new Builder();
-        }
-
-        public Builder setId(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder setWine(WineEntity wine) {
-            this.wine = wine;
-            return this;
-        }
-
-        public Builder setYear(Year year) {
-            this.year = year;
-            return this;
-        }
-        public Builder setStatus(boolean isDrunk) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder setDate(LocalDate date) {
-            this.date = date;
-            return this;
-        }
-
-        public Builder setRate(String rate) {
-            this.rate = rate;
-            return this;
-        }
-
-        public BottleEntity build() {
-            return new BottleEntity(this);
-        }
-    }
 
     @Override
     public String toString() {
@@ -95,5 +42,62 @@ public class BottleEntity {
                 ", date=" + date +
                 ", rate='" + rate + '\'' +
                 '}';
+    }
+
+    public static final class BottleEntityBuilder {
+        private Long id;
+        private WineEntity wine;
+        private String year;
+        private boolean isDrunk;
+        private LocalDate date;
+        private int rate;
+
+        private BottleEntityBuilder() {
+        }
+
+        public static BottleEntityBuilder aBottleEntity() {
+            return new BottleEntityBuilder();
+        }
+
+        public BottleEntityBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public BottleEntityBuilder withWine(WineEntity wine) {
+            this.wine = wine;
+            return this;
+        }
+
+        public BottleEntityBuilder withYear(String year) {
+            this.year = year;
+            return this;
+        }
+
+        public BottleEntityBuilder withIsDrunk(boolean isDrunk) {
+            this.isDrunk = isDrunk;
+            return this;
+        }
+
+        public BottleEntityBuilder withDate(LocalDate date) {
+            this.date = date;
+            return this;
+        }
+
+        public BottleEntityBuilder withRate(int rate) {
+            this.rate = rate;
+            return this;
+        }
+
+        public BottleEntity build() {
+            BottleEntity bottleEntity = new BottleEntity();
+            bottleEntity.date = this.date;
+            bottleEntity.rate = this.rate;
+            bottleEntity.id = this.id;
+            bottleEntity.year = this.year;
+            bottleEntity.isDrunk = this.isDrunk;
+            bottleEntity.wine = this.wine;
+            return bottleEntity;
+        }
     }
 }

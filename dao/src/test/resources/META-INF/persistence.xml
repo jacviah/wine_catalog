@@ -10,6 +10,7 @@
         <class>by.jacviah.winery.dao.entity.WineEntity</class>
         <class>by.jacviah.winery.dao.entity.BottleEntity</class>
         <class>by.jacviah.winery.dao.entity.GrapeEntity</class>
+        <class>by.jacviah.winery.dao.entity.UserEntity</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
@@ -21,7 +22,7 @@
             <property name="javax.persistence.jdbc.password" value="root"/>
             <property name="hibernate.dialect.storage_engine" value="innodb"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
-            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.hbm2ddl.auto" value="validate"/>
             <!--<property name="hibernate.hbm2ddl.auto" value="create"/>-->
             <property name="hibernate.use_sql_comments" value="true"/>
             <property name="hibernate.show_sql" value="true"/>
