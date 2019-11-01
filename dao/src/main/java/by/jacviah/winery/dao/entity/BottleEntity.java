@@ -1,5 +1,7 @@
 package by.jacviah.winery.dao.entity;
 
+import by.jacviah.winery.model.User;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Year;
@@ -49,6 +51,7 @@ public class BottleEntity {
         private WineEntity wine;
         private String year;
         private boolean isDrunk;
+        private UserEntity user;
         private LocalDate date;
         private int rate;
 
@@ -79,6 +82,10 @@ public class BottleEntity {
             return this;
         }
 
+        public BottleEntityBuilder withUser(UserEntity user) {
+            this.user = user;
+            return this;
+        }
         public BottleEntityBuilder withDate(LocalDate date) {
             this.date = date;
             return this;
@@ -94,6 +101,7 @@ public class BottleEntity {
             bottleEntity.date = this.date;
             bottleEntity.rate = this.rate;
             bottleEntity.id = this.id;
+            bottleEntity.user = this.user;
             bottleEntity.year = this.year;
             bottleEntity.isDrunk = this.isDrunk;
             bottleEntity.wine = this.wine;

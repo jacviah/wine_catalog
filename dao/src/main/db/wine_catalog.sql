@@ -55,7 +55,7 @@ create table bottle (
   wine_id bigint not null,
   user_id bigint not null,
   year varchar(4) not null,
-  rate int not null,
+  rate int,
   status boolean not null default false,
   date date,
   constraint if_status_then_date_is_not_null check ((not status) or (date is not null)),

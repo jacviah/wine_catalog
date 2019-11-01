@@ -30,7 +30,7 @@ public class WineEntity {
     private String winery;
 
     @Column(name = "avg_rate")
-    private double rate;
+    private Double rate;
 
     @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BottleEntity> bottle = new ArrayList<>();
@@ -38,7 +38,7 @@ public class WineEntity {
     public WineEntity() {
     }
 
-    public WineEntity (Long id, RegionEntity region, GrapeEntity grape, String name, String winery, double rate, List<BottleEntity> bottle) {
+    public WineEntity (Long id, RegionEntity region, GrapeEntity grape, String name, String winery, Double rate, List<BottleEntity> bottle) {
         this.id = id;
         this.region = region;
         this.grape = grape;
@@ -88,11 +88,11 @@ public class WineEntity {
         this.winery = winery;
     }
 
-    public double getRate() {
+    public Double getRate() {
         return rate;
     }
 
-    public void setRate(double rate) {
+    public void setRate(Double rate) {
         this.rate = rate;
     }
 

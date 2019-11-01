@@ -23,7 +23,7 @@ values (1, 'Piedmont'),
        (2, 'The Loire Valley '),
        (2, 'Provence');     
        
-insert into grapes (name)
+insert into grape (name)
 values ('Cabernet Sauvignon'),
        ('Cabernet Franc'),
        ('Merlot'),
@@ -31,7 +31,7 @@ values ('Cabernet Sauvignon'),
        ('Tempranillo'),
        ('Chardonnay');
        
-insert into wine (region_id, grapes_id, name, winery)
+insert into wine (region_id, grape_id, name, winery)
 values (1, 1, 'wine', 'chateau'),
 		(1, 1, 'wine', 'winery'),
 		(1, 2, 'wine', 'chateau2'),
@@ -41,9 +41,9 @@ insert into user (login, role, password)
 values ('sommelier', 'sommelier', 'sommelier'),
        ('user', 'user', 'user');
        
-insert into auth_user (user_id, login, uuid)
-values (1, 'sommelier', uuid()),
-       (2, 'user', uuid());
+insert into auth_user (user_id, uuid)
+values (1, uuid()),
+       (2, uuid());
        
 insert into bottle (wine_id, user_id, year, rate, status, date)
 values (1, 1, 2011, 3, 1, '2019-09-11'),
