@@ -3,29 +3,29 @@ package by.jacviah.winery.model;
 import java.util.UUID;
 
 public class User {
-    private int id;
+    private Long id;
     private String username;
     private String password;
-    private UUID uuid;
+    private String uuid;
     private Role role;
 
     public User() {
-        this.id = -1;
+        this.id = -1L;
     }
 
     public User(String username, String password) {
-        this.id = -1;
+        this.id = -1L;
         this.username = username;
         this.password = password;
-        this.uuid = UUID.randomUUID();
+        this.uuid = "";
         this.role = Role.USER;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -53,11 +53,11 @@ public class User {
         this.role = role;
     }
 
-    public UUID getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
@@ -82,5 +82,56 @@ public class User {
         return "User{" +
                 "username='" + username + '\'' +
                 '}';
+    }
+
+
+    public static final class UserBuilder {
+        private Long id;
+        private String username;
+        private String password;
+        private String uuid;
+        private Role role;
+
+        private UserBuilder() {
+        }
+
+        public static UserBuilder anUser() {
+            return new UserBuilder();
+        }
+
+        public UserBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public UserBuilder withUsername(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public UserBuilder withPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public UserBuilder withUuid(String uuid) {
+            this.uuid = uuid;
+            return this;
+        }
+
+        public UserBuilder withRole(Role role) {
+            this.role = role;
+            return this;
+        }
+
+        public User build() {
+            User user = new User();
+            user.setId(id);
+            user.setUsername(username);
+            user.setPassword(password);
+            user.setUuid(uuid);
+            user.setRole(role);
+            return user;
+        }
     }
 }

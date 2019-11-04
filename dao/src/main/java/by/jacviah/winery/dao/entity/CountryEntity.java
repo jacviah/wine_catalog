@@ -68,4 +68,13 @@ public class CountryEntity {
     public int hashCode() {
         return Objects.hash(getName());
     }
+
+    @Override
+    public String toString() {
+        return "CountryEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", regions=" + regions +
+                '}';
+    }
 }

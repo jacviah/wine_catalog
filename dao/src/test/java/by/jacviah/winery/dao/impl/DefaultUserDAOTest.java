@@ -20,9 +20,9 @@ import java.util.UUID;
 
 
 public class DefaultUserDAOTest {
-/*    UserDAO dao = DefaultUserDAO.getInstance();
+  UserDAO dao = DefaultUserDAO.getInstance();
 
-    @Rule
+/*      @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test

@@ -1,10 +1,7 @@
 package by.jacviah.winery.dao.entity;
 
-import by.jacviah.winery.model.User;
-
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.Year;
 
 @Entity
 @Table(name = "bottle")
