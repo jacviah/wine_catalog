@@ -4,29 +4,22 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Wine implements Serializable{
-    int id;
+    Long id;
     String country;
     String region;
     String grape;
     String name;
     String winery;
-    int rate;
+    Double rate;
 
     public Wine() {
     }
 
-    public Wine(String region, String grape, String name, String winery) {
-        this.region = region;
-        this.grape = grape;
-        this.name = name;
-        this.winery = winery;
-    }
-
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -62,11 +55,11 @@ public class Wine implements Serializable{
         this.winery = winery;
     }
 
-    public int getRate() {
+    public Double getRate() {
         return rate;
     }
 
-    public void setRate(int rate) {
+    public void setRate(Double rate) {
         this.rate = rate;
     }
 
@@ -89,5 +82,83 @@ public class Wine implements Serializable{
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    @Override
+    public String toString() {
+        return "Wine{" +
+                "id=" + id +
+                ", country='" + country + '\'' +
+                ", region='" + region + '\'' +
+                ", grape='" + grape + '\'' +
+                ", name='" + name + '\'' +
+                ", winery='" + winery + '\'' +
+                ", rate=" + rate +
+                '}';
+    }
+
+
+    public static final class WineBuilder {
+        Long id;
+        String country;
+        String region;
+        String grape;
+        String name;
+        String winery;
+        Double rate;
+
+        private WineBuilder() {
+        }
+
+        public static WineBuilder aWine() {
+            return new WineBuilder();
+        }
+
+        public WineBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public WineBuilder withCountry(String country) {
+            this.country = country;
+            return this;
+        }
+
+        public WineBuilder withRegion(String region) {
+            this.region = region;
+            return this;
+        }
+
+        public WineBuilder withGrape(String grape) {
+            this.grape = grape;
+            return this;
+        }
+
+        public WineBuilder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public WineBuilder withWinery(String winery) {
+            this.winery = winery;
+            return this;
+        }
+
+        public WineBuilder withRate(Double rate) {
+            this.rate = rate;
+            return this;
+        }
+
+        public Wine build() {
+            Wine wine = new Wine();
+            wine.setId(id);
+            wine.setCountry(country);
+            wine.setRegion(region);
+            wine.setGrape(grape);
+            wine.setName(name);
+            wine.setWinery(winery);
+            wine.setRate(rate);
+            return wine;
+        }
     }
 }

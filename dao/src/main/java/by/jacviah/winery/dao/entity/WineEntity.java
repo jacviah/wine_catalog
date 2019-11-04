@@ -116,5 +116,82 @@ public class WineEntity {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+    @Override
+    public String toString() {
+        return "WineEntity{" +
+                "id=" + id +
+                ", region=" + region +
+                ", grape=" + grape +
+                ", name='" + name + '\'' +
+                ", winery='" + winery + '\'' +
+                ", rate=" + rate +
+                ", bottle=" + bottle +
+                '}';
+    }
+
+    public static final class WineEntityBuilder {
+        private Long id;
+        private RegionEntity region;
+        private GrapeEntity grape;
+        private String name;
+        private String winery;
+        private Double rate;
+        private List<BottleEntity> bottle = new ArrayList<>();
+
+        private WineEntityBuilder() {
+        }
+
+        public static WineEntityBuilder aWineEntity() {
+            return new WineEntityBuilder();
+        }
+
+        public WineEntityBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public WineEntityBuilder withRegion(RegionEntity region) {
+            this.region = region;
+            return this;
+        }
+
+        public WineEntityBuilder withGrape(GrapeEntity grape) {
+            this.grape = grape;
+            return this;
+        }
+
+        public WineEntityBuilder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public WineEntityBuilder withWinery(String winery) {
+            this.winery = winery;
+            return this;
+        }
+
+        public WineEntityBuilder withRate(Double rate) {
+            this.rate = rate;
+            return this;
+        }
+
+        public WineEntityBuilder withBottle(List<BottleEntity> bottle) {
+            this.bottle = bottle;
+            return this;
+        }
+
+        public WineEntity build() {
+            WineEntity wineEntity = new WineEntity();
+            wineEntity.setId(id);
+            wineEntity.setRegion(region);
+            wineEntity.setGrape(grape);
+            wineEntity.setName(name);
+            wineEntity.setWinery(winery);
+            wineEntity.setRate(rate);
+            wineEntity.setBottle(bottle);
+            return wineEntity;
+        }
+    }
 }
 

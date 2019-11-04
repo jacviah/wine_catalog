@@ -73,4 +73,50 @@ public class RegionEntity {
     public int hashCode() {
         return Objects.hash(getName());
     }
+
+    @Override
+    public String toString() {
+        return "RegionEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", country=" + country +
+                '}';
+    }
+
+
+    public static final class RegionEntityBuilder {
+        Long id;
+        String name;
+        private CountryEntity country;
+
+        private RegionEntityBuilder() {
+        }
+
+        public static RegionEntityBuilder aRegionEntity() {
+            return new RegionEntityBuilder();
+        }
+
+        public RegionEntityBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public RegionEntityBuilder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public RegionEntityBuilder withCountry(CountryEntity country) {
+            this.country = country;
+            return this;
+        }
+
+        public RegionEntity build() {
+            RegionEntity regionEntity = new RegionEntity();
+            regionEntity.setId(id);
+            regionEntity.setName(name);
+            regionEntity.setCountry(country);
+            return regionEntity;
+        }
+    }
 }

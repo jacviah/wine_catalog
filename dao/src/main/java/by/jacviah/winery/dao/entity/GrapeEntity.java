@@ -22,17 +22,6 @@ public class GrapeEntity {
     public GrapeEntity() {
     }
 
-    public GrapeEntity(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public GrapeEntity(Long id, String name, List<WineEntity> wines) {
-        this.id = id;
-        this.name = name;
-        this.wines = wines;
-    }
-
     public Long getId() {
         return id;
     }
@@ -58,6 +47,15 @@ public class GrapeEntity {
     }
 
     @Override
+    public String toString() {
+        return "GrapeEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", wines=" + wines +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof GrapeEntity)) return false;
@@ -68,5 +66,42 @@ public class GrapeEntity {
     @Override
     public int hashCode() {
         return Objects.hash(getName());
+    }
+
+
+    public static final class GrapeEntityBuilder {
+        Long id;
+        String name;
+        private List<WineEntity> wines = new ArrayList<>();
+
+        private GrapeEntityBuilder() {
+        }
+
+        public static GrapeEntityBuilder aGrapeEntity() {
+            return new GrapeEntityBuilder();
+        }
+
+        public GrapeEntityBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public GrapeEntityBuilder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public GrapeEntityBuilder withWines(List<WineEntity> wines) {
+            this.wines = wines;
+            return this;
+        }
+
+        public GrapeEntity build() {
+            GrapeEntity grapeEntity = new GrapeEntity();
+            grapeEntity.setId(id);
+            grapeEntity.setName(name);
+            grapeEntity.wines = this.wines;
+            return grapeEntity;
+        }
     }
 }
