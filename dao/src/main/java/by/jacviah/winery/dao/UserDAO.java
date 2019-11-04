@@ -9,6 +9,6 @@ public interface UserDAO {
 
     public User findUser(String name) throws DaoException;
     public boolean addUser(User user) throws DaoException;
-    public boolean removeUser(String login) throws DaoException;
+    public boolean removeUser(User user) throws DaoException;
     public UUID getUUID(String name) throws DaoException;
 }

@@ -120,7 +120,7 @@ public class User {
         }
 
         public UserBuilder withRole(Role role) {
-            this.role = role;
+            this.role = Role.USER;
             return this;
         }
 

@@ -10,10 +10,13 @@ import by.jacviah.winery.model.Role;
 import by.jacviah.winery.model.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.sql.*;
 import java.util.UUID;
 
@@ -33,35 +36,23 @@ public class DefaultUserDAO implements UserDAO {
     }
 
     @Override
-    public User findUser(String login) throws DaoException {
-/*        try (Connection connection = getConnection();
-             PreparedStatement find_user = connection.prepareStatement("select " +
-                     "u.id, u.login, u.password, u.role, a.uuid from user u inner join auth_user a on u.id = a.user_id where u.login = ?")) {
-
-            User user = new User();
-            find_user.setString(1, login);
-            ResultSet rs = find_user.executeQuery();
-            if (rs.next()) {
-                user.setId(rs.getInt(1));
-                user.setUsername(rs.getString(2));
-                user.setPassword(rs.getString(3));
-                user.setRole(Role.asRole(rs.getString(4)));
-                user.setUuid(UUID.fromString(rs.getString(5)));
-            } else {
-                log.warn("user:{} not founded", user.toString());
-                return null;
-            }
-            log.warn("user:{} founded", user.toString());
-            return user;
-        } catch (SQLException e) {
-            log.error("fail to find user:{}", login, e);
-            throw new DaoException(DaoException._SQL_ERROR);
-        }*/
-        return null;
+    public User findUser(String login) {
+        try (Session session = EMUtil.getSession()) {
+            session.beginTransaction();
+            Query<UserEntity> query = session.createQuery("from UserEntity where username = :name").setCacheable(true);
+            query.setParameter("name", login);
+            User result = UserMapper.toDTO(query.getSingleResult());
+            session.getTransaction().commit();
+            session.close();
+            return result;
+        } catch (NoResultException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
-    public UUID getUUID(String name) throws DaoException {
+    public UUID getUUID(String name) {
         return null; //findUser(name).getUuid();
     }
 
@@ -71,33 +62,28 @@ public class DefaultUserDAO implements UserDAO {
             session.beginTransaction();
             session.save(UserMapper.toEntity(user));
             session.getTransaction().commit();
-            session.close();
             return true;
-        } catch (HibernateException e) {
+        } catch (ConstraintViolationException e) {
+            e.printStackTrace();
+            throw new DaoException(4);
+        }catch (HibernateException e) {
             e.printStackTrace();
             return false;
         }
     }
 
     @Override
-    public boolean removeUser(String login) throws DaoException {
-/*        try (Connection connection = getConnection();
-             PreparedStatement delete_auth_user = connection.prepareStatement("delete from wine_catalog.auth_user where login = ?");
-             PreparedStatement delete_user = connection.prepareStatement("delete from wine_catalog.user where login = ?")) {
-
-            connection.setAutoCommit(false);
-            delete_auth_user.setString(1, login);
-            delete_user.setString(1, login);
-            delete_auth_user.executeUpdate();
-            int i = delete_user.executeUpdate();
-            connection.commit();
-            if (i>0) return true;
+    public boolean removeUser(User user) {
+        try (Session session = EMUtil.getSession()) {
+            UserEntity readUser = session.get(UserEntity.class,user.getId());
+            session.beginTransaction();
+            session.delete(readUser);
+            session.getTransaction().commit();
+            return true;
+        } catch (HibernateException e) {
+            e.printStackTrace();
             return false;
-        } catch (SQLException e) {
-            log.error("fail to delete user:{}", login, e);
-            throw new DaoException(DaoException._SQL_ERROR);
-        }*/
-        return false;
+        }
     }
 
 }
