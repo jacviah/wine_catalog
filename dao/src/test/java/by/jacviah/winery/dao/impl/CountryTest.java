@@ -12,7 +12,7 @@ import by.jacviah.winery.dao.util.EMUtil;
 import javax.persistence.EntityManager;
 
 public class CountryTest {
-    @Test
+/*    @Test
     public void saveTest() {
         CountryEntity country = new CountryEntity("SD");
         RegionEntity region = new RegionEntity(null, "SF", country);
@@ -38,6 +38,6 @@ public class CountryTest {
     @AfterClass
     public static void cleanUp() {
         EMUtil.closeEMFactory();
-    }
+    }*/
 }
 

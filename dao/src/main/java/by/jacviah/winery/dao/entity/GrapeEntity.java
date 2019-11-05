@@ -51,7 +51,6 @@ public class GrapeEntity {
         return "GrapeEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", wines=" + wines +
                 '}';
     }
 

@@ -20,8 +20,8 @@ public class RegionEntity {
     @JoinColumn(name = "country_id")
     private CountryEntity country;
 
-    /*@OneToMany(mappedBy = "wine", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<WineEntity> wines = new ArrayList<>();*/
+    @OneToMany(mappedBy = "region", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WineEntity> wines = new ArrayList<>();
 
     public RegionEntity() {
     }
@@ -79,7 +79,7 @@ public class RegionEntity {
         return "RegionEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", country=" + country +
+                ", country=" + country.getName() +
                 '}';
     }
 

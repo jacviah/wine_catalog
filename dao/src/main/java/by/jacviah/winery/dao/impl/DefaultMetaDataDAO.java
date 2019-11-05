@@ -37,14 +37,30 @@ public class DefaultMetaDataDAO implements MetaDataDAO {
         try (Session session = EMUtil.getSession()) {
             session.beginTransaction();
             CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<String> criteriaQuery = cb.createQuery(String.class);
-            Root<CountryEntity> root = criteriaQuery.from(CountryEntity.class);
-            criteriaQuery.select(cb.construct(String.class, root.get("name")));
-            countries = session.createQuery(criteriaQuery).getResultList();
+            CriteriaQuery<String> query = cb.createQuery(String.class);
+            Root<CountryEntity> root = query.from(CountryEntity.class);
+            query.select(cb.construct(String.class, root.get("name")));
+            countries = session.createQuery(query).getResultList();
         } catch (HibernateException e) {
             log.error("sorry:{}", e);
         }
         return countries;
+    }
+
+    public CountryEntity getCountry(String name) {
+
+        try (Session session = EMUtil.getSession()) {
+            session.beginTransaction();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<CountryEntity> query = cb.createQuery(CountryEntity.class);
+            Root<CountryEntity> root = query.from(CountryEntity.class);
+            query.select(root)
+                    .where(cb.equal(root.get("name"), name));
+            return session.createQuery(query).getSingleResult();
+        } catch (HibernateException e) {
+            log.error("sorry:{}", e);
+            return null;
+        }
     }
 
     public List<String> getCountryRegions(String countryName) {
@@ -66,5 +82,22 @@ public class DefaultMetaDataDAO implements MetaDataDAO {
         }
         return strings;
     }
+
+    public RegionEntity getRegion(String name) {
+
+        try (Session session = EMUtil.getSession()) {
+            session.beginTransaction();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<RegionEntity> query = cb.createQuery(RegionEntity.class);
+            Root<RegionEntity> root = query.from(RegionEntity.class);
+            query.select(root)
+                    .where(cb.equal(root.get("name"), name));
+            return session.createQuery(query).getSingleResult();
+        } catch (HibernateException e) {
+            log.error("sorry:{}", e);
+            return null;
+        }
+    }
+
 
 }

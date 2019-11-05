@@ -52,11 +52,6 @@ public class DefaultUserDAO implements UserDAO {
     }
 
     @Override
-    public UUID getUUID(String name) {
-        return null; //findUser(name).getUuid();
-    }
-
-    @Override
     public boolean addUser(User user) throws DaoException {
         try (Session session = EMUtil.getSession()) {
             session.beginTransaction();
@@ -75,7 +70,7 @@ public class DefaultUserDAO implements UserDAO {
     @Override
     public boolean removeUser(User user) {
         try (Session session = EMUtil.getSession()) {
-            UserEntity readUser = session.get(UserEntity.class,user.getId());
+            UserEntity readUser = session.get(UserEntity.class, user.getId());
             session.beginTransaction();
             session.delete(readUser);
             session.getTransaction().commit();

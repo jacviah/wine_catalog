@@ -22,16 +22,6 @@ public class CountryEntity {
     public CountryEntity() {
     }
 
-    public CountryEntity(String name) {
-        this.name = name;
-    }
-
-    public CountryEntity(Long id, String name, List<RegionEntity> regions) {
-        this.id = id;
-        this.name = name;
-        this.regions = regions;
-    }
-
     public Long getId() {
         return id;
     }
@@ -74,7 +64,43 @@ public class CountryEntity {
         return "CountryEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", regions=" + regions +
                 '}';
+    }
+
+
+    public static final class CountryEntityBuilder {
+        Long id;
+        String name;
+        private List<RegionEntity> regions = new ArrayList<>();
+
+        private CountryEntityBuilder() {
+        }
+
+        public static CountryEntityBuilder aCountryEntity() {
+            return new CountryEntityBuilder();
+        }
+
+        public CountryEntityBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public CountryEntityBuilder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public CountryEntityBuilder withRegions(List<RegionEntity> regions) {
+            this.regions = regions;
+            return this;
+        }
+
+        public CountryEntity build() {
+            CountryEntity countryEntity = new CountryEntity();
+            countryEntity.setId(id);
+            countryEntity.setName(name);
+            countryEntity.setRegions(regions);
+            return countryEntity;
+        }
     }
 }

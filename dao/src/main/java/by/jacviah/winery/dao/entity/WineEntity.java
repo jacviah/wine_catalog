@@ -32,8 +32,8 @@ public class WineEntity {
     @Column(name = "avg_rate")
     private Double rate;
 
-    @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BottleEntity> bottle = new ArrayList<>();
+/*    @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BottleEntity> bottle = new ArrayList<>();*/
 
     public WineEntity() {
     }
@@ -45,7 +45,7 @@ public class WineEntity {
         this.name = name;
         this.winery = winery;
         this.rate = rate;
-        this.bottle = bottle;
+        //this.bottle = bottle;
     }
 
     public Long getId() {
@@ -96,13 +96,13 @@ public class WineEntity {
         this.rate = rate;
     }
 
-    public List<BottleEntity> getBottle() {
+    /*public List<BottleEntity> getBottle() {
         return bottle;
     }
 
     public void setBottle(List<BottleEntity> bottle) {
         this.bottle = bottle;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {
@@ -121,12 +121,12 @@ public class WineEntity {
     public String toString() {
         return "WineEntity{" +
                 "id=" + id +
-                ", region=" + region +
-                ", grape=" + grape +
+                ", region=" + region.getName() +
+                ", grape=" + grape.getName() +
                 ", name='" + name + '\'' +
                 ", winery='" + winery + '\'' +
                 ", rate=" + rate +
-                ", bottle=" + bottle +
+                ", bottle=" + //bottle +
                 '}';
     }
 
@@ -189,7 +189,7 @@ public class WineEntity {
             wineEntity.setName(name);
             wineEntity.setWinery(winery);
             wineEntity.setRate(rate);
-            wineEntity.setBottle(bottle);
+            //wineEntity.setBottle(bottle);
             return wineEntity;
         }
     }

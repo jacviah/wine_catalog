@@ -1,5 +1,6 @@
 package by.jacviah.winery.dao;
 
+import by.jacviah.winery.dao.entity.CountryEntity;
 import by.jacviah.winery.dao.exception.DaoException;
 
 import java.util.List;

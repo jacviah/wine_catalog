@@ -1,15 +1,25 @@
 package by.jacviah.winery.dao.impl;
 
 import by.jacviah.winery.dao.*;
+import by.jacviah.winery.dao.entity.UserEntity;
+import by.jacviah.winery.dao.entity.WineEntity;
 import by.jacviah.winery.dao.exception.DaoException;
-import by.jacviah.winery.model.Bottle;
-import by.jacviah.winery.model.Wine;
+import by.jacviah.winery.dao.util.EMUtil;
+import by.jacviah.winery.dao.util.mapper.WineMapper;
+import by.jacviah.winery.model.*;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.NoResultException;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DefaultWineDAO implements WineDAO {
@@ -32,52 +42,49 @@ public class DefaultWineDAO implements WineDAO {
     }
 
     @Override
-    public Wine findWine(String name, String winery) throws DaoException {
-        try (Connection connection = getConnection();
-             PreparedStatement find_wine = connection.prepareStatement("select " +
-                     "* from wine w where w.name = ? and w.winery = ?")) {
-            find_wine.setString(1, name);
-            find_wine.setString(2, winery);
-            ResultSet rs = find_wine.executeQuery();
-            if (rs.next()) {
-                Wine wine = new Wine();
-                //wine.setId(rs.getInt(1));
-                wine.setRegion(rs.getString(2));
-                wine.setGrape(rs.getString(3));
-                wine.setName(rs.getString(4));
-                wine.setWinery(rs.getString(5));
-                //wine.setRate(rs.getInt(6));
-                log.warn("wine:{} founded", wine.toString());
-                return wine;
-            } else {
-                log.warn("fail to find wine:{} {}", name, winery);
-                return null;
-            }
-        } catch (SQLException e) {
-            log.error("fail to find wine:{}", name, e);
-            throw new DaoException(DaoException._SQL_ERROR);
+    public Wine findWine(String name, String winery) {
+        try (Session session = EMUtil.getSession()) {
+            session.beginTransaction();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<WineEntity> criteria = cb.createQuery(WineEntity.class);
+            Root<WineEntity> root = criteria.from(WineEntity.class);
+
+/*            Predicate predicateForName
+                    = cb.equal(root.get("name"), name);
+            Predicate predicateForWinery
+                    = cb.equal(root.get("winery"), winery);
+            Predicate predicate
+                    = cb.and(predicateForName, predicateForWinery);*/
+
+
+            Predicate predicate = cb.and(
+                    cb.equal(root.get("name"), name),
+                    cb.equal(root.get("winery"), winery)
+            );
+            criteria.select(root).where(predicate);
+
+            WineEntity wine = session.createQuery(criteria).getSingleResult();
+            session.close();
+            return WineMapper.toDTO(wine);
+        } catch (NoResultException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
     @Override
-    public boolean addWine(Wine wine) throws DaoException {
-        DAOProvider provider = DAOProvider.getInstance();
-        MetaDataDAO metaDAO = provider.getMetaDAO();
-        try (Connection connection = getConnection();
-             PreparedStatement add_wine = connection.prepareStatement("insert " +
-                     "into wine (region_id, grapes_id, name, winery) values (?, ?, ?, ?)")) {
-            //add_wine.setInt(1, metaDAO.getRegionIdByName(wine.getRegion()));
-            //add_wine.setInt(2, metaDAO.getGrapeIdByName(wine.getGrape()));
-            add_wine.setString(3, wine.getName());
-            add_wine.setString(4, wine.getWinery());
-            int i = add_wine.executeUpdate();
-
-            if (i > 0) return true;
-            log.warn("not added wine:{} {}", wine.getName(), wine.getWinery());
+    public boolean addWine(Wine wine, Region region, Country country, Grape grape) throws DaoException {
+        try (Session session = EMUtil.getSession()) {
+            session.beginTransaction();
+            session.save(WineMapper.toEntity(wine, region, country, grape));
+            session.getTransaction().commit();
+            return true;
+        } catch (ConstraintViolationException e) {
+            e.printStackTrace();
+            throw new DaoException(4);
+        }catch (HibernateException e) {
+            e.printStackTrace();
             return false;
-        } catch (SQLException e) {
-            log.warn("fail to add wine:{} {}", wine.getName(), wine.getWinery());
-            throw new DaoException(DaoException._SQL_ERROR);
         }
     }
 }

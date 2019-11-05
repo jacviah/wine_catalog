@@ -2,8 +2,9 @@ package by.jacviah.winery.dao.impl;
 
 import by.jacviah.winery.dao.WineDAO;
 import by.jacviah.winery.dao.entity.*;
+import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.dao.util.EMUtil;
-import by.jacviah.winery.model.User;
+import by.jacviah.winery.model.*;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,36 +17,36 @@ import java.util.ArrayList;
 public class DefaultWineDAOTest {
     WineDAO dao = DefaultWineDAO.getInstance();
 
-/*    @Test
+   @Test
     public void testFindWine() throws Exception {
         Assert.assertNotNull(dao.findWine("wine", "winery"));
     }
 
-    @Test
-    public void testAddWine() throws Exception {
-        String name = "wine" + Instant.now().toString();
-        Wine wine = new Wine("Piedmont", "Merlot", name, "winery");
-        Assert.assertTrue(dao.addWine(wine));
-    }
+    /*    @Test
+       public void testAddWine() throws Exception {
+           String name = "wine" + Instant.now().toString();
+           Wine wine = new Wine("Piedmont", "Merlot", name, "winery");
+           Assert.assertTrue(dao.addWine(wine));
+       }*/
     @Test
     public void saveWineTest() {
-        WineEntity wine = new WineEntity(null, new RegionEntity(1L, "Piedmont"),
-                new GrapeEntity(4L, "Syrah"), "SD", "SF", 2d, new ArrayList<>());
-
-        EntityManager em = EMUtil.getEntityManager();
-        em.getTransaction().begin();
-        em.persist(wine);
-        em.flush();
-        em.getTransaction().commit();
-
-        em = EMUtil.getEntityManager();
-        em.getTransaction().begin();
-        wine = em.find(WineEntity.class, wine.getId());
-        em.remove(wine);
-        em.getTransaction().commit();
+        Wine wine = Wine.WineBuilder.aWine()
+                .withId(null)
+                .withName("FFF")
+                .withWinery("WWW")
+                .withRate(2d)
+                .build();
+        Country country = new Country (1L, "Italy");
+        Region region = new Region(1L, "", "Piedmont");
+        Grape grape = new Grape(4L, "Syrah");
+        try {
+            dao.addWine(wine, region, country, grape);
+        } catch (DaoException e){
+            e.printStackTrace();
+        }
     }
 
-    @Test
+ /*    @Test
     public void saveBottleTest() {
         EntityManager em = EMUtil.getEntityManager();
         em.getTransaction().begin();

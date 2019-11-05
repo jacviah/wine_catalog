@@ -1,7 +1,5 @@
 package by.jacviah.winery.model;
 
-import java.util.UUID;
-
 public class User {
     private Long id;
     private String username;
