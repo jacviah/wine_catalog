@@ -16,14 +16,22 @@ public class DefaultMetaDataDAOTest {
     MetaDataDAO dao = DefaultMetaDataDAO.getInstance();
 
     @Test
-    public void testGetCountryRegions() throws Exception {
+    public void testGetCountries() throws Exception {
 
-        List<String> regions = dao.getCountryRegions(1);
-        assertThat(regions, hasSize(5));
-        assertThat(regions, hasItems("Piedmont"));
+        List<String> countries = dao.getCountries();
+        assertThat(countries, hasSize(12));
+        assertThat(countries, hasItems("Italy"));
     }
 
     @Test
+    public void testGetCountryRegions() throws Exception {
+
+        List<String> regions = dao.getCountryRegions("Italy");
+        assertThat(regions, hasSize(5));
+        assertThat(regions, hasItems("Tuscany"));
+    }
+
+/*    @Test
     public void testGetRegionIdByName() throws Exception {
 
         int id = dao.getRegionIdByName("Piedmont");
@@ -35,5 +43,5 @@ public class DefaultMetaDataDAOTest {
 
         int id = dao.getGrapeIdByName("Merlot");
         Assert.assertTrue(id==3);
-    }
+    }*/
 }

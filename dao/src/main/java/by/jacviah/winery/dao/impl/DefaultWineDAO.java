@@ -41,12 +41,12 @@ public class DefaultWineDAO implements WineDAO {
             ResultSet rs = find_wine.executeQuery();
             if (rs.next()) {
                 Wine wine = new Wine();
-                wine.setId(rs.getInt(1));
+                //wine.setId(rs.getInt(1));
                 wine.setRegion(rs.getString(2));
                 wine.setGrape(rs.getString(3));
                 wine.setName(rs.getString(4));
                 wine.setWinery(rs.getString(5));
-                wine.setRate(rs.getInt(6));
+                //wine.setRate(rs.getInt(6));
                 log.warn("wine:{} founded", wine.toString());
                 return wine;
             } else {
@@ -66,8 +66,8 @@ public class DefaultWineDAO implements WineDAO {
         try (Connection connection = getConnection();
              PreparedStatement add_wine = connection.prepareStatement("insert " +
                      "into wine (region_id, grapes_id, name, winery) values (?, ?, ?, ?)")) {
-            add_wine.setInt(1, metaDAO.getRegionIdByName(wine.getRegion()));
-            add_wine.setInt(2, metaDAO.getGrapeIdByName(wine.getGrape()));
+            //add_wine.setInt(1, metaDAO.getRegionIdByName(wine.getRegion()));
+            //add_wine.setInt(2, metaDAO.getGrapeIdByName(wine.getGrape()));
             add_wine.setString(3, wine.getName());
             add_wine.setString(4, wine.getWinery());
             int i = add_wine.executeUpdate();

@@ -2,15 +2,19 @@ package by.jacviah.winery.dao.impl;
 
 import by.jacviah.winery.dao.DataSource;
 import by.jacviah.winery.dao.MetaDataDAO;
+import by.jacviah.winery.dao.entity.CountryEntity;
+import by.jacviah.winery.dao.entity.RegionEntity;
 import by.jacviah.winery.dao.exception.DaoException;
-import by.jacviah.winery.model.Role;
+import by.jacviah.winery.dao.util.EMUtil;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,60 +32,39 @@ public class DefaultMetaDataDAO implements MetaDataDAO {
         return DefaultMetaDataDAO.SingletonHolder.HOLDER_INSTANCE;
     }
 
-    private Connection getConnection() throws SQLException {
-        return DataSource.getInstance().getConnection();
-    }
-
-    public List<String> getCountryRegions(int country_id) throws DaoException {
-        List<String> regions = new ArrayList<>();
-        try (Connection connection = getConnection();
-             PreparedStatement select_regions = connection.prepareStatement("select" +
-                     " name from region where country_id = ?")) {
-            select_regions.setInt(1, country_id);
-            ResultSet rs = select_regions.executeQuery();
-            while (rs.next()) {
-                regions.add(rs.getString(1));
-            }
-        } catch (SQLException e) {
+    public List<String> getCountries() {
+        List<String> countries = new ArrayList<>();
+        try (Session session = EMUtil.getSession()) {
+            session.beginTransaction();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<String> criteriaQuery = cb.createQuery(String.class);
+            Root<CountryEntity> root = criteriaQuery.from(CountryEntity.class);
+            criteriaQuery.select(cb.construct(String.class, root.get("name")));
+            countries = session.createQuery(criteriaQuery).getResultList();
+        } catch (HibernateException e) {
             log.error("sorry:{}", e);
-            throw new DaoException(DaoException._SQL_ERROR);
         }
-        return regions;
+        return countries;
     }
 
-    @Override
-    public int getGrapeIdByName(String grapeName) throws DaoException {
-        try (Connection connection = getConnection();
-             PreparedStatement select_grape = connection.prepareStatement("select" +
-                     " id from grapes where name = ?")) {
-            select_grape.setString(1, grapeName);
-            ResultSet rs = select_grape.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1);
-            }
-            return -1;
-        } catch (SQLException e) {
+    public List<String> getCountryRegions(String countryName) {
+        List<RegionEntity> regions = new ArrayList<>();
+        try (Session session = EMUtil.getSession()) {
+            session.beginTransaction();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<RegionEntity> query = cb.createQuery(RegionEntity.class);
+            Root<CountryEntity> country = query.from(CountryEntity.class);
+            Join<CountryEntity, RegionEntity> regionEntityJoin = country.join("regions");
+            query.select(regionEntityJoin).where(cb.equal(country.get("name"), countryName));
+            regions = session.createQuery(query).getResultList();
+        } catch (HibernateException e) {
             log.error("sorry:{}", e);
-            throw new DaoException(DaoException._SQL_ERROR);
         }
-    }
-
-    @Override
-    public int getRegionIdByName(String regionName) throws DaoException {
-        try (Connection connection = getConnection();
-             PreparedStatement select_region = connection.prepareStatement("select" +
-                     " id from region where name = ?")) {
-            select_region.setString(1, regionName);
-            ResultSet rs = select_region.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1);
-            }
-            return -1;
-        } catch (SQLException e) {
-            log.error("sorry:{}", e);
-            throw new DaoException(DaoException._SQL_ERROR);
+        List<String> strings = new ArrayList<>();
+        for (RegionEntity r : regions) {
+            strings.add(r.getName());
         }
+        return strings;
     }
-
 
 }

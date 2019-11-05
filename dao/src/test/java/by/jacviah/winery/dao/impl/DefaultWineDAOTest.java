@@ -26,8 +26,7 @@ public class DefaultWineDAOTest {
         String name = "wine" + Instant.now().toString();
         Wine wine = new Wine("Piedmont", "Merlot", name, "winery");
         Assert.assertTrue(dao.addWine(wine));
-    }*/
-
+    }
     @Test
     public void saveWineTest() {
         WineEntity wine = new WineEntity(null, new RegionEntity(1L, "Piedmont"),
@@ -64,5 +63,6 @@ public class DefaultWineDAOTest {
         em.persist(bottle);
         em.flush();
         em.getTransaction().commit();
-    }
+    }*/
+
 }
