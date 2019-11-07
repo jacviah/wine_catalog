@@ -6,6 +6,7 @@ public class User {
     private String password;
     private String uuid;
     private Role role;
+    private UserDetail detail;
 
     public User() {
         this.id = -1L;
@@ -59,6 +60,14 @@ public class User {
         this.uuid = uuid;
     }
 
+    public UserDetail getDetail() {
+        return detail;
+    }
+
+    public void setDetail(UserDetail detail) {
+        this.detail = detail;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,6 +98,7 @@ public class User {
         private String password;
         private String uuid;
         private Role role;
+        private UserDetail detail;
 
         private UserBuilder() {
         }
@@ -118,7 +128,12 @@ public class User {
         }
 
         public UserBuilder withRole(Role role) {
-            this.role = Role.USER;
+            this.role = role;
+            return this;
+        }
+
+        public UserBuilder withDetail(UserDetail detail) {
+            this.detail = detail;
             return this;
         }
 
@@ -129,6 +144,7 @@ public class User {
             user.setPassword(password);
             user.setUuid(uuid);
             user.setRole(role);
+            user.setDetail(detail);
             return user;
         }
     }

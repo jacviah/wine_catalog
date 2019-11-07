@@ -1,6 +1,7 @@
 package by.jacviah.winery.model;
 
 public enum Rate {
+    EMPTY("", null),
     ONE("*", 1),
     TWO("**", 2),
     THREE("***", 3),
@@ -8,20 +9,20 @@ public enum Rate {
     FIVE("******", 5);
 
     private String printedText;
-    private int value;
+    private Integer value;
 
-    private Rate(String str, int value){
+    private Rate(String str, Integer value){
         this.printedText = str;
         this.value = value;
     }
 
-    public int getValue() {
+    public Integer getValue() {
         return value;
     }
 
-    public static Rate asRate(String str) {
+    public static Rate asRate(Integer value) {
         for (Rate rate : Rate.values()) {
-            if (rate.name().equalsIgnoreCase(str))
+            if (rate.getValue().equals(value))
                 return rate;
         }
         return null;

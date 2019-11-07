@@ -3,9 +3,7 @@ package by.jacviah.winery.dao.entity;
 import by.jacviah.winery.model.Rate;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "wine")
@@ -32,8 +30,11 @@ public class WineEntity {
     @Column(name = "avg_rate")
     private Double rate;
 
-/*    @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BottleEntity> bottle = new ArrayList<>();*/
+    @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BottleEntity> bottle = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "wines")
+     private Set<RecEntity> recommendations = new HashSet<>();;
 
     public WineEntity() {
     }

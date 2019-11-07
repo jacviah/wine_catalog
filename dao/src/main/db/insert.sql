@@ -45,6 +45,10 @@ insert into auth_user (user_id, uuid)
 values (1, uuid()),
        (2, uuid());
        
+insert into user_detail (id, user_id, description)
+values (1, 1,'sommelier'),
+       (2, 2, 'user');
+       
 insert into bottle (wine_id, user_id, year, rate, status, date)
 values (1, 1, 2011, 3, 1, '2019-09-11'),
        (1, 1, 2012, 4, 1, '2019-09-12'),

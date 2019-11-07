@@ -1,6 +1,8 @@
 package by.jacviah.winery.dao.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -23,6 +25,13 @@ public class UserEntity {
 
     @Column(name = "role")
     private String role;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER,
+            cascade = {CascadeType.ALL})
+    private UserDetailEntity detail;
+
+    @OneToMany(mappedBy = "sommelier", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<RecEntity> recommendations = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -64,13 +73,55 @@ public class UserEntity {
         this.role = role;
     }
 
-    public static final class UserEntityBuilder {
+    public UserDetailEntity getDetail() {
+        return detail;
+    }
 
+    public void setDetail(UserDetailEntity detail) {
+        this.detail = detail;
+    }
+
+    public List<RecEntity> getRecommendations() {
+        return recommendations;
+    }
+
+    public void setRecommendations(List<RecEntity> recommendations) {
+        this.recommendations = recommendations;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserEntity)) return false;
+        UserEntity that = (UserEntity) o;
+        return Objects.equals(username, that.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username);
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", uuid='" + uuid + '\'' +
+                ", role='" + role + '\'' +
+                '}';
+    }
+
+
+    public static final class UserEntityBuilder {
         private Long id;
         private String username;
         private String password;
         private String uuid;
         private String role;
+        private UserDetailEntity detail;
+        private List<RecEntity> recommendations = new ArrayList<>();
 
         private UserEntityBuilder() {
         }
@@ -104,38 +155,26 @@ public class UserEntity {
             return this;
         }
 
+        public UserEntityBuilder withDetail(UserDetailEntity detail) {
+            this.detail = detail;
+            return this;
+        }
+
+        public UserEntityBuilder withRecommendations(List<RecEntity> recommendations) {
+            this.recommendations = recommendations;
+            return this;
+        }
+
         public UserEntity build() {
             UserEntity userEntity = new UserEntity();
-            userEntity.role = this.role;
-            userEntity.password = this.password;
-            userEntity.username = this.username;
-            userEntity.id = this.id;
-            userEntity.uuid = this.uuid;
+            userEntity.setId(id);
+            userEntity.setUsername(username);
+            userEntity.setPassword(password);
+            userEntity.setUuid(uuid);
+            userEntity.setRole(role);
+            userEntity.setDetail(detail);
+            userEntity.setRecommendations(recommendations);
             return userEntity;
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UserEntity)) return false;
-        UserEntity that = (UserEntity) o;
-        return Objects.equals(username, that.username);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(username);
-    }
-
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", uuid='" + uuid + '\'' +
-                ", role='" + role + '\'' +
-                '}';
     }
 }

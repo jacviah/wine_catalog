@@ -11,6 +11,8 @@
         <class>by.jacviah.winery.dao.entity.BottleEntity</class>
         <class>by.jacviah.winery.dao.entity.GrapeEntity</class>
         <class>by.jacviah.winery.dao.entity.UserEntity</class>
+        <class>by.jacviah.winery.dao.entity.UserDetailEntity</class>
+        <class>by.jacviah.winery.dao.entity.RecEntity</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

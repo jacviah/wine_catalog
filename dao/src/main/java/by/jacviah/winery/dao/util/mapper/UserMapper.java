@@ -1,5 +1,6 @@
 package by.jacviah.winery.dao.util.mapper;
 
+import by.jacviah.winery.dao.entity.UserDetailEntity;
 import by.jacviah.winery.dao.entity.UserEntity;
 import by.jacviah.winery.model.Role;
 import by.jacviah.winery.model.User;
@@ -8,13 +9,21 @@ public class UserMapper {
 
     public static UserEntity toEntity(User dto) {
 
-        return UserEntity.UserEntityBuilder.anUserEntity()
+        UserEntity user = UserEntity.UserEntityBuilder.anUserEntity()
                 .withId(dto.getId())
                 .withUsername(dto.getUsername())
                 .withPassword(dto.getPassword())
-                .withRole(dto.getRole().toString())
+                .withRole(dto.getRole().toString().toLowerCase())
                 .withUuid(dto.getUuid())
                 .build();
+        if (dto.getDetail()!=null) {
+            UserDetailEntity detail = UserDetailEntity.UserDetailEntityBuilder.anUserDetailEntity()
+                    .withDescription(dto.getDetail().getDescription())
+                    .withUser(user)
+                    .build();
+            user.setDetail(detail);
+        }
+        return user;
     }
 
 

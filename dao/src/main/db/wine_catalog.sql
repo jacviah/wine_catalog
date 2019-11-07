@@ -6,6 +6,7 @@ drop table if exists region;
 drop table if exists country;
 drop table if exists grape;
 drop table if exists auth_user;
+drop table if exists user_detail;
 drop table if exists user;
 
 create table country (
@@ -48,6 +49,13 @@ create table auth_user (
   user_id   bigint primary key,
   uuid varchar(64) not null,
   constraint auth_user_user_id_fk foreign key (user_id) references user (id)
+);
+
+create table user_detail (
+  id   bigint primary key auto_increment,
+  user_id   bigint,
+  description varchar(1024),
+  constraint user_detail_user_id_fk foreign key (user_id) references user (id)
 );
 
 create table bottle (

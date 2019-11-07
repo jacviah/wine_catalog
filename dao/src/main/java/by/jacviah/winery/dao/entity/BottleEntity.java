@@ -2,6 +2,7 @@ package by.jacviah.winery.dao.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "bottle")
@@ -29,8 +30,79 @@ public class BottleEntity {
     private LocalDate date;
 
     @Column(name = "rate")
-    private int rate;
+    private Integer rate;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public WineEntity getWine() {
+        return wine;
+    }
+
+    public void setWine(WineEntity wine) {
+        this.wine = wine;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public boolean isDrunk() {
+        return isDrunk;
+    }
+
+    public void setDrunk(boolean drunk) {
+        isDrunk = drunk;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public Integer getRate() {
+        return rate;
+    }
+
+    public void setRate(Integer rate) {
+        this.rate = rate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BottleEntity)) return false;
+        BottleEntity that = (BottleEntity) o;
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(getWine(), that.getWine()) &&
+                Objects.equals(getUser(), that.getUser()) &&
+                Objects.equals(getYear(), that.getYear());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getWine(), getUser(), getYear());
+    }
 
     @Override
     public String toString() {
@@ -50,7 +122,7 @@ public class BottleEntity {
         private boolean isDrunk;
         private UserEntity user;
         private LocalDate date;
-        private int rate;
+        private Integer rate;
 
         private BottleEntityBuilder() {
         }
@@ -88,7 +160,7 @@ public class BottleEntity {
             return this;
         }
 
-        public BottleEntityBuilder withRate(int rate) {
+        public BottleEntityBuilder withRate(Integer rate) {
             this.rate = rate;
             return this;
         }

@@ -10,23 +10,22 @@ import by.jacviah.winery.model.Region;
 import by.jacviah.winery.model.Wine;
 
 public class WineMapper {
-    public static WineEntity toEntity(Wine wine, Region region, Country country, Grape grape) {
-
+    public static WineEntity toEntity(Wine wine) {
         return WineEntity.WineEntityBuilder.aWineEntity()
                 .withId(wine.getId())
                 .withName(wine.getName())
                 .withWinery(wine.getWinery())
                 .withRate(wine.getRate())
                 .withGrape(GrapeEntity.GrapeEntityBuilder.aGrapeEntity()
-                            .withId(grape.getId())
-                            .withName(grape.getName())
+                            .withId(wine.getGrape().getId())
+                            .withName(wine.getGrape().getName())
                             .build())
                 .withRegion(RegionEntity.RegionEntityBuilder.aRegionEntity()
-                            .withId(region.getId())
-                            .withName(region.getName())
+                            .withId(wine.getRegion().getId())
+                            .withName(wine.getRegion().getName())
                             .withCountry(CountryEntity.CountryEntityBuilder.aCountryEntity()
-                                        .withId(country.getId())
-                                        .withName(country.getName())
+                                        .withId(wine.getCountry().getId())
+                                        .withName(wine.getCountry().getName())
                                         .build())
                             .build())
                 .build();
@@ -39,9 +38,15 @@ public class WineMapper {
                 .withName(entity.getName())
                 .withWinery(entity.getWinery())
                 .withRate(entity.getRate())
-                .withGrape(entity.getGrape().toString())
-                .withRegion(entity.getRegion().toString())
-                .withCountry(entity.getRegion().getCountry().toString())
+                .withGrape(new Grape(
+                        entity.getGrape().getId(),
+                        entity.getGrape().getName()))
+                .withRegion(new Region(
+                        entity.getRegion().getId(),
+                        entity.getRegion().getName()))
+                .withCountry(new Country(
+                        entity.getRegion().getCountry().getId(),
+                        entity.getRegion().getCountry().getName()))
                 .build();
     }
 }

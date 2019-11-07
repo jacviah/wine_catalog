@@ -5,9 +5,9 @@ import java.util.Objects;
 
 public class Wine implements Serializable{
     Long id;
-    String country;
-    String region;
-    String grape;
+    Country country;
+    Region region;
+    Grape grape;
     String name;
     String winery;
     Double rate;
@@ -23,19 +23,27 @@ public class Wine implements Serializable{
         this.id = id;
     }
 
-    public String getRegion() {
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public Region getRegion() {
         return region;
     }
 
-    public void setRegion(String region) {
+    public void setRegion(Region region) {
         this.region = region;
     }
 
-    public String getGrape() {
+    public Grape getGrape() {
         return grape;
     }
 
-    public void setGrape(String grape) {
+    public void setGrape(Grape grape) {
         this.grape = grape;
     }
 
@@ -63,34 +71,31 @@ public class Wine implements Serializable{
         this.rate = rate;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Wine)) return false;
         Wine wine = (Wine) o;
-        return Objects.equals(name, wine.name);
+        return Objects.equals(getId(), wine.getId()) &&
+                Objects.equals(getCountry(), wine.getCountry()) &&
+                Objects.equals(getRegion(), wine.getRegion()) &&
+                Objects.equals(getGrape(), wine.getGrape()) &&
+                Objects.equals(getName(), wine.getName()) &&
+                Objects.equals(getWinery(), wine.getWinery());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(getId(), getCountry(), getRegion(), getGrape(), getName(), getWinery());
     }
 
     @Override
     public String toString() {
         return "Wine{" +
                 "id=" + id +
-                ", country='" + country + '\'' +
-                ", region='" + region + '\'' +
-                ", grape='" + grape + '\'' +
+                ", country=" + country.getName() +
+                ", region=" + region.getName() +
+                ", grape=" + grape.getName() +
                 ", name='" + name + '\'' +
                 ", winery='" + winery + '\'' +
                 ", rate=" + rate +
@@ -100,9 +105,9 @@ public class Wine implements Serializable{
 
     public static final class WineBuilder {
         Long id;
-        String country;
-        String region;
-        String grape;
+        Country country;
+        Region region;
+        Grape grape;
         String name;
         String winery;
         Double rate;
@@ -119,17 +124,17 @@ public class Wine implements Serializable{
             return this;
         }
 
-        public WineBuilder withCountry(String country) {
+        public WineBuilder withCountry(Country country) {
             this.country = country;
             return this;
         }
 
-        public WineBuilder withRegion(String region) {
+        public WineBuilder withRegion(Region region) {
             this.region = region;
             return this;
         }
 
-        public WineBuilder withGrape(String grape) {
+        public WineBuilder withGrape(Grape grape) {
             this.grape = grape;
             return this;
         }

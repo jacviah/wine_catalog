@@ -4,6 +4,7 @@ import by.jacviah.winery.dao.UserDAO;
 import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.Role;
 import by.jacviah.winery.model.User;
+import by.jacviah.winery.model.UserDetail;
 import org.junit.*;
 import org.junit.Ignore;
 import org.junit.rules.ExpectedException;
@@ -31,6 +32,7 @@ public class DefaultUserDAOTest {
                 .withUsername("gamer " + Instant.now().toString())
                 .withPassword("1")
                 .withRole(Role.USER)
+                .withDetail(new UserDetail(null, "asdasdasd"))
                 .build();
         dao.addUser(user);
         user = dao.findUser(user.getUsername());

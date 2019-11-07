@@ -4,12 +4,13 @@ import java.util.Objects;
 
 public class Region {
     Long id;
-    String country;
     String name;
 
-    public Region(Long id, String country, String name) {
+    public Region() {
+    }
+
+    public Region(Long id, String name) {
         this.id = id;
-        this.country = country;
         this.name = name;
     }
 
@@ -19,14 +20,6 @@ public class Region {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public String getName() {
@@ -42,19 +35,19 @@ public class Region {
         if (this == o) return true;
         if (!(o instanceof Region)) return false;
         Region region = (Region) o;
-        return Objects.equals(getName(), region.getName());
+        return Objects.equals(getId(), region.getId()) &&
+                Objects.equals(getName(), region.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName());
+        return Objects.hash(getId(), getName());
     }
 
     @Override
     public String toString() {
         return "Region{" +
                 "id=" + id +
-                ", country='" + country + '\'' +
                 ", name='" + name + '\'' +
                 '}';
     }
