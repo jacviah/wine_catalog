@@ -1,5 +1,6 @@
 package by.jacviah.winery.dao.entity;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
@@ -10,6 +11,8 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @DynamicUpdate
 @OptimisticLocking(type = OptimisticLockType.DIRTY)
 @Table(name = "recommendation")
