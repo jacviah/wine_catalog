@@ -3,9 +3,16 @@ package by.jacviah.winery.dao.impl;
 import by.jacviah.winery.dao.DataSource;
 import by.jacviah.winery.dao.MetaDataDAO;
 import by.jacviah.winery.dao.entity.CountryEntity;
+import by.jacviah.winery.dao.entity.GrapeEntity;
 import by.jacviah.winery.dao.entity.RegionEntity;
 import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.dao.util.EMUtil;
+import by.jacviah.winery.dao.util.mapper.CountryMapper;
+import by.jacviah.winery.dao.util.mapper.GrapeMapper;
+import by.jacviah.winery.dao.util.mapper.RegionMapper;
+import by.jacviah.winery.model.Country;
+import by.jacviah.winery.model.Grape;
+import by.jacviah.winery.model.Region;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -42,12 +49,12 @@ public class DefaultMetaDataDAO implements MetaDataDAO {
             query.select(cb.construct(String.class, root.get("name")));
             countries = session.createQuery(query).getResultList();
         } catch (HibernateException e) {
-            log.error("sorry:{}", e);
+            log.error("HibernateException in method getCountries()", e);
         }
         return countries;
     }
 
-    public CountryEntity getCountry(String name) {
+    public Country findCountry(String name) {
 
         try (Session session = EMUtil.getSession()) {
             session.beginTransaction();
@@ -56,9 +63,9 @@ public class DefaultMetaDataDAO implements MetaDataDAO {
             Root<CountryEntity> root = query.from(CountryEntity.class);
             query.select(root)
                     .where(cb.equal(root.get("name"), name));
-            return session.createQuery(query).getSingleResult();
+            return CountryMapper.toDTO(session.createQuery(query).getSingleResult());
         } catch (HibernateException e) {
-            log.error("sorry:{}", e);
+            log.error("HibernateException in method findCountry(String name)", e);
             return null;
         }
     }
@@ -74,7 +81,7 @@ public class DefaultMetaDataDAO implements MetaDataDAO {
             query.select(regionEntityJoin).where(cb.equal(country.get("name"), countryName));
             regions = session.createQuery(query).getResultList();
         } catch (HibernateException e) {
-            log.error("sorry:{}", e);
+            log.error("HibernateException in method getCountryRegions(String countryName)", e);
         }
         List<String> strings = new ArrayList<>();
         for (RegionEntity r : regions) {
@@ -83,8 +90,7 @@ public class DefaultMetaDataDAO implements MetaDataDAO {
         return strings;
     }
 
-    public RegionEntity getRegion(String name) {
-
+    public Region findRegion(String name) {
         try (Session session = EMUtil.getSession()) {
             session.beginTransaction();
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -92,9 +98,25 @@ public class DefaultMetaDataDAO implements MetaDataDAO {
             Root<RegionEntity> root = query.from(RegionEntity.class);
             query.select(root)
                     .where(cb.equal(root.get("name"), name));
-            return session.createQuery(query).getSingleResult();
+            return RegionMapper.toDTO(session.createQuery(query).getSingleResult());
         } catch (HibernateException e) {
-            log.error("sorry:{}", e);
+            log.error("HibernateException in method findRegion(String name)", e);
+            return null;
+        }
+    }
+
+    @Override
+    public Grape findGrape(String name) {
+        try (Session session = EMUtil.getSession()) {
+            session.beginTransaction();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<GrapeEntity> query = cb.createQuery(GrapeEntity.class);
+            Root<GrapeEntity> root = query.from(GrapeEntity.class);
+            query.select(root)
+                    .where(cb.equal(root.get("name"), name));
+            return GrapeMapper.toDTO(session.createQuery(query).getSingleResult());
+        } catch (HibernateException e) {
+            log.error("HibernateException in method findGrape(String name)", e);
             return null;
         }
     }

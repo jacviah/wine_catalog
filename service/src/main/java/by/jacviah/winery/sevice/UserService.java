@@ -7,7 +7,6 @@ import java.util.UUID;
 
 public interface UserService {
 
-    public User findUser(String name) throws DaoException;
-    public UUID getUserUUID(String name) throws DaoException;
+    public User findUser(String name);
     public User createUser(String name, String password) throws DaoException;
 }

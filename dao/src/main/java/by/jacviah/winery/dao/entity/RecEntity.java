@@ -1,9 +1,7 @@
 package by.jacviah.winery.dao.entity;
 
-
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -22,9 +20,10 @@ public class RecEntity {
     @Column(name = "description")
     String message;
 
-    @ManyToMany(mappedBy = "recommendations")
-    @JoinTable(name = "wine_recommendation",joinColumns = {@JoinColumn(name = "rec_id")},
-            inverseJoinColumns = {@JoinColumn(name = "wine_id")})
+    @ManyToMany
+    @JoinTable(name = "wine_recommendation",
+                joinColumns = {@JoinColumn(name = "rec_id")},
+                inverseJoinColumns = {@JoinColumn(name = "wine_id")})
     Set<WineEntity> wines = new HashSet<>();
 
     public RecEntity() {

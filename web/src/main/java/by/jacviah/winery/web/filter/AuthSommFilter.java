@@ -37,17 +37,13 @@ public class AuthSommFilter implements Filter {
         Cookie[] cookies = req.getCookies();
         if (cookies != null) {
             for (Cookie ck : cookies) {
-                try {
-                    if ("name".equals(ck.getName())) {
-                        user = service.findUser(URLDecoder.decode(ck.getValue(), "UTF-8"));
-                    }
-                    if ("uuid".equals(ck.getName())) {
-                        cookieUuid = UUID.fromString(URLDecoder.decode(ck.getValue(), "UTF-8"));
-                    }
-
-                } catch (DaoException e) {
-                    e.printStackTrace();
+                if ("name".equals(ck.getName())) {
+                    user = service.findUser(URLDecoder.decode(ck.getValue(), "UTF-8"));
                 }
+                if ("uuid".equals(ck.getName())) {
+                    cookieUuid = UUID.fromString(URLDecoder.decode(ck.getValue(), "UTF-8"));
+                }
+
             }
 
             if (user != null) {

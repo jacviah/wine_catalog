@@ -1,13 +1,11 @@
 package by.jacviah.winery.dao.impl;
 
 import by.jacviah.winery.dao.MetaDataDAO;
-import by.jacviah.winery.dao.impl.DefaultMetaDataDAO;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 

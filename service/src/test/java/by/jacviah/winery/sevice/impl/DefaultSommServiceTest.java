@@ -27,9 +27,10 @@ public class DefaultSommServiceTest {
     @Test
     public void testSetAsSomm() throws DaoException {
         User user = new User();
-        user.setId(1);
+        user.setId(1L);
+        user.setUsername("admin");
         when(userDao.findUser("admin")).thenReturn(user);
-        when(sommDao.setUserAsSommelier(1)).thenReturn(true);
+        when(sommDao.setUserAsSommelier(user)).thenReturn(true);
         assertTrue(service.setUserAsSommelier("admin"));
     }
 }

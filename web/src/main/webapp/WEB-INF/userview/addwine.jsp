@@ -20,6 +20,10 @@
                      <input type="text" name="wine"/><br>
                 </div>
                 <div class="field">
+                    Please enter country
+                    <input type="text" name="country"/><br>
+                </div>
+                <div class="field">
                     Please enter region
                     <input type="text" name="region"/><br>
                 </div>

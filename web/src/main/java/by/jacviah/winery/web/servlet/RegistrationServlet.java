@@ -45,12 +45,8 @@ public class RegistrationServlet extends HttpServlet {
             errorMessage = "Your password and confirmation password do not match, please try again.";
         }
 
-        try {
-            if (service.findUser(name)!=null) {
-                errorMessage = "Username already exists";
-            }
-        } catch (DaoException e) {
-            e.printStackTrace();
+        if (service.findUser(name)!=null) {
+            errorMessage = "Username already exists";
         }
         if (!errorMessage.equals("")) {
             req.setAttribute("errorMessage", errorMessage);
@@ -65,7 +61,7 @@ public class RegistrationServlet extends HttpServlet {
             }
             Cookie cookieName = new Cookie("name",URLEncoder.encode(user.getUsername(), "UTF-8"));
             Cookie cookieUUID = new Cookie("uuid", URLEncoder.encode(user.getUuid().toString(), "UTF-8"));
-            req.getSession().setAttribute("user_name", user.getUsername());
+            req.getSession().setAttribute("user", user);
             log.info("user {} registered", user.getUsername());
             resp.addCookie(cookieName);
             resp.addCookie(cookieUUID);

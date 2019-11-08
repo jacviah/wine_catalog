@@ -3,7 +3,8 @@ package by.jacviah.winery.dao.impl;
 import by.jacviah.winery.dao.RecommendDAO;
 import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -46,7 +47,7 @@ public class DefaultRecommendDAOTest {
                 .build();
 
         try {
-            dao.addRecommendation(rec);
+            Assertions.assertTrue(dao.addRecommendation(rec));
         } catch (DaoException e){
             e.printStackTrace();
         }

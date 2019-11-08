@@ -35,6 +35,7 @@ public class AddWineServlet extends HttpServlet {
 
             String name = req.getParameter("wine");
             String winery = req.getParameter("winery");
+            String country = req.getParameter("country");
             String region = req.getParameter("region");
             String grape = req.getParameter("grape");
 
@@ -46,6 +47,10 @@ public class AddWineServlet extends HttpServlet {
                 errorMessage = "Empty winery name, please enter winery.";
             }
 
+            if (country.isEmpty()) {
+                errorMessage = "Empty country, please enter.";
+            }
+
             if (region.isEmpty()) {
                 errorMessage = "Empty region, please enter.";
             }
@@ -54,20 +59,15 @@ public class AddWineServlet extends HttpServlet {
                 errorMessage = "Empty grape, please enter.";
             }
 
-            try {
-                if (service.findWine(name, winery) != null) {
-                    errorMessage = "Wine is exist";
-                }
-            } catch (DaoException e) {
-                log.error("error - method  service.addWine() call");
-                resp.setStatus(503);
+            if (service.findWine(name, winery) != null) {
+                errorMessage = "Wine is exist";
             }
 
             if (!errorMessage.equals("")) {
                 req.setAttribute("Error_Message", errorMessage);
             } else {
                 try {
-                    boolean wine = service.addWine(region, grape, name, winery);
+                    boolean wine = service.addWine(country, region, grape, name, winery);
                     if (wine) {
                         Wine created = service.findWine(name, winery);
                         req.setAttribute("wine", created);

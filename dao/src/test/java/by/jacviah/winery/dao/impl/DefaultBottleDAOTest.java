@@ -3,19 +3,18 @@ package by.jacviah.winery.dao.impl;
 import by.jacviah.winery.dao.BottleDAO;
 import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.*;
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.time.Year;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DefaultBottleDAOTest {
 
     BottleDAO dao = DefaultBottleDAO.getInstance();
-
-/*    @Test
-    public void testFindWine() throws Exception {
-        Assert.assertNotNull(dao.findWine("wine", "winery"));
-    }*/
 
     @Test
     public void saveBottleTest() {
@@ -41,9 +40,24 @@ public class DefaultBottleDAOTest {
                 .withYear(Year.now())
                 .build();
         try {
-            dao.addBottle(bottle);
+            assertTrue(dao.addBottle(bottle));
         } catch (DaoException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void paginationTest() {
+        User user = User.UserBuilder.anUser()
+                .withId(1L)
+                .withUsername("sommelier")
+                .withRole(Role.SOMMELIER)
+                .build();
+
+        final List<Bottle> page0 = dao.getUserBottles(user, 0);
+        Assertions.assertTrue(page0.size()==2);
+
+        final List<Bottle> page1 = dao.getUserBottles(user, 1);
+        Assertions.assertTrue(page1.size()==1);
     }
 }

@@ -50,13 +50,20 @@ public class DefaultUserServiceTest {
 
     @Test
     public void testCreateUser() throws Exception {
-        User user = new User("admin2", "pass");
-        when(dao.addUser(user)).thenReturn(user);
+        User init = User.UserBuilder.anUser()
+                .withUsername("admin2")
+                .withPassword("pass")
+                .build();
+        User founded = User.UserBuilder.anUser()
+                .withUsername("admin2")
+                .withPassword("pass")
+                .withRole(Role.USER)
+                .build();
+        when(dao.addUser(init)).thenReturn(true);
+        when(dao.findUser(init.getUsername())).thenReturn(founded);
         User userFromDb = service.createUser("admin2", "pass");
         assertEquals(userFromDb.getUsername(), "admin2");
         assertEquals(userFromDb.getPassword(), "pass");
         assertEquals(userFromDb.getRole(), Role.USER);
     }
-
-
 }

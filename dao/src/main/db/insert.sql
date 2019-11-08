@@ -52,8 +52,9 @@ values (1, 1,'sommelier'),
 insert into bottle (wine_id, user_id, year, rate, status, date)
 values (1, 1, 2011, 3, 1, '2019-09-11'),
        (1, 1, 2012, 4, 1, '2019-09-12'),
-       (2, 2, 2010, 2, 1, '2019-09-11');
-
+       (2, 2, 2010, 2, 1, '2019-09-11'),
+       (2, 1, 2014, 2, 1, '2019-09-15');
+       
 SET SQL_SAFE_UPDATES = 0;   
 update wine_catalog.wine w
 set w.avg_rate = 

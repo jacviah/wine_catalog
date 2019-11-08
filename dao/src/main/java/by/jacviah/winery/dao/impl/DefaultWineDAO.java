@@ -72,20 +72,4 @@ public class DefaultWineDAO implements WineDAO {
             return false;
         }
     }
-
-    @Override
-    public boolean addBottle(Bottle bottle) throws DaoException {
-        try (Session session = EMUtil.getSession()) {
-            session.beginTransaction();
-            session.save(BottleMapper.toEntity(bottle));
-            session.getTransaction().commit();
-            return true;
-        } catch (ConstraintViolationException e) {
-            e.printStackTrace();
-            throw new DaoException(4);
-        }catch (HibernateException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
 }

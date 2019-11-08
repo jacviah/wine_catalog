@@ -1,4 +1,4 @@
-drop table if exists wine_recomendation;
+drop table if exists wine_recommendation;
 drop table if exists recommendation;
 drop table if exists bottle;
 drop table if exists wine;
@@ -73,17 +73,15 @@ create table bottle (
 
 create table recommendation (
   id   bigint primary key auto_increment,
-  sommelier_id bigint not null,
   user_id bigint not null,
-  message text,
-  constraint sommelier_recommendation_id_fk foreign key (sommelier_id) references user (id),
+  description varchar(1024),
   constraint user_recommendation_id_fk foreign key (user_id) references user (id)
 );
 
-create table wine_recomendation (
+create table wine_recommendation (
   id   bigint primary key auto_increment,
-  recommendation_id bigint not null,
-  bottle_id bigint not null,
-  constraint wine_recomendation_recommendation_id_fk foreign key (recommendation_id) references recommendation (id),
-  constraint wine_recomendation_bottle_id_fk foreign key (bottle_id) references bottle (id)
+  rec_id bigint not null,
+  wine_id bigint not null,
+  constraint wine_recomendation_recommendation_id_fk foreign key (rec_id) references recommendation (id),
+  constraint wine_recomendation_wine_id_fk foreign key (wine_id) references wine (id)
 )

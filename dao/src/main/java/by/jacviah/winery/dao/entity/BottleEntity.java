@@ -12,11 +12,11 @@ public class BottleEntity {
     @Column(name = "id", unique = true)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "wine_id")
     private WineEntity wine;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 

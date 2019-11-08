@@ -1,9 +1,16 @@
 package by.jacviah.winery.dao.impl;
 
+import by.jacviah.winery.dao.entity.UserEntity;
 import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.dao.DataSource;
 import by.jacviah.winery.dao.SommDAO;
+import by.jacviah.winery.dao.util.EMUtil;
+import by.jacviah.winery.dao.util.mapper.UserMapper;
 import by.jacviah.winery.model.Role;
+import by.jacviah.winery.model.User;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,27 +33,18 @@ public class DefaultSommDAO implements SommDAO {
         return DefaultSommDAO.SingletonHolder.HOLDER_INSTANCE;
     }
 
-    private Connection getConnection() throws SQLException {
-        return DataSource.getInstance().getConnection();
-    }
     @Override
-    public boolean setUserAsSommelier(int user_id) throws DaoException {
-        try (Connection connection = getConnection();
-             PreparedStatement set_user_as_sommelier = connection.prepareStatement("update " +
-                     "user set role = ? WHERE id =?")) {
-            set_user_as_sommelier.setString(1, Role.SOMMELIER.toString());
-            set_user_as_sommelier.setInt(2, user_id);
-            int i =  set_user_as_sommelier.executeUpdate();
-            if (i>0) {
-                log.warn("user {} is sommelier", user_id);
-                return true;
-            } else {
-                log.warn("user {} not found", user_id);
-                return false;
-            }
-        } catch (SQLException e) {
-            log.error("sorry:{}", e);
-            throw new DaoException(DaoException._SQL_ERROR);
+    public boolean setUserAsSommelier(User user) {
+        try (Session session = EMUtil.getSession()) {
+            session.beginTransaction();
+            session.createQuery("update UserEntity e set e.role = 'sommelier' where login = :name")
+                    .setParameter("name", user.getUsername())
+                    .executeUpdate();
+            session.getTransaction().commit();
+            return true;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

@@ -47,15 +47,10 @@ public class LoginServlet extends HttpServlet {
                 errorMessage = "Empty password, please enter your password.";
             }
 
-            try {
-                if (service.findUser(name) == null) {
-                    errorMessage = "This user does not exist, please check the login.";
-                } else if (!service.findUser(name).getPassword().equals(pass)) {
-                        errorMessage = "This password does not match. - " + service.findUser(name).getPassword();
-                }
-            } catch (DaoException e) {
-                log.error("error - method  service.findUser() call");
-                resp.setStatus(503);
+            if (service.findUser(name) == null) {
+                errorMessage = "This user does not exist, please check the login.";
+            } else if (!service.findUser(name).getPassword().equals(pass)) {
+                    errorMessage = "This password does not match. - " + service.findUser(name).getPassword();
             }
 
 
@@ -63,24 +58,19 @@ public class LoginServlet extends HttpServlet {
                 req.setAttribute("Error_Message", errorMessage);
                 WebUtils.forward("login", req, resp);
             } else {
-                try {
-                    User user =  service.findUser(name);
-                    Cookie cookieName = new Cookie("name", URLEncoder.encode(user.getUsername(), "UTF-8"));
-                    Cookie cookieUUID = new Cookie("uuid", URLEncoder.encode(user.getUuid().toString(), "UTF-8"));
-                    req.getSession().setAttribute("user_name", user.getUsername());
-                    resp.addCookie(cookieName);
-                    resp.addCookie(cookieUUID);
-                    if (user.getRole()== Role.USER) {
-                        log.info("user {} logged as {}", user.getUsername(), user.getRole().toString());
-                        WebUtils.redirect("/userview/findwine", req, resp);
-                    }
-                    if (user.getRole()== Role.SOMMELIER) {
-                        log.info("user {} logged as {}", user.getUsername(), user.getRole().toString());
-                        WebUtils.redirect("/sommelierview/setassomm", req, resp);
-                    }
-                } catch (DaoException e) {
-                    log.error("error - method  service.findUser() call");
-                    resp.setStatus(503);
+                User user =  service.findUser(name);
+                Cookie cookieName = new Cookie("name", URLEncoder.encode(user.getUsername(), "UTF-8"));
+                Cookie cookieUUID = new Cookie("uuid", URLEncoder.encode(user.getUuid().toString(), "UTF-8"));
+                req.getSession().setAttribute("user", user);
+                resp.addCookie(cookieName);
+                resp.addCookie(cookieUUID);
+                if (user.getRole()== Role.USER) {
+                    log.info("user {} logged as {}", user.getUsername(), user.getRole().toString());
+                    WebUtils.redirect("/userview/findwine", req, resp);
+                }
+                if (user.getRole()== Role.SOMMELIER) {
+                    log.info("user {} logged as {}", user.getUsername(), user.getRole().toString());
+                    WebUtils.redirect("/sommelierview/setassomm", req, resp);
                 }
             }
         }

@@ -5,19 +5,16 @@ import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.Role;
 import by.jacviah.winery.model.User;
 import by.jacviah.winery.model.UserDetail;
-import org.junit.*;
-import org.junit.Ignore;
-import org.junit.rules.ExpectedException;
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class DefaultUserDAOTest {
   UserDAO dao = DefaultUserDAO.getInstance();
-
-   @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void testFindUser001() throws Exception {
@@ -44,8 +41,10 @@ public class DefaultUserDAOTest {
     @Test
     public void testAddUser002() throws Exception {
         User user = new User("user", "user");
-        thrown.expect(DaoException.class);
-        dao.addUser(user);
+        assertThrows(DaoException.class, () -> {
+            dao.addUser(user);
+        });
+
     }
 
     @Test
@@ -54,11 +53,12 @@ public class DefaultUserDAOTest {
                 .withUsername("user_for_delete")
                 .withPassword("1")
                 .withRole(Role.USER)
+                .withDetail(null)
                 .build();
         dao.addUser(user);
         User fromDB = dao.findUser(user.getUsername());
         dao.removeUser(fromDB);
-        Assert.assertNull(fromDB = dao.findUser(user.getUsername()));
+        Assert.assertNull(dao.findUser(user.getUsername()));
     }
 
   /*    @Test

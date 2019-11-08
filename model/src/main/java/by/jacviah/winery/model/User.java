@@ -1,5 +1,7 @@
 package by.jacviah.winery.model;
 
+import java.util.UUID;
+
 public class User {
     private Long id;
     private String username;
@@ -16,7 +18,7 @@ public class User {
         this.id = -1L;
         this.username = username;
         this.password = password;
-        this.uuid = "";
+        this.uuid = UUID.randomUUID().toString();
         this.role = Role.USER;
     }
 

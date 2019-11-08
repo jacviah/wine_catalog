@@ -7,8 +7,8 @@ import java.util.UUID;
 
 public interface UserDAO {
 
-    public User findUser(String name) throws DaoException;
+    public User findUser(String name);
     public boolean addUser(User user) throws DaoException;
-    public boolean removeUser(User user) throws DaoException;
+    public boolean removeUser(User user);
 
 }

@@ -13,7 +13,7 @@ public class DefaultSommService implements SommService {
     UserDAO userDAO = provider.getUserDAO();
     SommDAO sommDAO = provider.getSommDAO();
 
-    public boolean setUserAsSommelier (String name) throws DaoException {
-        return sommDAO.setUserAsSommelier(userDAO.findUser(name).getId());
+    public boolean setUserAsSommelier (String name)  {
+        return sommDAO.setUserAsSommelier(userDAO.findUser(name));
     }
 }

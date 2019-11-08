@@ -3,10 +3,8 @@ package by.jacviah.winery.dao.impl;
 import by.jacviah.winery.dao.UserDAO;
 import by.jacviah.winery.dao.entity.UserEntity;
 import by.jacviah.winery.dao.exception.DaoException;
-import by.jacviah.winery.dao.DataSource;
 import by.jacviah.winery.dao.util.EMUtil;
 import by.jacviah.winery.dao.util.mapper.UserMapper;
-import by.jacviah.winery.model.Role;
 import by.jacviah.winery.model.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -14,11 +12,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import java.sql.*;
-import java.util.UUID;
 
 public class DefaultUserDAO implements UserDAO {
 
@@ -39,7 +33,9 @@ public class DefaultUserDAO implements UserDAO {
     public User findUser(String login) {
         try (Session session = EMUtil.getSession()) {
             session.beginTransaction();
-            Query<UserEntity> query = session.createQuery("from UserEntity where username = :name").setCacheable(true);
+            Query<UserEntity> query = session.
+                    createQuery("from UserEntity where username = :name", UserEntity.class)
+                    .setCacheable(true);
             query.setParameter("name", login);
             User result = UserMapper.toDTO(query.getSingleResult());
             session.getTransaction().commit();

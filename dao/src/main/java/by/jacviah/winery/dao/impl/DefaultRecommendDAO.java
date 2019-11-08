@@ -28,8 +28,8 @@ public class DefaultRecommendDAO implements RecommendDAO {
 
     @Override
     public boolean addRecommendation(Recommendation dto) throws DaoException {
-        RecEntity rec = RecommendMapper.toEntity(dto);
         try (Session session = EMUtil.getSession()) {
+            RecEntity rec = RecommendMapper.toEntity(dto);
             session.beginTransaction();
             session.save(rec);
             session.getTransaction().commit();

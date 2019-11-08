@@ -1,7 +1,5 @@
 package by.jacviah.winery.dao.entity;
 
-import by.jacviah.winery.model.Rate;
-
 import javax.persistence.*;
 import java.util.*;
 
@@ -46,7 +44,7 @@ public class WineEntity {
         this.name = name;
         this.winery = winery;
         this.rate = rate;
-        //this.bottle = bottle;
+        this.bottle = bottle;
     }
 
     public Long getId() {
@@ -97,25 +95,29 @@ public class WineEntity {
         this.rate = rate;
     }
 
-    /*public List<BottleEntity> getBottle() {
+    public List<BottleEntity> getBottle() {
         return bottle;
     }
 
     public void setBottle(List<BottleEntity> bottle) {
         this.bottle = bottle;
-    }*/
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        WineEntity wine = (WineEntity) o;
-        return Objects.equals(name, wine.name);
+        if (!(o instanceof WineEntity)) return false;
+        WineEntity that = (WineEntity) o;
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(getRegion(), that.getRegion()) &&
+                Objects.equals(getGrape(), that.getGrape()) &&
+                Objects.equals(getName(), that.getName()) &&
+                Objects.equals(getWinery(), that.getWinery());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(getId(), getRegion(), getGrape(), getName(), getWinery());
     }
 
     @Override
@@ -190,7 +192,7 @@ public class WineEntity {
             wineEntity.setName(name);
             wineEntity.setWinery(winery);
             wineEntity.setRate(rate);
-            //wineEntity.setBottle(bottle);
+            wineEntity.setBottle(bottle);
             return wineEntity;
         }
     }

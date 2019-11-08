@@ -39,14 +39,9 @@ public class SetAsSommelierServlet extends HttpServlet {
                 req.setAttribute("Error_Message", errorMessage);
                 WebUtils.forward("/sommelierview/setassomm", req, resp);
             } else {
-                try {
-                    if (service.setUserAsSommelier(name)) {
-                        log.info("{} user role changed to sommelier", name);
-                        req.setAttribute("sommelier", "Ok, " + name + " is sommelier now");
-                    }
-                } catch (DaoException e) {
-                    log.error("error - method  service.setUserAsSommelier() call");
-                    resp.setStatus(503);
+                if (service.setUserAsSommelier(name)) {
+                    log.info("{} user role changed to sommelier", name);
+                    req.setAttribute("sommelier", "Ok, " + name + " is sommelier now");
                 }
                 WebUtils.forward("/sommelierview/setassomm", req, resp);
             }

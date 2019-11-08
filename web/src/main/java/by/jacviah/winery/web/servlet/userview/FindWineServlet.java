@@ -44,25 +44,15 @@ public class FindWineServlet extends HttpServlet {
                 errorMessage = "Empty winery name, please enter winery.";
             }
 
-            try {
-                if (service.findWine(name, winery) == null) {
-                    errorMessage = "No one has ever drunk such wine yet.";
-                }
-            } catch (DaoException e) {
-                log.error("error - method  service.findWine() call");
-                resp.setStatus(503);
+            if (service.findWine(name, winery) == null) {
+                errorMessage = "No one has ever drunk such wine yet.";
             }
 
             if (!errorMessage.equals("")) {
                 req.setAttribute("Error_Message", errorMessage);
             } else {
-                try {
-                    Wine wine = service.findWine(name, winery);
-                    req.setAttribute("wine", wine);
-                } catch (DaoException e) {
-                    log.error("error - method  service.findWine() call");
-                    resp.setStatus(503);
-                }
+                Wine wine = service.findWine(name, winery);
+                req.setAttribute("wine", wine);
             }
             WebUtils.forward("/userview/findwine", req, resp);
         }
