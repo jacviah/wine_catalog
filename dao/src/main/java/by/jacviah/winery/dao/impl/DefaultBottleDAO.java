@@ -57,8 +57,8 @@ public class DefaultBottleDAO implements BottleDAO {
             session.beginTransaction();
             List<BottleEntity> list = session.createQuery(
                     "select b " +
-                            "from BottleEntity as b" +
-                            " inner join b.user as u where u.id = :user", BottleEntity.class)
+                            "from BottleEntity as b " +
+                            "inner join b.user as u where u.id = :user", BottleEntity.class)
                     .setParameter("user", user.getId())
                     .setMaxResults(pageSize).setFirstResult(page * pageSize)
                     .getResultList();

@@ -1,11 +1,17 @@
 package by.jacviah.winery.dao.entity;
 
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
+@DynamicUpdate
+@OptimisticLocking(type = OptimisticLockType.ALL)
 @Table(name = "country")
 public class CountryEntity {
     @Id

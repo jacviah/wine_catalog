@@ -1,27 +1,23 @@
 package by.jacviah.winery.sevice.impl;
 
-import by.jacviah.winery.dao.impl.DefaultUserDAO;
 import by.jacviah.winery.model.Role;
 import by.jacviah.winery.model.User;
 import by.jacviah.winery.dao.UserDAO;
 import by.jacviah.winery.dao.exception.DaoException;
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.UUID;
 
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@RunWith(JUnitPlatform.class)
 public class DefaultUserServiceTest {
 
     @Mock

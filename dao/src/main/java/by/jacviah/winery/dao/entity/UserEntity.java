@@ -1,11 +1,17 @@
 package by.jacviah.winery.dao.entity;
 
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
+@DynamicUpdate
+@OptimisticLocking(type = OptimisticLockType.VERSION)
 @Table(name = "user")
 @SecondaryTable(name = "auth_user", pkJoinColumns = @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id"))
 public class UserEntity {

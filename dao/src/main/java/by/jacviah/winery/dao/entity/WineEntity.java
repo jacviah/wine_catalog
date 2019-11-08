@@ -1,9 +1,15 @@
 package by.jacviah.winery.dao.entity;
 
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
+
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
+@DynamicUpdate
+@OptimisticLocking(type = OptimisticLockType.VERSION)
 @Table(name = "wine")
 public class WineEntity {
     @Id

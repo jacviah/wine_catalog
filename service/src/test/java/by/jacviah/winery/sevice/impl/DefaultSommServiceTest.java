@@ -1,20 +1,22 @@
 package by.jacviah.winery.sevice.impl;
 
-
 import by.jacviah.winery.dao.SommDAO;
 import by.jacviah.winery.dao.UserDAO;
-import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.User;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@RunWith(JUnitPlatform.class)
 public class DefaultSommServiceTest {
     @Mock
     SommDAO sommDao;
@@ -25,7 +27,7 @@ public class DefaultSommServiceTest {
     DefaultSommService service;
 
     @Test
-    public void testSetAsSomm() throws DaoException {
+    public void testSetAsSomm() {
         User user = new User();
         user.setId(1L);
         user.setUsername("admin");
