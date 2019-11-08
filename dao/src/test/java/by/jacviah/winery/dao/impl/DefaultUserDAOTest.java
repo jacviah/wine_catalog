@@ -1,10 +1,13 @@
 package by.jacviah.winery.dao.impl;
 
 import by.jacviah.winery.dao.UserDAO;
+import by.jacviah.winery.dao.entity.UserEntity;
 import by.jacviah.winery.dao.exception.DaoException;
+import by.jacviah.winery.dao.util.EMUtil;
 import by.jacviah.winery.model.Role;
 import by.jacviah.winery.model.User;
 import by.jacviah.winery.model.UserDetail;
+import org.hibernate.Session;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
@@ -61,10 +64,13 @@ public class DefaultUserDAOTest {
         Assert.assertNull(dao.findUser(user.getUsername()));
     }
 
-  /*    @Test
-    public void testDeleteUser002() throws Exception {
+    @Test
+    public void cacheTest() {
+        Session em = EMUtil.getSession().getSession();
+        UserEntity user = em.get(UserEntity.class, 1L);
 
-        Assert.assertTrue(dao.removeUser("user_for_delete")==false);
-    }*/
+        user = EMUtil.getSession().get(UserEntity.class, 1L);
+        em.close();
+    }
 
 }

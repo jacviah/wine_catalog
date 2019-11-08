@@ -11,7 +11,7 @@ import java.util.Objects;
 
 @Entity
 @DynamicUpdate
-@OptimisticLocking(type = OptimisticLockType.VERSION)
+@OptimisticLocking(type = OptimisticLockType.DIRTY)
 @Table(name = "user")
 @SecondaryTable(name = "auth_user", pkJoinColumns = @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id"))
 public class UserEntity {

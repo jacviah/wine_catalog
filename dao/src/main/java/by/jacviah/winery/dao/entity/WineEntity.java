@@ -9,7 +9,7 @@ import java.util.*;
 
 @Entity
 @DynamicUpdate
-@OptimisticLocking(type = OptimisticLockType.VERSION)
+@OptimisticLocking(type = OptimisticLockType.DIRTY)
 @Table(name = "wine")
 public class WineEntity {
     @Id
