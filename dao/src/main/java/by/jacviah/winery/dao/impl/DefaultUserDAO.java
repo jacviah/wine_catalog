@@ -3,6 +3,7 @@ package by.jacviah.winery.dao.impl;
 import by.jacviah.winery.dao.UserDAO;
 import by.jacviah.winery.dao.entity.UserEntity;
 import by.jacviah.winery.dao.exception.DaoException;
+import by.jacviah.winery.dao.repository.UserRepository;
 import by.jacviah.winery.dao.util.EMUtil;
 import by.jacviah.winery.dao.util.mapper.UserMapper;
 import by.jacviah.winery.model.User;
@@ -13,22 +14,25 @@ import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.persistence.NoResultException;
+import java.util.List;
 
 public class DefaultUserDAO implements UserDAO {
 
     private static final Logger log = LoggerFactory.getLogger(DefaultUserDAO.class);
 
-    private DefaultUserDAO() {
+    private final UserRepository repository;
+
+    public DefaultUserDAO(UserRepository repository) {
+        this.repository = repository;
     }
 
-    private static class SingletonHolder {
-        static final UserDAO HOLDER_INSTANCE = new DefaultUserDAO();
+    @Override
+    public User findUser(String login) {
+        final UserEntity entity = repository.findByUsername(login);
+        return UserMapper.toDTO(entity);
     }
 
-    public static UserDAO getInstance() {
-        return SingletonHolder.HOLDER_INSTANCE;
-    }
-
+/*
     @Override
     public User findUser(String login) {
         try (Session session = EMUtil.getSession()) {
@@ -76,5 +80,6 @@ public class DefaultUserDAO implements UserDAO {
             return false;
         }
     }
+*/
 
 }

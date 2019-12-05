@@ -5,7 +5,7 @@ import by.jacviah.winery.dao.impl.*;
 public class DAOProvider {
     private static final DAOProvider instance = new DAOProvider();
 
-    private UserDAO userDAO = DefaultUserDAO.getInstance();
+    //private UserDAO userDAO = DefaultUserDAO.getInstance();
     private WineDAO wineDAO = DefaultWineDAO.getInstance();
     private BottleDAO bottleDAO = DefaultBottleDAO.getInstance();
     private SommDAO sommDAO = DefaultSommDAO.getInstance();
@@ -20,9 +20,9 @@ public class DAOProvider {
         return instance;
     }
 
-    public UserDAO getUserDAO() {
+/*    public UserDAO getUserDAO() {
         return userDAO;
-    }
+    }*/
 
     public WineDAO getWineDAO() {
         return wineDAO;

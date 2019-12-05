@@ -73,7 +73,6 @@ public class CountryEntity {
                 '}';
     }
 
-
     public static final class CountryEntityBuilder {
         Long id;
         String name;

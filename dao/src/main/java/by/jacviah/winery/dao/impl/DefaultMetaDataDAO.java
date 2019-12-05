@@ -1,11 +1,9 @@
 package by.jacviah.winery.dao.impl;
 
-import by.jacviah.winery.dao.DataSource;
 import by.jacviah.winery.dao.MetaDataDAO;
 import by.jacviah.winery.dao.entity.CountryEntity;
 import by.jacviah.winery.dao.entity.GrapeEntity;
 import by.jacviah.winery.dao.entity.RegionEntity;
-import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.dao.util.EMUtil;
 import by.jacviah.winery.dao.util.mapper.CountryMapper;
 import by.jacviah.winery.dao.util.mapper.GrapeMapper;
