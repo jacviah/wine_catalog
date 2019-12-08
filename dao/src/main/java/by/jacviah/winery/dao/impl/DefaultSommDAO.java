@@ -1,40 +1,26 @@
 package by.jacviah.winery.dao.impl;
 
 import by.jacviah.winery.dao.SommDAO;
-import by.jacviah.winery.dao.util.EMUtil;
+import by.jacviah.winery.dao.entity.UserEntity;
+import by.jacviah.winery.dao.repository.UserRepository;
+import by.jacviah.winery.model.Role;
 import by.jacviah.winery.model.User;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DefaultSommDAO implements SommDAO {
     private static final Logger log = LoggerFactory.getLogger(DefaultUserDAO.class);
+    private final UserRepository repository;
 
-    private DefaultSommDAO() {
-    }
-
-
-    private static class SingletonHolder {
-        static final SommDAO HOLDER_INSTANCE = new DefaultSommDAO();
-    }
-
-    public static SommDAO getInstance() {
-        return DefaultSommDAO.SingletonHolder.HOLDER_INSTANCE;
+    public DefaultSommDAO(UserRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public boolean setUserAsSommelier(User user) {
-        try (Session session = EMUtil.getSession()) {
-            session.beginTransaction();
-            session.createQuery("update UserEntity e set e.role = 'sommelier' where login = :name")
-                    .setParameter("name", user.getUsername())
-                    .executeUpdate();
-            session.getTransaction().commit();
-            return true;
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            return false;
-        }
+    public boolean setRole(User user, Role role) {
+        UserEntity entity = repository.getOne(user.getId());
+        entity.setRole(role.toString());
+        repository.save(entity);
+        return (repository.getOne(user.getId()).getRole().equals(role.toString()));
     }
 }

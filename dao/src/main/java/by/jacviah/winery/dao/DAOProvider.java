@@ -8,7 +8,7 @@ public class DAOProvider {
     //private UserDAO userDAO = DefaultUserDAO.getInstance();
     private WineDAO wineDAO = DefaultWineDAO.getInstance();
     private BottleDAO bottleDAO = DefaultBottleDAO.getInstance();
-    private SommDAO sommDAO = DefaultSommDAO.getInstance();
+    //private SommDAO sommDAO = DefaultSommDAO.getInstance();
     private RecommendDAO recDAO = DefaultRecommendDAO.getInstance();
     private MetaDataDAO metaDAO = DefaultMetaDataDAO.getInstance();
 
@@ -32,9 +32,9 @@ public class DAOProvider {
         return bottleDAO;
     }
 
-    public SommDAO getSommDAO() {
+    /*public SommDAO getSommDAO() {
         return sommDAO;
-    }
+    }*/
 
     public RecommendDAO getRecommendDAO() {
         return recDAO;

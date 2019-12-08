@@ -36,10 +36,10 @@ public class UserEntity {
     private String role;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.EAGER,
-            cascade = {CascadeType.ALL})
+            cascade = CascadeType.ALL, orphanRemoval = true)
     private UserDetailEntity detail;
 
-    @OneToMany(mappedBy = "sommelier", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "sommelier", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<RecEntity> recommendations = new ArrayList<>();
 
     public Long getId() {

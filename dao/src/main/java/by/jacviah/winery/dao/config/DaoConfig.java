@@ -1,6 +1,8 @@
 package by.jacviah.winery.dao.config;
 
+import by.jacviah.winery.dao.SommDAO;
 import by.jacviah.winery.dao.UserDAO;
+import by.jacviah.winery.dao.impl.DefaultSommDAO;
 import by.jacviah.winery.dao.impl.DefaultUserDAO;
 import by.jacviah.winery.dao.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,4 +25,10 @@ public class DaoConfig {
     public UserDAO userDao() {
         return new DefaultUserDAO(userRepository);
     }
+
+    @Bean
+    public SommDAO sommDao() {
+        return new DefaultSommDAO(userRepository);
+    }
+
 }

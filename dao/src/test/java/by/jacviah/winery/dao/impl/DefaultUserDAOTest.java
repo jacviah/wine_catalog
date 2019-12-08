@@ -8,43 +8,33 @@ import by.jacviah.winery.dao.util.EMUtil;
 import by.jacviah.winery.model.Role;
 import by.jacviah.winery.model.User;
 import by.jacviah.winery.model.UserDetail;
+import org.hibernate.JDBCException;
 import org.hibernate.Session;
+import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = DaoConfig.class)
-@Transactional
 public class DefaultUserDAOTest {
 
     @Autowired
     private UserDAO dao;
 
     @Test
-    void getContext() {
-        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-        context.register(DaoConfig.class);
-        context.refresh();
-        Arrays.stream(context.getBeanDefinitionNames()).forEach(System.out::println);
-        UserDAO dao = (UserDAO) context.getBean("UserDAO");
-    }
-
-    @Test
-    void getByLoginExists() {
-        User user = dao.findUser("user");
-        Assert.assertNotNull(user.getUuid());
-    }
-}
-
-/*    @Test
+    @Transactional
     public void testAddUser001() throws Exception {
         User user = User.UserBuilder.anUser()
                 .withUsername("gamer " + Instant.now().toString())
@@ -60,15 +50,17 @@ public class DefaultUserDAOTest {
     }
 
     @Test
+    @Transactional
     public void testAddUser002() throws Exception {
         User user = new User("user", "user");
-        assertThrows(DaoException.class, () -> {
+        assertThrows(DataIntegrityViolationException.class, () -> {
             dao.addUser(user);
         });
 
     }
 
     @Test
+    @Transactional
     public void testDeleteUser001() throws Exception {
         User user = User.UserBuilder.anUser()
                 .withUsername("user_for_delete")
@@ -89,6 +81,6 @@ public class DefaultUserDAOTest {
 
         user = EMUtil.getSession().get(UserEntity.class, 1L);
         em.close();
-    }*/
-
+    }
+}
 

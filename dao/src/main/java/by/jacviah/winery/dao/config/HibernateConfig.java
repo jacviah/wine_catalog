@@ -30,8 +30,6 @@ public class HibernateConfig {
     @Bean
     public DataSource dataSource() {
         final DataSourseSettings dataSourseSettings = settingsConfig.dataSourseSettings();
-        log.error("+++");
-        log.error(dataSourseSettings.toString());
         final HikariDataSource hikariDataSource = new HikariDataSource();
         hikariDataSource.setJdbcUrl(dataSourseSettings.getUrl());
         hikariDataSource.setUsername(dataSourseSettings.getUser());
