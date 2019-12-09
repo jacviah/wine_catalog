@@ -2,19 +2,16 @@ package by.jacviah.winery.dao.impl;
 
 import by.jacviah.winery.dao.*;
 import by.jacviah.winery.dao.entity.BottleEntity;
-import by.jacviah.winery.dao.entity.UserEntity;
-import by.jacviah.winery.dao.exception.DaoException;
+import by.jacviah.winery.dao.repository.BottleRepository;
 import by.jacviah.winery.dao.util.EMUtil;
 import by.jacviah.winery.dao.util.mapper.BottleMapper;
 import by.jacviah.winery.model.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.exception.ConstraintViolationException;
-import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,31 +19,17 @@ public class DefaultBottleDAO implements BottleDAO {
 
     private static final Logger log = LoggerFactory.getLogger(DefaultBottleDAO.class);
 
-    private DefaultBottleDAO() {
-    }
+    @Autowired
+    BottleRepository repository;
 
-    private static class SingletonHolder {
-        static final BottleDAO HOLDER_INSTANCE = new DefaultBottleDAO();
-    }
-
-    public static BottleDAO getInstance() {
-        return DefaultBottleDAO.SingletonHolder.HOLDER_INSTANCE;
+    public DefaultBottleDAO(BottleRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public boolean addBottle(Bottle bottle) throws DaoException {
-        try (Session session = EMUtil.getSession()) {
-            session.beginTransaction();
-            session.save(BottleMapper.toEntity(bottle));
-            session.getTransaction().commit();
-            return true;
-        } catch (ConstraintViolationException e) {
-            e.printStackTrace();
-            throw new DaoException(4);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            return false;
-        }
+    public boolean addBottle(Bottle bottle) {
+        BottleEntity entity = BottleMapper.toEntity(bottle);
+        return repository.existsById(entity.getId());
     }
 
     @Override

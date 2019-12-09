@@ -21,21 +21,21 @@ public class DefaultUserDAO implements UserDAO {
     @Override
     public User findUser(String login) {
         final UserEntity entity = repository.findByUsername(login);
-        return UserMapper.toDTO(entity);
+        return (entity != null) ? UserMapper.toDTO(entity) : null;
     }
 
     @Override
     public boolean addUser(User user) {
         UserEntity entity = UserMapper.toEntity(user);
         repository.saveAndFlush(entity);
-        return (entity.getId()!=null);
+        return (entity.getId() != null);
     }
 
     @Override
     public boolean removeUser(User user) {
         UserEntity entity = UserMapper.toEntity(user);
         repository.delete(entity);
-        return (repository.findById(entity.getId())==null);
+        return (repository.findById(entity.getId()) == null);
     }
 
 }

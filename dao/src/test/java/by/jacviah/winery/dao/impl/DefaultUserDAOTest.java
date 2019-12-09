@@ -46,7 +46,6 @@ public class DefaultUserDAOTest {
         user = dao.findUser(user.getUsername());
         Assert.assertTrue(user.getRole().equals(Role.USER));
         Assert.assertTrue(user.getPassword().equals("1"));
-        dao.removeUser(user);
     }
 
     @Test
