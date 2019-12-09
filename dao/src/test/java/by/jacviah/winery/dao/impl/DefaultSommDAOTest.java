@@ -29,7 +29,6 @@ public class DefaultSommDAOTest {
                 .withUsername("userAsSommelier")
                 .withPassword("123")
                 .withRole(Role.USER)
-                .withDetail(null)
                 .build();
         userDAO.addUser(user);
         User fromDB = userDAO.findUser(user.getUsername());

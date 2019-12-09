@@ -20,7 +20,7 @@ public class DefaultSommDAO implements SommDAO {
     public boolean setRole(User user, Role role) {
         UserEntity entity = repository.getOne(user.getId());
         entity.setRole(role.toString());
-        repository.save(entity);
+        repository.saveAndFlush(entity);
         return (repository.getOne(user.getId()).getRole().equals(role.toString()));
     }
 }
