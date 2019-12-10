@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,47 +30,28 @@ public class DefaultBottleDAO implements BottleDAO {
     @Override
     public boolean addBottle(Bottle bottle) {
         BottleEntity entity = BottleMapper.toEntity(bottle);
+        repository.save(entity);
         return repository.existsById(entity.getId());
     }
 
     @Override
-    public List<Bottle> getUserBottles(User user, int page) {
-        List<Bottle> result = new ArrayList<>();
-        int pageSize = 2;
-        try (Session session = EMUtil.getSession()) {
-            session.beginTransaction();
-            List<BottleEntity> list = session.createQuery(
-                    "select b " +
-                            "from BottleEntity as b " +
-                            "inner join b.user as u where u.id = :user", BottleEntity.class)
-                    .setParameter("user", user.getId())
-                    .setMaxResults(pageSize).setFirstResult(page * pageSize)
-                    .getResultList();
-            for (BottleEntity item : list) {
-                result.add(BottleMapper.toDTO(item));
+    public List<Bottle> getUserBottles(User user, Pageable pageable) {
+        List<Bottle> bottles = new ArrayList<>();
+        List<BottleEntity> entities = repository.getUserBottles(user.getId(), pageable);
+        if (entities.isEmpty()) {
+            return bottles;
+        } else {
+            for (BottleEntity t : entities) {
+                bottles.add(BottleMapper.toDTO(t));
             }
-            session.getTransaction().commit();
-            return result;
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            return result;
+            return bottles;
         }
     }
 
     @Override
     public boolean removeBottle(Bottle dto) {
-        BottleEntity bottle = BottleMapper.toEntity(dto);
-        try (Session session = EMUtil.getSession()) {
-            BottleEntity readBottle = session.get(BottleEntity.class, bottle.getId());
-            session.beginTransaction();
-            session.delete(readBottle);
-            session.getTransaction().commit();
-            return true;
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            return false;
-        }
+        BottleEntity entity = BottleMapper.toEntity(dto);
+        repository.delete(entity);
+        return (repository.findById(entity.getId()) == null);
     }
-
-
 }

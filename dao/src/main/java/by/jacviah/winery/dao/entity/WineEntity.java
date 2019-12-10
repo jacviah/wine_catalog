@@ -38,7 +38,7 @@ public class WineEntity {
     private List<BottleEntity> bottle = new ArrayList<>();
 
     @ManyToMany(mappedBy = "wines")
-     private Set<RecEntity> recommendations = new HashSet<>();;
+     private Set<RecommendEntity> recommendations = new HashSet<>();;
 
     public WineEntity() {
     }

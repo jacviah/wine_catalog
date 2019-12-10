@@ -1,56 +1,49 @@
 package by.jacviah.winery.dao.impl;
 
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import by.jacviah.winery.dao.entity.CountryEntity;
-import by.jacviah.winery.dao.repository.UserRepository;
+import by.jacviah.winery.dao.MetaDataDAO;
+import by.jacviah.winery.dao.config.DaoConfig;
+import by.jacviah.winery.model.Country;
+import by.jacviah.winery.model.Region;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.core.IsCollectionContaining.hasItems;
+
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = DaoConfig.class)
 public class DefaultMetaDataDAOTest {
 
     @Autowired
-    UserRepository countryRepository;
-
-/*      @Test
-    public void testGetCountryRegions() throws Exception {
-
-        List<CountryEntity> regions = countryRepository.findByName("Italy");
-        assertThat(regions, hasSize(12));
-    }
-
-  MetaDataDAO dao = DefaultMetaDataDAO.getInstance();
+    MetaDataDAO dao;
 
     @Test
-    public void testGetCountries() throws Exception {
+    public void testGetCountries() {
 
-        List<String> countries = dao.getCountries();
+        List<Country> countries = dao.getCountries();
         assertThat(countries, hasSize(12));
-        assertThat(countries, hasItems("Italy"));
     }
 
     @Test
-    public void testGetCountryRegions() throws Exception {
+    public void testGetCountryRegions() {
 
-        List<String> regions = dao.getCountryRegions("Italy");
+        List<Region> regions = dao.getCountryRegions("Italy");
         assertThat(regions, hasSize(5));
-        assertThat(regions, hasItems("Tuscany"));
-    }*/
-
-/*    @Test
-    public void testGetRegionIdByName() throws Exception {
-
-        int id = dao.getRegionIdByName("Piedmont");
-        Assert.assertTrue(id==1);
+        assertThat(regions, hasItems(new Region(2L, "Tuscany")));
     }
 
     @Test
-    public void testGetGrapeIdByName() throws Exception {
+    public void testGetGrapes() {
 
-        int id = dao.getGrapeIdByName("Merlot");
-        Assert.assertTrue(id==3);
-    }*/
+        List<Region> regions = dao.getCountryRegions("Italy");
+        assertThat(regions, hasSize(5));
+        assertThat(regions, hasItems(new Region(2L, "Tuscany")));
+    }
 }

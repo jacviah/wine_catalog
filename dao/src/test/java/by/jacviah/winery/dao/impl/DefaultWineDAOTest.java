@@ -1,28 +1,33 @@
 package by.jacviah.winery.dao.impl;
 
 import by.jacviah.winery.dao.WineDAO;
+import by.jacviah.winery.dao.config.DaoConfig;
 import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.*;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Year;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = DaoConfig.class)
 public class DefaultWineDAOTest {
-    WineDAO dao = DefaultWineDAO.getInstance();
+
+    @Autowired
+    WineDAO dao;
 
    @Test
     public void testFindWine() throws Exception {
-        Assert.assertNotNull(dao.findWine("wine", "winery"));
+       Assert.assertNotNull(dao.findWine("wine", "winery"));
     }
 
-    /*    @Test
-       public void testAddWine() throws Exception {
-           String name = "wine" + Instant.now().toString();
-           Wine wine = new Wine("Piedmont", "Merlot", name, "winery");
-           Assert.assertTrue(dao.addWine(wine));
-       }*/
     @Test
+    @Transactional
     public void saveWineTest() {
         Wine wine = Wine.WineBuilder.aWine()
                 .withId(null)
@@ -33,10 +38,6 @@ public class DefaultWineDAOTest {
                 .withWinery("WWW")
                 .withRate(2d)
                 .build();
-        try {
-            dao.addWine(wine);
-        } catch (DaoException e){
-            e.printStackTrace();
-        }
+        Assert.assertTrue(dao.addWine(wine));
     }
 }

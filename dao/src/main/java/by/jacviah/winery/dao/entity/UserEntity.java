@@ -40,7 +40,7 @@ public class UserEntity {
     private UserDetailEntity detail;
 
     @OneToMany(mappedBy = "sommelier", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<RecEntity> recommendations = new ArrayList<>();
+    private List<RecommendEntity> recommendations = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -90,11 +90,11 @@ public class UserEntity {
         this.detail = detail;
     }
 
-    public List<RecEntity> getRecommendations() {
+    public List<RecommendEntity> getRecommendations() {
         return recommendations;
     }
 
-    public void setRecommendations(List<RecEntity> recommendations) {
+    public void setRecommendations(List<RecommendEntity> recommendations) {
         this.recommendations = recommendations;
     }
 
@@ -130,7 +130,7 @@ public class UserEntity {
         private String uuid;
         private String role;
         private UserDetailEntity detail;
-        private List<RecEntity> recommendations = new ArrayList<>();
+        private List<RecommendEntity> recommendations = new ArrayList<>();
 
         private UserEntityBuilder() {
         }
@@ -169,7 +169,7 @@ public class UserEntity {
             return this;
         }
 
-        public UserEntityBuilder withRecommendations(List<RecEntity> recommendations) {
+        public UserEntityBuilder withRecommendations(List<RecommendEntity> recommendations) {
             this.recommendations = recommendations;
             return this;
         }

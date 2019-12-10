@@ -1,6 +1,6 @@
 package by.jacviah.winery.dao.util.mapper;
 
-import by.jacviah.winery.dao.entity.RecEntity;
+import by.jacviah.winery.dao.entity.RecommendEntity;
 import by.jacviah.winery.dao.entity.WineEntity;
 import by.jacviah.winery.model.Recommendation;
 import by.jacviah.winery.model.Wine;
@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class RecommendMapper {
-    public static RecEntity toEntity(Recommendation dto) {
+    public static RecommendEntity toEntity(Recommendation dto) {
 
         Set<WineEntity> target = new HashSet<>();
         Set<Wine> source = dto.getWines();
@@ -17,7 +17,7 @@ public class RecommendMapper {
             target.add(WineMapper.toEntity(wine));
         }
 
-        return RecEntity.RecEntityBuilder.aRecEntity()
+        return RecommendEntity.RecEntityBuilder.aRecEntity()
                 .withId(dto.getId())
                 .withMessage(dto.getMessage())
                 .withSommelier(UserMapper.toEntity(dto.getSommelier()))
@@ -26,7 +26,7 @@ public class RecommendMapper {
     }
 
 
-    public static Recommendation toDTO(RecEntity entity) {
+    public static Recommendation toDTO(RecommendEntity entity) {
         Set<Wine> target = new HashSet<>();
         Set<WineEntity> source = entity.getWines();
         for (WineEntity wine : source) {

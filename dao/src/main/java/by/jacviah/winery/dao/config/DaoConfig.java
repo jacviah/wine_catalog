@@ -1,16 +1,8 @@
 package by.jacviah.winery.dao.config;
 
-import by.jacviah.winery.dao.BottleDAO;
-import by.jacviah.winery.dao.SommDAO;
-import by.jacviah.winery.dao.UserDAO;
-import by.jacviah.winery.dao.WineDAO;
-import by.jacviah.winery.dao.impl.DefaultBottleDAO;
-import by.jacviah.winery.dao.impl.DefaultSommDAO;
-import by.jacviah.winery.dao.impl.DefaultUserDAO;
-import by.jacviah.winery.dao.impl.DefaultWineDAO;
-import by.jacviah.winery.dao.repository.BottleRepository;
-import by.jacviah.winery.dao.repository.UserRepository;
-import by.jacviah.winery.dao.repository.WineRepository;
+import by.jacviah.winery.dao.*;
+import by.jacviah.winery.dao.impl.*;
+import by.jacviah.winery.dao.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,9 +19,19 @@ public class DaoConfig {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private UserDetailRepository userDetailRepository;
+    @Autowired
+    private CountryRepository countryRepository;
+    @Autowired
+    private RegionRepository regionRepository;
+    @Autowired
+    private GrapeRepository grapeRepository;
+    @Autowired
     private WineRepository wineRepository;
     @Autowired
     private BottleRepository bottleRepository;
+    @Autowired
+    private RecommendRepository recommendRepository;
 
     @Bean
     public UserDAO userDao() {
@@ -40,6 +42,7 @@ public class DaoConfig {
     public SommDAO sommDao() {
         return new DefaultSommDAO(userRepository);
     }
+
     @Bean
     public WineDAO wineDao() {
         return new DefaultWineDAO(wineRepository);
@@ -48,5 +51,15 @@ public class DaoConfig {
     @Bean
     public BottleDAO bottleDao() {
         return new DefaultBottleDAO(bottleRepository);
+    }
+
+    @Bean
+    public RecommendDAO recommendDao() {
+        return new DefaultRecommendDAO(recommendRepository);
+    }
+
+    @Bean
+    public MetaDataDAO metaDataDAO() {
+       return new DefaultMetaDataDAO(countryRepository, regionRepository, grapeRepository);
     }
 }

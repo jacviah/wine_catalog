@@ -1,22 +1,36 @@
 package by.jacviah.winery.dao.impl;
 
 import by.jacviah.winery.dao.BottleDAO;
+import by.jacviah.winery.dao.config.DaoConfig;
 import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.*;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Year;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = DaoConfig.class)
 public class DefaultBottleDAOTest {
 
-    BottleDAO dao = DefaultBottleDAO.getInstance();
+    @Autowired
+    BottleDAO dao;
 
     @Test
+    @Transactional
     public void saveBottleTest() {
         Wine wine = Wine.WineBuilder.aWine()
                 .withId(2L)
@@ -39,11 +53,7 @@ public class DefaultBottleDAOTest {
                 .withRate(Rate.EMPTY)
                 .withYear(Year.now())
                 .build();
-        try {
             assertTrue(dao.addBottle(bottle));
-        } catch (DaoException e) {
-            e.printStackTrace();
-        }
     }
 
     @Test
@@ -53,11 +63,12 @@ public class DefaultBottleDAOTest {
                 .withUsername("sommelier")
                 .withRole(Role.SOMMELIER)
                 .build();
-
-        final List<Bottle> page0 = dao.getUserBottles(user, 0);
+        Pageable firstPageWithTwoElements = PageRequest.of(0, 2);
+        Pageable secondPageWithTwoElements = PageRequest.of(1, 2);
+        
+        final List<Bottle> page0 = dao.getUserBottles(user, firstPageWithTwoElements);
         Assertions.assertTrue(page0.size()==2);
-
-        final List<Bottle> page1 = dao.getUserBottles(user, 1);
+        final List<Bottle> page1 = dao.getUserBottles(user, secondPageWithTwoElements);
         Assertions.assertTrue(page1.size()==1);
     }
 }

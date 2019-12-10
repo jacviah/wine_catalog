@@ -1,20 +1,29 @@
 package by.jacviah.winery.dao.impl;
 
 import by.jacviah.winery.dao.RecommendDAO;
+import by.jacviah.winery.dao.config.DaoConfig;
 import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = DaoConfig.class)
 public class DefaultRecommendDAOTest {
-    RecommendDAO dao = DefaultRecommendDAO.getInstance();
+    @Autowired
+    RecommendDAO dao;
 
     @Test
+    @Transactional
     public void saveRecommendationTest() {
-
         User sommelier = User.UserBuilder.anUser()
                 .withId(1L)
                 .withUsername("sommelier")
@@ -45,11 +54,6 @@ public class DefaultRecommendDAOTest {
                 .withSommelier(sommelier)
                 .withWines(wines)
                 .build();
-
-        try {
             Assertions.assertTrue(dao.addRecommendation(rec));
-        } catch (DaoException e){
-            e.printStackTrace();
-        }
     }
 }

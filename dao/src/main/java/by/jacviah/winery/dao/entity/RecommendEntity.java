@@ -16,7 +16,7 @@ import java.util.Set;
 @DynamicUpdate
 @OptimisticLocking(type = OptimisticLockType.DIRTY)
 @Table(name = "recommendation")
-public class RecEntity {
+public class RecommendEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
@@ -35,7 +35,7 @@ public class RecEntity {
                 inverseJoinColumns = {@JoinColumn(name = "wine_id")})
     Set<WineEntity> wines = new HashSet<>();
 
-    public RecEntity() {
+    public RecommendEntity() {
     }
 
     public Long getId() {
@@ -73,8 +73,8 @@ public class RecEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RecEntity)) return false;
-        RecEntity that = (RecEntity) o;
+        if (!(o instanceof RecommendEntity)) return false;
+        RecommendEntity that = (RecommendEntity) o;
         return Objects.equals(getId(), that.getId()) &&
                 Objects.equals(getSommelier(), that.getSommelier());
     }
@@ -126,8 +126,8 @@ public class RecEntity {
             return this;
         }
 
-        public RecEntity build() {
-            RecEntity recEntity = new RecEntity();
+        public RecommendEntity build() {
+            RecommendEntity recEntity = new RecommendEntity();
             recEntity.setId(id);
             recEntity.setSommelier(sommelier);
             recEntity.setMessage(message);
