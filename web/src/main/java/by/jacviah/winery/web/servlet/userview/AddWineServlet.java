@@ -2,7 +2,6 @@ package by.jacviah.winery.web.servlet.userview;
 
 import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.Wine;
-import by.jacviah.winery.sevice.ServiceFactory;
 import by.jacviah.winery.sevice.WineService;
 import by.jacviah.winery.web.WebUtils;
 import by.jacviah.winery.web.servlet.LoginServlet;

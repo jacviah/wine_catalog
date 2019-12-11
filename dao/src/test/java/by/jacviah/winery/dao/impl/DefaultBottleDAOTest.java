@@ -65,7 +65,7 @@ public class DefaultBottleDAOTest {
                 .build();
         Pageable firstPageWithTwoElements = PageRequest.of(0, 2);
         Pageable secondPageWithTwoElements = PageRequest.of(1, 2);
-        
+
         final List<Bottle> page0 = dao.getUserBottles(user, firstPageWithTwoElements);
         Assertions.assertTrue(page0.size()==2);
         final List<Bottle> page1 = dao.getUserBottles(user, secondPageWithTwoElements);

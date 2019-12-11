@@ -1,26 +1,28 @@
 package by.jacviah.winery.sevice.impl;
 
 import by.jacviah.winery.dao.BottleDAO;
-import by.jacviah.winery.dao.DAOProvider;
-import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.Bottle;
 import by.jacviah.winery.model.User;
 import by.jacviah.winery.sevice.BottleService;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public class DefaultBottleService implements BottleService {
 
-    private DAOProvider provider = DAOProvider.getInstance();
-    private BottleDAO bottleDAO = provider.getBottleDAO();
+    private final BottleDAO bottleDao;
 
-    @Override
-    public boolean addBottle(Bottle bottle) throws DaoException {
-        return bottleDAO.addBottle(bottle);
+    public DefaultBottleService(BottleDAO defaultBottleDao) {
+        this.bottleDao = defaultBottleDao;
     }
 
     @Override
-    public List<Bottle> getUserBottlesByPages(User user, int page) {
-        return bottleDAO.getUserBottles(user, page);
+    public boolean addBottle(Bottle bottle) {
+        return bottleDao.addBottle(bottle);
+    }
+
+    @Override
+    public List<Bottle> getUserBottlesByPages(User user, Pageable page) {
+        return bottleDao.getUserBottles(user, page);
     }
 }

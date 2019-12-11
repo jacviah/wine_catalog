@@ -1,5 +1,6 @@
 package by.jacviah.winery.sevice.impl;
 
+import by.jacviah.winery.dao.config.DaoConfig;
 import by.jacviah.winery.model.Role;
 import by.jacviah.winery.model.User;
 import by.jacviah.winery.dao.UserDAO;
@@ -13,11 +14,16 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith({MockitoExtension.class, SpringExtension.class})
 @RunWith(JUnitPlatform.class)
+@ContextConfiguration(classes = DaoConfig.class)
+@Transactional
 public class DefaultUserServiceTest {
 
     @Mock

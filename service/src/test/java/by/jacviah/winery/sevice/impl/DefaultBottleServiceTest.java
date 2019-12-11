@@ -13,6 +13,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.time.Year;
 import java.util.ArrayList;
@@ -70,11 +73,12 @@ public class DefaultBottleServiceTest {
                 .withRate(Rate.EMPTY)
                 .withYear(Year.now())
                 .build();
+        Pageable pageable = PageRequest.of(0, 2);
         List<Bottle> list = new ArrayList<>();
         list.add(bottle1);
         list.add(bottle2);
-        when(dao.getUserBottles(user,1)).thenReturn(list);
-        List<Bottle> bottles = dao.getUserBottles(user, 1);
+        when(dao.getUserBottles(user,pageable)).thenReturn(list);
+        List<Bottle> bottles = dao.getUserBottles(user, pageable);
         assertTrue(list.contains(bottle1));
         assertTrue(list.contains(bottle2));
     }

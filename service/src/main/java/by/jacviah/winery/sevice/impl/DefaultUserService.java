@@ -8,20 +8,23 @@ import by.jacviah.winery.sevice.UserService;
 
 public class DefaultUserService implements UserService {
 
-    DAOProvider provider = DAOProvider.getInstance();
-    UserDAO userDAO = provider.getUserDAO();
+    private final UserDAO userDao;
+
+    public DefaultUserService(UserDAO defaultUserDao) {
+        this.userDao = defaultUserDao;
+    }
 
     @Override
     public User findUser(String name) {
-        return userDAO.findUser(name);
+        return userDao.findUser(name);
     }
 
     @Override
     public User createUser(String name, String password) throws DaoException {
         User result = null;
         User user = new User(name, password);
-            if (userDAO.addUser(user)) {
-                result = userDAO.findUser(name);
+            if (userDao.addUser(user)) {
+                result = userDao.findUser(name);
             }
         return result;
     }

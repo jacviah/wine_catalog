@@ -1,7 +1,5 @@
 package by.jacviah.winery.web.servlet.sommelierview;
 
-import by.jacviah.winery.dao.exception.DaoException;
-import by.jacviah.winery.sevice.ServiceFactory;
 import by.jacviah.winery.sevice.SommService;
 import by.jacviah.winery.web.WebUtils;
 import by.jacviah.winery.web.servlet.LoginServlet;

@@ -2,7 +2,6 @@ package by.jacviah.winery.web.servlet;
 
 import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.User;
-import by.jacviah.winery.sevice.ServiceFactory;
 import by.jacviah.winery.sevice.UserService;
 import by.jacviah.winery.web.WebUtils;
 import org.slf4j.Logger;
