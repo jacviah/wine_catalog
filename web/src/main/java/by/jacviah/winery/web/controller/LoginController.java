@@ -1,4 +1,4 @@
-package by.jacviah.winery.web.servlet;
+package by.jacviah.winery.web.controller;
 
 import by.jacviah.winery.model.Role;
 import by.jacviah.winery.model.User;
@@ -6,6 +6,9 @@ import by.jacviah.winery.sevice.UserService;
 import by.jacviah.winery.web.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,12 +19,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 
-@WebServlet(urlPatterns = {"/login"})
-public class LoginServlet extends HttpServlet {
+@Controller
+@RequestMapping("/login")
+public class LoginController {
 
-    private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
+    @Autowired
+    private UserService personService;
 
-    @Override
+    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
+
+   /* @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         WebUtils.forward("login", req, resp);
     }
@@ -72,5 +79,5 @@ public class LoginServlet extends HttpServlet {
                 }
             }
         }
-    }
+    }*/
 }

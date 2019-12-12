@@ -1,10 +1,10 @@
-package by.jacviah.winery.web.servlet.userview;
+package by.jacviah.winery.web.controller.userview;
 
 import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.Wine;
 import by.jacviah.winery.sevice.WineService;
 import by.jacviah.winery.web.WebUtils;
-import by.jacviah.winery.web.servlet.LoginServlet;
+import by.jacviah.winery.web.controller.LoginController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/userview/addwine")
 public class AddWineServlet extends HttpServlet {
-    private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
+    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

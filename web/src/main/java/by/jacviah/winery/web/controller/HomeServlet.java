@@ -1,4 +1,4 @@
-package by.jacviah.winery.web.servlet;
+package by.jacviah.winery.web.controller;
 
 import by.jacviah.winery.web.WebUtils;
 

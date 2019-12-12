@@ -1,8 +1,8 @@
-package by.jacviah.winery.web.servlet.sommelierview;
+package by.jacviah.winery.web.controller.sommelierview;
 
 import by.jacviah.winery.sevice.SommService;
 import by.jacviah.winery.web.WebUtils;
-import by.jacviah.winery.web.servlet.LoginServlet;
+import by.jacviah.winery.web.controller.LoginController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/sommelierview/setassomm")
 public class SetAsSommelierServlet extends HttpServlet {
-    private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
+    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         WebUtils.forward("/sommelierview/setassomm", req, resp);

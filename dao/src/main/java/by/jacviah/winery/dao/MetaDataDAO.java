@@ -9,6 +9,9 @@ import by.jacviah.winery.model.Region;
 import java.util.List;
 
 public interface MetaDataDAO {
+
     public List<Country> getCountries();
     public List<Region> getCountryRegions(String countryName);
+    public List<Grape> getGrapes();
+
 }

@@ -1,4 +1,4 @@
-package by.jacviah.winery.web.servlet;
+package by.jacviah.winery.web.controller;
 
 import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.User;
@@ -18,7 +18,7 @@ import java.net.URLEncoder;
 
 @WebServlet(name = "RegServlet", urlPatterns = {"/registration"})
 public class RegistrationServlet extends HttpServlet {
-    private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
+    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
