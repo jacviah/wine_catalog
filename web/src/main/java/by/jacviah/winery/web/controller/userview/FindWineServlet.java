@@ -16,7 +16,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/userview/findwine")
 public class FindWineServlet extends HttpServlet {
-    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
+   /* private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -54,5 +54,5 @@ public class FindWineServlet extends HttpServlet {
             }
             WebUtils.forward("/userview/findwine", req, resp);
         }
-    }
+    }*/
 }

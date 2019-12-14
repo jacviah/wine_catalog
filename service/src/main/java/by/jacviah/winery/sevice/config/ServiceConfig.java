@@ -1,20 +1,16 @@
 package by.jacviah.winery.sevice.config;
 
 import by.jacviah.winery.dao.config.DaoConfig;
-import by.jacviah.winery.sevice.BottleService;
-import by.jacviah.winery.sevice.RecommendService;
-import by.jacviah.winery.sevice.UserService;
-import by.jacviah.winery.sevice.WineService;
-import by.jacviah.winery.sevice.impl.DefaultBottleService;
-import by.jacviah.winery.sevice.impl.DefaultRecommendService;
-import by.jacviah.winery.sevice.impl.DefaultUserService;
-import by.jacviah.winery.sevice.impl.DefaultWineService;
+import by.jacviah.winery.sevice.*;
+import by.jacviah.winery.sevice.impl.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ServiceConfig {
 
+    @Autowired
     private DaoConfig daoConfig;
 
     public ServiceConfig(DaoConfig daoConfig) {
@@ -39,6 +35,11 @@ public class ServiceConfig {
     @Bean
     public RecommendService recommendService(){
         return new DefaultRecommendService(daoConfig.recommendDao());
+    }
+
+    @Bean
+    public MetadataService metadataService(){
+        return new DefaultMetadataService(daoConfig.metaDataDAO());
     }
 
 }

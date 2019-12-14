@@ -9,9 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class DefoultMetadataService implements MetadataService {
-    @Autowired
+public class DefaultMetadataService implements MetadataService {
+
     MetaDataDAO dao;
+
+    public DefaultMetadataService(MetaDataDAO dao) {
+        this.dao = dao;
+    }
 
     @Override
     public List<Country> getCountries() {

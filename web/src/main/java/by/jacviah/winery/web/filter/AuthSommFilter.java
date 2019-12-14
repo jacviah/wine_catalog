@@ -17,13 +17,13 @@ import java.util.UUID;
 @WebFilter(urlPatterns = "/sommelierview/*")
 public class AuthSommFilter implements Filter {
 
-    public void init(final FilterConfig filterConfig) throws ServletException {
+   public void init(final FilterConfig filterConfig) throws ServletException {
 
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        ServiceFactory factory = ServiceFactory.getInstance();
+/*        ServiceFactory factory = ServiceFactory.getInstance();
         UserService service = factory.getUserService();
 
         HttpServletRequest req = (HttpServletRequest) servletRequest;
@@ -53,7 +53,7 @@ public class AuthSommFilter implements Filter {
             }
             WebUtils.redirect("/login", req, resp);
 
-        }
+        }*/
     }
 
 

@@ -20,7 +20,7 @@ import java.net.URLEncoder;
 public class RegistrationServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
-    @Override
+/*    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         WebUtils.forward("registration", req, resp);
     }
@@ -66,5 +66,5 @@ public class RegistrationServlet extends HttpServlet {
             resp.addCookie(cookieUUID);
             WebUtils.forward("home", req, resp);
         }
-    }
+    }*/
 }

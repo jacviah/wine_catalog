@@ -1,11 +1,8 @@
 package by.jacviah.winery.sevice.impl;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import by.jacviah.winery.dao.MetaDataDAO;
 import by.jacviah.winery.dao.WineDAO;
 import by.jacviah.winery.dao.config.DaoConfig;
-import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.Country;
 import by.jacviah.winery.model.Grape;
 import by.jacviah.winery.model.Region;
@@ -23,6 +20,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith({MockitoExtension.class, SpringExtension.class})
@@ -35,6 +34,7 @@ public class DefaultWineServiceTest {
 
     @Mock
     WineDAO dao;
+
     @Mock
     MetaDataDAO meta;
 

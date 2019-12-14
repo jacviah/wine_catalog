@@ -23,7 +23,7 @@ public class AuthUserFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        ServiceFactory factory = ServiceFactory.getInstance();
+  /*      ServiceFactory factory = ServiceFactory.getInstance();
         UserService service = factory.getUserService();
 
         HttpServletRequest req = (HttpServletRequest) servletRequest;
@@ -55,7 +55,7 @@ public class AuthUserFilter implements Filter {
             } else {
                 WebUtils.redirect("/login", req, resp);
             }
-        }
+        }*/
     }
 
 

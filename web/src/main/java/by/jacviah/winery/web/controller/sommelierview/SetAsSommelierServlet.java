@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/sommelierview/setassomm")
 public class SetAsSommelierServlet extends HttpServlet {
-    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
+  /*  private static final Logger log = LoggerFactory.getLogger(LoginController.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         WebUtils.forward("/sommelierview/setassomm", req, resp);
@@ -44,5 +44,5 @@ public class SetAsSommelierServlet extends HttpServlet {
                 WebUtils.forward("/sommelierview/setassomm", req, resp);
             }
         }
-    }
+    }*/
 }

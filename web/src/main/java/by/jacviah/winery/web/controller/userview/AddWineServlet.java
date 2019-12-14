@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/userview/addwine")
 public class AddWineServlet extends HttpServlet {
-    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
+/*    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,9 +26,6 @@ public class AddWineServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         {
-
-            ServiceFactory factory = ServiceFactory.getInstance();
-            WineService service = factory.getWineService();
 
             String errorMessage = "";
 
@@ -78,6 +75,6 @@ public class AddWineServlet extends HttpServlet {
             }
             WebUtils.forward("/userview/addwine", req, resp);
         }
-    }
+    }*/
 }
 

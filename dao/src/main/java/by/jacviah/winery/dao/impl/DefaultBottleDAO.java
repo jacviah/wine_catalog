@@ -20,7 +20,6 @@ public class DefaultBottleDAO implements BottleDAO {
 
     private static final Logger log = LoggerFactory.getLogger(DefaultBottleDAO.class);
 
-    @Autowired
     BottleRepository repository;
 
     public DefaultBottleDAO(BottleRepository repository) {
