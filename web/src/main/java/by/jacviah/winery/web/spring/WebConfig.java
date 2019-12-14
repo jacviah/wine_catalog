@@ -2,7 +2,6 @@ package by.jacviah.winery.web.spring;
 
 
 import by.jacviah.winery.sevice.config.ServiceConfig;
-import by.jacviah.winery.web.controller.MetaController;
 import by.jacviah.winery.web.controller.WelcomeController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -26,11 +25,6 @@ public class WebConfig {
     @Bean
     public WelcomeController welcomeController(){
         return new WelcomeController();
-    }
-
-    @Bean
-    public MetaController metaController(){
-        return new MetaController(serviceConfig.metadataService());
     }
 
     @Bean
