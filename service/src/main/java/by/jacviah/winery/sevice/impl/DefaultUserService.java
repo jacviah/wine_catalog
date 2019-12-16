@@ -20,7 +20,7 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public User createUser(String name, String password) throws DaoException {
+    public User createUser(String name, String password) {
         User result = null;
         User user = new User(name, password);
             if (userDao.addUser(user)) {

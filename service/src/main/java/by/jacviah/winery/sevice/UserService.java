@@ -8,5 +8,5 @@ import java.util.UUID;
 public interface UserService {
 
     public User findUser(String name);
-    public User createUser(String name, String password) throws DaoException;
+    public User createUser(String name, String password);
 }

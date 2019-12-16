@@ -2,6 +2,8 @@ package by.jacviah.winery.web.spring;
 
 
 import by.jacviah.winery.sevice.config.ServiceConfig;
+import by.jacviah.winery.web.controller.LoginController;
+import by.jacviah.winery.web.controller.LogoutController;
 import by.jacviah.winery.web.controller.WelcomeController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +23,16 @@ public class WebConfig implements WebMvcConfigurer {
 
     public WebConfig(ServiceConfig serviceConfig) {
         this.serviceConfig = serviceConfig;
+    }
+
+    @Bean
+    public LoginController loginController(){
+        return new LoginController(serviceConfig.securityService());
+    }
+
+    @Bean
+    public LogoutController logoutController(){
+        return new LogoutController(serviceConfig.securityService());
     }
 
     @Bean
