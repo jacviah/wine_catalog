@@ -1,9 +1,9 @@
 package by.jacviah.winery.model;
 
 public enum Role {
-    ADMIN("Administrator"),
-    USER("User"),
-    SOMMELIER("Sommelier");
+    ADMIN("ADMINISTRATOR"),
+    USER("USER"),
+    SOMMELIER("SOMMELIER");
     private String printedText;
     private Role(String str){
         printedText = str;

@@ -12,4 +12,8 @@
     <definition name="home" extends="default">
         <put-attribute name="body" value="/WEB-INF/view/page/home.jspx" />
     </definition>
+
+    <definition name="login" extends="default">
+        <put-attribute name="body" value="/WEB-INF/view/page/login.jspx" />
+    </definition>
 </tiles-definitions>
