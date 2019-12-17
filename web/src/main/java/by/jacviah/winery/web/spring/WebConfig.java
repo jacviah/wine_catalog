@@ -4,9 +4,11 @@ package by.jacviah.winery.web.spring;
 import by.jacviah.winery.sevice.config.ServiceConfig;
 import by.jacviah.winery.web.controller.LoginController;
 import by.jacviah.winery.web.controller.LogoutController;
+import by.jacviah.winery.web.controller.UserController;
 import by.jacviah.winery.web.controller.WelcomeController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -16,6 +18,8 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 
 @Configuration
 @EnableWebMvc
+@ComponentScan(basePackages= {
+        "by.jacviah.winery.web"})
 public class WebConfig implements WebMvcConfigurer {
 
     @Autowired
@@ -36,6 +40,10 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
+    public UserController userController(){
+        return new UserController(serviceConfig.userService());
+    }
+    @Bean
     public WelcomeController welcomeController(){
         return new WelcomeController();
     }
@@ -53,22 +61,4 @@ public class WebConfig implements WebMvcConfigurer {
         tilesConfigurer.setDefinitions("/WEB-INF/tiles.xml");
         return tilesConfigurer;
     }
-
-/*    @Bean
-    public ReloadableResourceBundleMessageSource messageSource(){
-        ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
-        source.setBasename("classpath:i18n/messages");
-        source.setDefaultEncoding("UTF-8");
-
-        return source;
-    }
-
-    @Bean
-    public CookieLocaleResolver localeResolver(){
-        CookieLocaleResolver resolver = new CookieLocaleResolver();
-        //resolver.setDefaultLocale(Locale.forLanguageTag("en"));
-        resolver.setCookieName("LocaleCookie");
-        resolver.setCookieMaxAge(3600);
-        return resolver;
-    }*/
 }

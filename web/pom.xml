@@ -101,7 +101,7 @@
                     <url>http://localhost:8080/manager/text</url>
                     <server>TomcatServer</server>
                     <path>/winery</path>
-                    <username>admin</username>
+                    <username>manager</username>
                     <password>123</password>
                 </configuration>
             </plugin>

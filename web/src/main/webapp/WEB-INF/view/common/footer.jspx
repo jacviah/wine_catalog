@@ -2,10 +2,8 @@
           xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:spring="http://www.springframework.org/tags"
           version="2.0">
-    <footer class="newFooter">
-        <div class="footer">
-            <h2>Footer</h2>
-        </div>
-    </footer>
-
+    <div class="footer"
+            style="background: #E0E0E0; text-align: center; padding: 5px; margin-top: 10px;">
+        @Copyright jacviah
+    </div>
 </jsp:root>

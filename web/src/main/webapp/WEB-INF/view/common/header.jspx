@@ -4,11 +4,10 @@
           xmlns:sec="http://www.springframework.org/security/tags"
           version="2.0"
           xmlns:spring="http://www.springframework.org/tags">
-
-
-    <header class="clearfix">
-        <h2>Header</h2>
-    </header>
-
-
+    
+    <div style="background: #E0E0E0; height: 55px; padding: 5px;">
+        <div style="float: left">
+            <h1>My Site</h1>
+        </div>
+    </div>
 </jsp:root>
