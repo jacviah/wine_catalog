@@ -1,15 +1,25 @@
 package by.jacviah.winery.web.rq;
 
-public class CreateUser {
-    private String username;
-    private String password;
+import by.jacviah.winery.web.validator.EqualFields;
 
-    public String getUsername() {
-        return username;
+import javax.validation.constraints.NotNull;
+
+@EqualFields(baseField = "password", matchField = "confirmedPassword")
+public class CreateUser {
+
+    @NotNull
+    private String login;
+    @NotNull
+    private String password;
+    @NotNull
+    private String confirmedPassword;
+
+    public String getLogin() {
+        return login;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {
@@ -18,5 +28,13 @@ public class CreateUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getConfirmedPassword() {
+        return confirmedPassword;
+    }
+
+    public void setConfirmedPassword(String confirmedPassword) {
+        this.confirmedPassword = confirmedPassword;
     }
 }

@@ -17,27 +17,27 @@
                 <div class="field">
                     Please enter winery
                     <input type="text" name="winery"/>
-                    <br>
+                    <br/>
                 </div>
                 <div class="field">
                     Please enter wine name
                     <input type="text" name="wine"/>
-                    <br>
+                    <br/>
                 </div>
                 <div class="field">
                     Please enter region
                     <input type="text" name="region"/>
-                    <br>
+                    <br/>
                 </div>
                 <div class="field">
                     Please enter grape
                     <input type="text" name="grape"/>
-                    <br>
+                    <br/>
                 </div>
                 <div class="field">
                     Please enter year
                     <input type="text" name="year"/>
-                    <br>
+                    <br/>
                 </div>
                 <input type="submit" value="submit">
             </div>
