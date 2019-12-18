@@ -9,6 +9,8 @@ import by.jacviah.winery.sevice.UserService;
 import by.jacviah.winery.web.rq.CreateBottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,11 +20,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.Year;
+import java.util.List;
 
 @Controller
-@RequestMapping
+@RequestMapping("/bottle")
 public class BottleController {
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
@@ -38,17 +42,19 @@ public class BottleController {
         this.userService = userService;
     }
 
-    @GetMapping("/bottle")
-    public String createBottlePage() {
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || "anonymousUser".equals(authentication.getPrincipal())) {
-            return "login";
-        }
-        return "redirect:/bottle";
+    @GetMapping
+    public String createBottlePage(HttpServletRequest rq, UsernamePasswordAuthenticationToken authentication) {
+        User auth = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUser(auth.getUsername());
+
+        List<Bottle> bottles = bottleService.getUserBottlesByPages(user, PageRequest.of(0, 5));
+        rq.setAttribute("bottles", bottles);
+        return "bottle";
     }
 
-    @PostMapping("/bottle")
-    public String createBottle(@Valid CreateBottle rq, BindingResult result, ModelMap map) {
+    @PostMapping
+    public String createBottle(@Valid CreateBottle rq, BindingResult result,
+                               ModelMap map, UsernamePasswordAuthenticationToken authentication) {
         if(result.hasErrors()) {
             log.info("create bottle errors: ", result.getAllErrors());
             return "bottle";

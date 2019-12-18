@@ -10,7 +10,27 @@
     </head>
 
     <body>
-        <form action="addbottle" method="post">
+        <h3>Bottles</h3>
+        <c:if test="${bottles != null}">
+            <table>
+                <tr>
+                    <th>wine</th>
+                    <th>winery</th>
+                    <th>grape</th>
+                    <th>year</th>
+                </tr>
+                <c:forEach items="${bottles}" var="bottles">
+                    <tr>
+                        <td>${bottle.wine.name}</td>
+                        <td>${bottle.wine.winery}</td>
+                        <td>${bottle.grape.name}</td>
+                        <td>${bottle.year}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </c:if>
+
+        <form action="bottle" method="post">
             <div>
                 <div class="field">
                     Enter winery name

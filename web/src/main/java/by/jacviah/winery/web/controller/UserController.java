@@ -1,6 +1,5 @@
 package by.jacviah.winery.web.controller;
 
-import by.jacviah.winery.model.User;
 import by.jacviah.winery.sevice.UserService;
 import by.jacviah.winery.web.rq.CreateUser;
 import org.slf4j.Logger;
@@ -10,11 +9,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping
@@ -37,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String registration(@Valid CreateUser rq, BindingResult result, ModelMap map) {
+    public String registration(@Validated CreateUser rq, BindingResult result, ModelMap map) {
         if(result.hasErrors()) {
             log.info("create user errors: ", result.getAllErrors());
             return "registration";
