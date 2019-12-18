@@ -3,9 +3,10 @@ package by.jacviah.winery.web.rq;
 public class CreateBottle {
     private String winery;
     private String wine;
+    private String country;
     private String region;
     private String grape;
-    private String year;
+    private int year;
 
     public String getWinery() {
         return winery;
@@ -21,6 +22,14 @@ public class CreateBottle {
 
     public void setWine(String wine) {
         this.wine = wine;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public String getRegion() {
@@ -39,11 +48,11 @@ public class CreateBottle {
         this.grape = grape;
     }
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year = year;
     }
 }

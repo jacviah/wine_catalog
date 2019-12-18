@@ -13,5 +13,8 @@ public interface MetaDataDAO {
     public List<Country> getCountries();
     public List<Region> getCountryRegions(String countryName);
     public List<Grape> getGrapes();
+    public Country findCountry(String name);
+    public Region findRegion(String name);
+    public Grape findGrape(String name);
 
 }

@@ -1,12 +1,10 @@
 package by.jacviah.winery.web.controller;
 
 import by.jacviah.winery.model.User;
-import by.jacviah.winery.sevice.SecurityService;
 import by.jacviah.winery.sevice.UserService;
 import by.jacviah.winery.web.rq.CreateUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.script.Bindings;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -42,18 +38,18 @@ public class UserController {
 
     @PostMapping("/registration")
     public String registration(@Valid CreateUser rq, BindingResult result, ModelMap map) {
-        String login = rq.getLogin();
-        String password = rq.getPassword();
         if(result.hasErrors()) {
-            map.addAttribute("error", "check your passwords");
+            log.info("create user errors: ", result.getAllErrors());
             return "registration";
         }
-        User user = service.createUser(login, password);
-        if (user == null) {
+        String login = rq.getLogin();
+        String password = rq.getPassword();
+        boolean createResult = service.createUser(login, password);
+        if (createResult == false) {
             map.addAttribute("error", "user not created");
             return "registration";
         }
-        log.info("user {} logged", user.getUsername());
-        return "redirect:/home";
+        log.info("user {} logged", login);
+        return "redirect:/login";
     }
 }

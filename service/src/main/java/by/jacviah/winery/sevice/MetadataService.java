@@ -10,4 +10,7 @@ public interface MetadataService {
     public List<Country> getCountries();
     public List<Grape> getGrapes();
     public List<Region> getCountryRegions(Country country);
+    public Country getCountry(String name);
+    public Region getRegion(String name);
+    public Grape getGrape(String name);
 }

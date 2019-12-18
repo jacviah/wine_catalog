@@ -10,7 +10,10 @@ import java.util.List;
 
 @Repository
 public interface RegionRepository extends CrudRepository<RegionEntity, Long> {
+
     @Query("select r from CountryEntity c join c.regions r where c.name = :name")
     List<RegionEntity> getCountryRegions(@Param("name") String name);
+
+    RegionEntity findByName(String name);
 }
 

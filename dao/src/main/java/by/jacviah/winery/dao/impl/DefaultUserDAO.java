@@ -27,7 +27,7 @@ public class DefaultUserDAO implements UserDAO {
     @Override
     public boolean addUser(User user) {
         UserEntity entity = UserMapper.toEntity(user);
-        repository.saveAndFlush(entity);
+        repository.save(entity);
         return (entity.getId() != null);
     }
 

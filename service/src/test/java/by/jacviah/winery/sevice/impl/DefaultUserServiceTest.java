@@ -57,15 +57,18 @@ public class DefaultUserServiceTest {
                 .withPassword("pass")
                 .build();
         User founded = User.UserBuilder.anUser()
+                .withId(1L)
                 .withUsername("admin2")
                 .withPassword("pass")
                 .withRole(Role.USER)
                 .build();
         when(dao.addUser(init)).thenReturn(true);
+        when(dao.findUser(init.getUsername())).thenReturn(null);
+        service.createUser("admin2", "pass");
         when(dao.findUser(init.getUsername())).thenReturn(founded);
-        User userFromDb = service.createUser("admin2", "pass");
+        User userFromDb = service.findUser("admin2");
         assertEquals(userFromDb.getUsername(), "admin2");
-        assertEquals(userFromDb.getPassword(), "pass");
+        assertNotNull(userFromDb.getId());
         assertEquals(userFromDb.getRole(), Role.USER);
     }
 }

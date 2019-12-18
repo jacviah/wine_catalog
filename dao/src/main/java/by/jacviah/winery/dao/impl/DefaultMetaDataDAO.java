@@ -48,6 +48,18 @@ public class DefaultMetaDataDAO implements MetaDataDAO {
         return (entity != null) ? CountryMapper.toDTO(entity) : null;
     }
 
+    @Override
+    public Region findRegion(String name) {
+        RegionEntity entity = regionRepository.findByName(name);
+        return (entity != null) ? RegionMapper.toDTO(entity) : null;
+    }
+
+    @Override
+    public Grape findGrape(String name) {
+        GrapeEntity entity = grapeRepository.findByName(name);
+        return (entity != null) ? GrapeMapper.toDTO(entity) : null;
+    }
+
     public List<Region> getCountryRegions(String countryName) {
         List<Region> regions = new ArrayList<>();
         List<RegionEntity> entities = regionRepository.getCountryRegions(countryName);

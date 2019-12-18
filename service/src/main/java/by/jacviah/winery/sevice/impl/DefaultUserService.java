@@ -1,10 +1,9 @@
 package by.jacviah.winery.sevice.impl;
 
-import by.jacviah.winery.dao.DAOProvider;
 import by.jacviah.winery.dao.UserDAO;
-import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.User;
 import by.jacviah.winery.sevice.UserService;
+import org.springframework.transaction.annotation.Transactional;
 
 public class DefaultUserService implements UserService {
 
@@ -20,12 +19,13 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public User createUser(String name, String password) {
-        User result = null;
-        User user = new User(name, password);
-            if (userDao.addUser(user)) {
-                result = userDao.findUser(name);
-            }
-        return result;
+    @Transactional
+    public boolean createUser(String name, String password) {
+        User existed = userDao.findUser(name);
+        if (existed == null) {
+            User user = new User(name, password);
+            return  userDao.addUser(user);
+        }
+        return false;
     }
 }

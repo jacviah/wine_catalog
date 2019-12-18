@@ -8,6 +8,6 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface BottleService {
-    public boolean addBottle(Bottle bottle) throws DaoException;
+    public boolean addBottle(Bottle bottle);
     public List<Bottle> getUserBottlesByPages(User user, Pageable page);
 }

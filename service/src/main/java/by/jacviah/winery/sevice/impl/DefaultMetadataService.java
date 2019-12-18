@@ -31,4 +31,19 @@ public class DefaultMetadataService implements MetadataService {
     public List<Region> getCountryRegions(Country country) {
         return dao.getCountryRegions(country.getName());
     }
+
+    @Override
+    public Country getCountry(String name) {
+        return dao.findCountry(name);
+    }
+
+    @Override
+    public Region getRegion(String name) {
+        return dao.findRegion(name);
+    }
+
+    @Override
+    public Grape getGrape(String name) {
+        return dao.findGrape(name);
+    }
 }
