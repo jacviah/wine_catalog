@@ -1,11 +1,19 @@
 package by.jacviah.winery.web.rq;
 
+import javax.validation.constraints.NotBlank;
+
 public class CreateBottle {
+    @NotBlank
     private String winery;
+    @NotBlank
     private String wine;
+    @NotBlank
     private String country;
+    @NotBlank
     private String region;
+    @NotBlank
     private String grape;
+    @NotBlank
     private int year;
 
     public String getWinery() {

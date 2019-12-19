@@ -6,6 +6,7 @@ import by.jacviah.winery.model.Wine;
 import by.jacviah.winery.sevice.BottleService;
 import by.jacviah.winery.sevice.MetadataService;
 import by.jacviah.winery.sevice.UserService;
+import by.jacviah.winery.web.rq.BottleForm;
 import by.jacviah.winery.web.rq.CreateBottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.Year;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/bottle")
@@ -43,17 +45,19 @@ public class BottleController {
     }
 
     @GetMapping
-    public String createBottlePage(HttpServletRequest rq, UsernamePasswordAuthenticationToken authentication) {
+    public String BottlePage(UsernamePasswordAuthenticationToken authentication, ModelMap map) {
         User auth = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUser(auth.getUsername());
 
         List<Bottle> bottles = bottleService.getUserBottlesByPages(user, PageRequest.of(0, 5));
-        rq.setAttribute("bottles", bottles);
+        List<BottleForm> result = bottles.stream().map(bottle -> new BottleForm(bottle))
+                .collect(Collectors.toList());
+        map.addAttribute("bottles", result);
         return "bottle";
     }
 
     @PostMapping
-    public String createBottle(@Valid CreateBottle rq, BindingResult result,
+    public String Bottle(@Valid CreateBottle rq, BindingResult result,
                                ModelMap map, UsernamePasswordAuthenticationToken authentication) {
         if(result.hasErrors()) {
             log.info("create bottle errors: ", result.getAllErrors());
