@@ -10,5 +10,6 @@ import java.util.List;
 public interface BottleService {
     public boolean addBottle(Bottle bottle);
     public List<Bottle> getUserBottlesByPages(User user, Pageable page);
+    public Integer countAllUserBottles(User user);
     public boolean deleteBottle(Long id);
 }

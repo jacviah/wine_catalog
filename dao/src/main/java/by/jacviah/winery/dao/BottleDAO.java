@@ -11,4 +11,5 @@ public interface BottleDAO {
         public boolean addBottle(Bottle bottle);
         public boolean removeBottle(Long id);
         public List<Bottle> getUserBottles(User user, Pageable pageable);
+        public Integer countUserBottles(Long id);
 }

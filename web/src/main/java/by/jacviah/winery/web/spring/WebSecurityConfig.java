@@ -18,8 +18,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login", "/signup").permitAll()
                 .antMatchers("/home**",
                         "/bottle",
-                        "/bottle-list",
-                        "/bottle-list/*"
+                        "/bottle-list**"
                 ).hasRole("USER")
                 .anyRequest().authenticated();
     }

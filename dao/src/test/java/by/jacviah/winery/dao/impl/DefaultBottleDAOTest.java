@@ -57,6 +57,12 @@ public class DefaultBottleDAOTest {
     }
 
     @Test
+    public void countUserBottlesTest() {
+        Integer count = dao.countUserBottles(1l);
+        Assertions.assertTrue(count==3);
+    }
+
+    @Test
     public void paginationTest() {
         User user = User.UserBuilder.anUser()
                 .withId(1L)

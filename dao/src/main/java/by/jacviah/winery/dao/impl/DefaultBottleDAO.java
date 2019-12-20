@@ -48,8 +48,13 @@ public class DefaultBottleDAO implements BottleDAO {
     }
 
     @Override
+    public Integer countUserBottles(Long id) {
+        return repository.countUserBottles(id);
+    }
+
+    @Override
     public boolean removeBottle(Long id) {
-        repository.deleteById(id);
+        repository.deleteBottle(id);
         return (repository.findById(id) == null);
     }
 }

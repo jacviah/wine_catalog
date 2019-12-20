@@ -11,7 +11,7 @@ import by.jacviah.winery.web.rq.CreateBottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Year;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping
@@ -71,21 +73,34 @@ public class BottleController {
         return "redirect:/bottle";
     }
 
-    @GetMapping("/bottle-list")
-    public String listBottles(UsernamePasswordAuthenticationToken authentication, ModelMap map) {
+    @GetMapping(value = {"/bottle-list", "/bottle-list/{pageNumber}"})
+    public String listBottles(@PathVariable Optional<Integer> pageNumber, UsernamePasswordAuthenticationToken authentication, ModelMap map) {
         User auth = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUser(auth.getUsername());
+        Pageable page;
+        int pageSize = 3;
+        if (pageNumber.isPresent()) {
+            page = PageRequest.of(pageNumber.get(), pageSize);
+        } else {
+            page = PageRequest.of(0, pageSize);
+        }
 
-        List<Bottle> bottles = bottleService.getUserBottlesByPages(user, PageRequest.of(0, 10));
+        int totalPages = bottleService.countAllUserBottles(user)/pageSize+1;
+        if(totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(0,totalPages-1).boxed().collect(Collectors.toList());
+            map.addAttribute("pageNumbers", pageNumbers);
+        }
+
+        List<Bottle> bottles = bottleService.getUserBottlesByPages(user, page);
         List<BottleForm> result = bottles.stream().map(bottle -> new BottleForm(bottle))
                 .collect(Collectors.toList());
         map.addAttribute("bottles", result);
         return "bottle-list";
     }
 
-    @DeleteMapping("/bottle-list/{id}")
+    @DeleteMapping("/bottle/{id}")
     public String deleteBottle(@PathVariable long id, UsernamePasswordAuthenticationToken authentication,
-                             ModelMap map) {
+                               ModelMap map) {
         bottleService.deleteBottle(id);
         return "redirect:/bottle-list";
     }
