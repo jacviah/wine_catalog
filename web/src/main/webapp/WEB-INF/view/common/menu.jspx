@@ -1,6 +1,7 @@
 <div style="padding: 5px;">
     <ul>
-        <li><a href="${pageContext.request.contextPath}/">Home</a></li>
-        <li><a href="${pageContext.request.contextPath}/contactus">Contact Us</a></li>
+        <li><a href="${pageContext.request.contextPath}/bottle-list">My wines</a></li>
+        <li><a href="${pageContext.request.contextPath}/bottle">Add bottle</a></li>
+        <li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
     </ul>
 </div>

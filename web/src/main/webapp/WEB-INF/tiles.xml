@@ -8,9 +8,13 @@
         <put-attribute name="header" value="/WEB-INF/view/common/header.jspx"/>
         <put-attribute name="body" value=""/>
         <put-attribute name="footer" value="/WEB-INF/view/common/footer.jspx"/>
-        <put-list-attribute name="stylesheets">
-            <add-attribute value="/WEB-INF/static/style.css" />
-        </put-list-attribute>
+    </definition>
+    <definition name="standard" template="/WEB-INF/view/layouts/standard.jspx">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="header" value="/WEB-INF/view/common/header.jspx"/>
+        <put-attribute name="menu" value="/WEB-INF/view/common/menu.jspx"/>
+        <put-attribute name="body" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/view/common/footer.jspx"/>
     </definition>
     <definition name="home" extends="default">
         <put-attribute name="title" value="home page"/>
@@ -22,13 +26,17 @@
     </definition>
     <definition name="signup" extends="default">
         <put-attribute name="title" value="registration page"/>
-        <put-attribute name="body" value="/WEB-INF/view/page/registration.jspx" />
+        <put-attribute name="body" value="/WEB-INF/view/page/signup.jspx" />
     </definition>
-    <definition name="bottle" extends="default">
+    <definition name="accessDenied" extends="default">
+        <put-attribute name="title" value="Access denied page"/>
+        <put-attribute name="body" value="/WEB-INF/view/page/accessDenied.jspx" />
+    </definition>
+    <definition name="bottle" extends="standard">
         <put-attribute name="title" value="bottle page"/>
         <put-attribute name="body" value="/WEB-INF/view/page/bottle.jspx" />
     </definition>
-    <definition name="bottle-list" extends="default">
+    <definition name="bottle-list" extends="standard">
         <put-attribute name="title" value="bottle page"/>
         <put-attribute name="body" value="/WEB-INF/view/page/bottle-list.jspx" />
     </definition>

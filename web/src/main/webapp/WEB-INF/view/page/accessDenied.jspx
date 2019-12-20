@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:jsp="http://java.sun.com/JSP/Page"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <jsp:directive.page pageEncoding="UTF-8" contentType="text/html"/>
+    <head>
+        <meta content="text/html; charset=utf-8"/>
+        <title>Add Bottle Page</title>
+    </head>
+    <body>
+        <h2>Sorry, you do not have permission to view this page.</h2>
+        <div>
+            If you are login, click to <a href="${pageContext.request.contextPath}/">Home</a> to go to home page.
+        </div>
+        <div>
+            Click to <a href="${pageContext.request.contextPath}/login">Login</a> to go to login page.
+        </div>
+        <div>
+            Click to <a href="${pageContext.request.contextPath}/signup">SignUp</a> to go to registration page.
+        </div>
+    </body>
+</html>

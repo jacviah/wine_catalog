@@ -1,8 +1,7 @@
 <jsp:root xmlns="http://www.w3.org/1999/xhtml"
           xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
-          xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:spring="http://www.w3.org/1999/XSL/Transform"
-
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
           version="2.0" xmlns:tiles="http://tiles.apache.org/tags-tiles">
     <jsp:directive.page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"/>
 <head>
@@ -10,7 +9,7 @@
 </head>
 
 <body>
-    <form action="registration" method="post">
+    <form action="signup" method="post">
         <div>
             <div class="field">
                 Please enter your login
