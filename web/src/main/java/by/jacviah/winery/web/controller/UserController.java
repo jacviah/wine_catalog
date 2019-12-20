@@ -25,27 +25,27 @@ public class UserController {
         this.service = service;
     }
 
-    @GetMapping("/registration")
+    @GetMapping("/signup")
     public String registration() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || "anonymousUser".equals(authentication.getPrincipal())) {
-            return "registration";
+            return "signup";
         }
         return "redirect:/home";
     }
 
-    @PostMapping("/registration")
+    @PostMapping("/signup")
     public String registration(@Validated CreateUser rq, BindingResult result, ModelMap map) {
         if(result.hasErrors()) {
             log.info("create user errors: ", result.getAllErrors());
-            return "registration";
+            return "signup";
         }
         String login = rq.getLogin();
         String password = rq.getPassword();
         boolean createResult = service.createUser(login, password);
         if (createResult == false) {
             map.addAttribute("error", "user not created");
-            return "registration";
+            return "signup";
         }
         log.info("user {} logged", login);
         return "redirect:/login";

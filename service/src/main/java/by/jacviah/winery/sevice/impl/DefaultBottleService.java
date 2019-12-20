@@ -25,4 +25,11 @@ public class DefaultBottleService implements BottleService {
     public List<Bottle> getUserBottlesByPages(User user, Pageable page) {
         return bottleDao.getUserBottles(user, page);
     }
+
+    @Override
+    public boolean deleteBottle(Long id) {
+        return bottleDao.removeBottle(id);
+    }
+
+
 }

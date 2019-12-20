@@ -13,4 +13,6 @@ import java.util.List;
 public interface BottleRepository extends JpaRepository<BottleEntity, Long> {
     @Query("select b from BottleEntity as b inner join b.user as u where u.id = :user")
     List<BottleEntity> getUserBottles(@Param("user") Long id, Pageable pageable);
+
+    void deleteById(Long id);
 }

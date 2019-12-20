@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface BottleDAO {
         public boolean addBottle(Bottle bottle);
-        public boolean removeBottle(Bottle bottle);
+        public boolean removeBottle(Long id);
         public List<Bottle> getUserBottles(User user, Pageable pageable);
 }

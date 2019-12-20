@@ -3,6 +3,7 @@ package by.jacviah.winery.web.rq;
 import by.jacviah.winery.model.Bottle;
 
 public class BottleForm {
+    private long id;
     private String wine;
     private String winery;
     private String country;
@@ -18,12 +19,21 @@ public class BottleForm {
 
 
     public BottleForm(Bottle dto) {
+        this.id = dto.getId();
         this.wine = dto.getWine().getName();
         this.winery = dto.getWine().getWinery();
         this.country = dto.getWine().getCountry().getName();
         this.region = dto.getWine().getRegion().getName();
         this.grape = dto.getWine().getGrape().getName();
         this.year = dto.getYear().toString();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getWine() {

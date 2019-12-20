@@ -3,9 +3,11 @@ package by.jacviah.winery.web.spring;
 import by.jacviah.winery.dao.config.DaoConfig;
 import by.jacviah.winery.sevice.config.ServiceConfig;
 import org.springframework.web.filter.DelegatingFilterProxy;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;
+import javax.servlet.ServletContext;
 
 public class WebAppInitialiser extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -34,7 +36,6 @@ public class WebAppInitialiser extends AbstractAnnotationConfigDispatcherServlet
     protected Filter[] getServletFilters() {
         DelegatingFilterProxy delegateFilterProxy = new DelegatingFilterProxy();
         delegateFilterProxy.setTargetBeanName("springSecurityFilterChain");
-        return new Filter[]{delegateFilterProxy};
+        return new Filter[]{delegateFilterProxy, new HiddenHttpMethodFilter()};
     }
-
 }

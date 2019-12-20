@@ -1,0 +1,45 @@
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          version="2.0" xmlns:tiles="http://tiles.apache.org/tags-tiles">
+    <jsp:directive.page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"/>
+    <head>
+        <meta content="text/html; charset=utf-8"/>
+        <title>Add Bottle Page</title>
+    </head>
+
+    <body>
+        <h3>My bottles</h3>
+        <c:if test="${bottles != null}">
+            <table class="table">
+                <tr>
+                    <th>wine</th>
+                    <th>winery</th>
+                    <th>country</th>
+                    <th>region</th>
+                    <th>grape</th>
+                    <th>year</th>
+                </tr>
+                <c:forEach items="${bottles}" var="bottle">
+                    <tr>
+                        <td>${bottle.wine}</td>
+                        <td>${bottle.winery}</td>
+                        <td>${bottle.country}</td>
+                        <td>${bottle.region}</td>
+                        <td>${bottle.grape}</td>
+                        <td>${bottle.year}</td>
+                        <td>
+                            <form action="bottle/{bottle.id}" method="POST" >
+                                <input type="hidden" name="_method" value="DELETE"/>
+                                <input type="submit" value="delete"/>
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </c:if>
+        <c:if test="${error}"/>
+        <c:out value='${error}'/>
+    </body>
+</jsp:root>

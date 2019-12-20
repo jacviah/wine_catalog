@@ -11,24 +11,21 @@ import by.jacviah.winery.web.rq.CreateBottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.time.Year;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/bottle")
+@RequestMapping
 public class BottleController {
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
@@ -44,22 +41,15 @@ public class BottleController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public String BottlePage(UsernamePasswordAuthenticationToken authentication, ModelMap map) {
-        User auth = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findUser(auth.getUsername());
-
-        List<Bottle> bottles = bottleService.getUserBottlesByPages(user, PageRequest.of(0, 5));
-        List<BottleForm> result = bottles.stream().map(bottle -> new BottleForm(bottle))
-                .collect(Collectors.toList());
-        map.addAttribute("bottles", result);
+    @GetMapping("/bottle")
+    public String createBottlePage() {
         return "bottle";
     }
 
-    @PostMapping
-    public String Bottle(@Valid CreateBottle rq, BindingResult result,
-                               ModelMap map, UsernamePasswordAuthenticationToken authentication) {
-        if(result.hasErrors()) {
+    @PostMapping("/bottle")
+    public String bottle(@Validated CreateBottle rq, BindingResult result,
+                         ModelMap map, UsernamePasswordAuthenticationToken authentication) {
+        if (result.hasErrors()) {
             log.info("create bottle errors: ", result.getAllErrors());
             return "bottle";
         }
@@ -79,5 +69,24 @@ public class BottleController {
                 .build();
         boolean createResult = bottleService.addBottle(bottle);
         return "redirect:/bottle";
+    }
+
+    @GetMapping("/bottle-list")
+    public String listBottles(UsernamePasswordAuthenticationToken authentication, ModelMap map) {
+        User auth = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUser(auth.getUsername());
+
+        List<Bottle> bottles = bottleService.getUserBottlesByPages(user, PageRequest.of(0, 10));
+        List<BottleForm> result = bottles.stream().map(bottle -> new BottleForm(bottle))
+                .collect(Collectors.toList());
+        map.addAttribute("bottles", result);
+        return "bottle-list";
+    }
+
+    @DeleteMapping("/bottle-list/{id}")
+    public String deleteBottle(@PathVariable long id, UsernamePasswordAuthenticationToken authentication,
+                             ModelMap map) {
+        bottleService.deleteBottle(id);
+        return "redirect:/bottle-list";
     }
 }

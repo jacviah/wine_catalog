@@ -8,6 +8,9 @@
         <put-attribute name="header" value="/WEB-INF/view/common/header.jspx"/>
         <put-attribute name="body" value=""/>
         <put-attribute name="footer" value="/WEB-INF/view/common/footer.jspx"/>
+        <put-list-attribute name="stylesheets">
+            <add-attribute value="/WEB-INF/static/style.css" />
+        </put-list-attribute>
     </definition>
     <definition name="home" extends="default">
         <put-attribute name="title" value="home page"/>
@@ -17,12 +20,16 @@
         <put-attribute name="title" value="login page"/>
         <put-attribute name="body" value="/WEB-INF/view/page/login.jspx" />
     </definition>
-    <definition name="registration" extends="default">
+    <definition name="signup" extends="default">
         <put-attribute name="title" value="registration page"/>
         <put-attribute name="body" value="/WEB-INF/view/page/registration.jspx" />
     </definition>
     <definition name="bottle" extends="default">
         <put-attribute name="title" value="bottle page"/>
         <put-attribute name="body" value="/WEB-INF/view/page/bottle.jspx" />
+    </definition>
+    <definition name="bottle-list" extends="default">
+        <put-attribute name="title" value="bottle page"/>
+        <put-attribute name="body" value="/WEB-INF/view/page/bottle-list.jspx" />
     </definition>
 </tiles-definitions>

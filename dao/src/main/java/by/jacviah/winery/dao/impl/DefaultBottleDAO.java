@@ -48,9 +48,8 @@ public class DefaultBottleDAO implements BottleDAO {
     }
 
     @Override
-    public boolean removeBottle(Bottle dto) {
-        BottleEntity entity = BottleMapper.toEntity(dto);
-        repository.delete(entity);
-        return (repository.findById(entity.getId()) == null);
+    public boolean removeBottle(Long id) {
+        repository.deleteById(id);
+        return (repository.findById(id) == null);
     }
 }
