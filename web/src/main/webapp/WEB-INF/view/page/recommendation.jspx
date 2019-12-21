@@ -15,7 +15,7 @@
 
     <body>
         <h3>Sommeliers</h3>
-        <form action="recommendation"  method="POST">
+        <form action="${pageContext.request.contextPath}/recommendation"  method="POST">
             <table>
                 <tr>
                     <td>Wines :</td>

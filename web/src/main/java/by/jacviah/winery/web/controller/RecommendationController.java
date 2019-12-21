@@ -57,7 +57,7 @@ public class RecommendationController {
     @PostMapping("/recommendation")
     public String createRecommendation(@RequestParam String username,
                                        @RequestParam String description,
-                                       @RequestParam Set<WineForm> wineForms,
+                                       @RequestParam List<WineForm> wineForms,
                                        UsernamePasswordAuthenticationToken authentication,
                                        ModelMap map)  {
         Set<Wine> wines = wineForms.stream()
