@@ -5,6 +5,9 @@
         <sec:authorize access ="hasAuthority('ROLE_USER')">
             <li><a href="${pageContext.request.contextPath}/subscribe">Subscribe</a></li>
         </sec:authorize>
+        <sec:authorize access ="hasAuthority('ROLE_SOMMELIER')">
+            <li><a href="${pageContext.request.contextPath}/subscribers">Subscribers</a></li>
+        </sec:authorize>
         <li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
     </ul>
 </div>
