@@ -30,30 +30,42 @@ values ('Cabernet Sauvignon'),
 	   ('Syrah'),
        ('Tempranillo'),
        ('Chardonnay');
-       
-insert into wine (region_id, grape_id, name, winery)
-values (1, 1, 'wine', 'chateau'),
-		(1, 1, 'wine', 'winery'),
-		(1, 2, 'wine', 'chateau2'),
-        (1, 2, 'wine2', 'chateau');
     
-insert into user (login, role, password)
-values ('sommelier', 'sommelier', 'sommelier'),
-       ('user', 'user', 'user');
+insert into user (login, role, password, sommelier_id)
+values ('sommelier', 'SOMMELIER', 'sommelier', null),
+       ('expert', 'SOMMELIER', 'expert', null),
+       ('user', 'USER', 'user', 1),
+       ('amateur', 'USER', 'amateur', 2);
        
 insert into auth_user (user_id, uuid)
 values (1, uuid()),
        (2, uuid());
        
 insert into user_detail (id, user_id, description)
-values (1, 1,'sommelier'),
-       (2, 2, 'user');
+values (1, 1,'first sommelier'),
+       (2, 3, 'first user'),
+       (3, 2,'expert - second sommelier'),
+       (4, 4, 'amateur - second user');
        
+insert into wine (region_id, grape_id, name, winery)
+values (1, 1, 'wineItaly1', 'chateau'),
+		(2, 1, 'wineItaly2', 'winery'),
+		(5, 3, 'wineItaly3', 'chateau2'),
+        (1, 2, 'wineItaly4', 'chateau'),
+        (6, 3, 'wineFrance1', 'chateau'),
+		(7, 1, 'wineFrance2', 'winery'),
+		(9, 4, 'wineFrance3', 'chateau2'),
+        (2, 2, 'wineFrance4', 'chateau');
+        
 insert into bottle (wine_id, user_id, year, rate, status, date)
 values (1, 1, 2011, 3, 1, '2019-09-11'),
-       (1, 1, 2012, 4, 1, '2019-09-12'),
-       (2, 2, 2010, 2, 1, '2019-09-11'),
-       (2, 1, 2014, 2, 1, '2019-09-15');
+       (3, 1, 2012, 4, 1, '2019-09-12'),
+       (4, 2, 2010, 2, 1, '2019-09-11'),
+       (3, 1, 2014, 2, 1, '2019-09-15'),
+       (4, 1, 2011, 3, 1, '2019-09-11'),
+       (5, 1, 2012, 4, 1, '2019-09-12'),
+       (6, 2, 2010, 2, 1, '2019-09-11'),
+       (7, 1, 2014, 2, 1, '2019-09-15');
        
 SET SQL_SAFE_UPDATES = 0;   
 update wine_catalog.wine w

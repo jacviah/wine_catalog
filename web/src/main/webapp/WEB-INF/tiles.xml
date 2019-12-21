@@ -40,4 +40,16 @@
         <put-attribute name="title" value="bottle page"/>
         <put-attribute name="body" value="/WEB-INF/view/page/bottle-list.jspx" />
     </definition>
+    <definition name="subscribe" extends="standard">
+        <put-attribute name="title" value="Subscribe page"/>
+        <put-attribute name="body" value="/WEB-INF/view/page/subscribe.jspx" />
+    </definition>
+    <definition name="subscribers" extends="standard">
+        <put-attribute name="title" value="Subscribers"/>
+        <put-attribute name="body" value="/WEB-INF/view/page/subscribers.jspx" />
+    </definition>
+    <definition name="recommendation" extends="standard">
+        <put-attribute name="title" value="Recommendation page"/>
+        <put-attribute name="body" value="/WEB-INF/view/page/recommendation.jspx" />
+    </definition>
 </tiles-definitions>

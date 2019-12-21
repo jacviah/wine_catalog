@@ -6,9 +6,7 @@ import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Cacheable
@@ -35,12 +33,22 @@ public class UserEntity {
     @Column(name = "role")
     private String role;
 
+    @ManyToOne(cascade={CascadeType.ALL})
+    @JoinColumn(name="sommelier_id")
+    private UserEntity sommelier;
+
+    @OneToMany(mappedBy="sommelier", fetch = FetchType.LAZY)
+    private Set<UserEntity> subscribers = new HashSet<UserEntity>();
+
     @OneToOne(mappedBy = "user", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)
     private UserDetailEntity detail;
 
-    @OneToMany(mappedBy = "sommelier", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<RecommendEntity> recommendations = new ArrayList<>();
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<RecommendEntity> fromUser = new ArrayList<>();
+
+    @OneToMany(mappedBy = "subscriber", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<RecommendEntity> toUser= new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -90,12 +98,36 @@ public class UserEntity {
         this.detail = detail;
     }
 
-    public List<RecommendEntity> getRecommendations() {
-        return recommendations;
+    public List<RecommendEntity> getRecommendationFromUser() {
+        return fromUser;
     }
 
-    public void setRecommendations(List<RecommendEntity> recommendations) {
-        this.recommendations = recommendations;
+    public void setRecommendationsFromUser(List<RecommendEntity> recommendationsFromUser) {
+        this.fromUser = recommendationsFromUser;
+    }
+
+    public List<RecommendEntity> getRecommendationToUser() {
+        return toUser;
+    }
+
+    public void setRecommendationsToUser(List<RecommendEntity> recommendationsToUser) {
+        this.toUser = recommendationsToUser;
+    }
+
+    public UserEntity getSommelier() {
+        return sommelier;
+    }
+
+    public void setSommelier(UserEntity sommelier) {
+        this.sommelier = sommelier;
+    }
+
+    public Set<UserEntity> getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(Set<UserEntity> subscribers) {
+        this.subscribers = subscribers;
     }
 
     @Override
@@ -129,8 +161,11 @@ public class UserEntity {
         private String password;
         private String uuid;
         private String role;
+        private UserEntity sommelier;
+        private Set<UserEntity> subscribers = new HashSet<>();
         private UserDetailEntity detail;
-        private List<RecommendEntity> recommendations = new ArrayList<>();
+        private List<RecommendEntity> fromUser = new ArrayList<>();
+        private List<RecommendEntity> toUser = new ArrayList<>();
 
         private UserEntityBuilder() {
         }
@@ -164,13 +199,28 @@ public class UserEntity {
             return this;
         }
 
+        public UserEntityBuilder withSommelier(UserEntity sommelier) {
+            this.sommelier = sommelier;
+            return this;
+        }
+
+        public UserEntityBuilder withSubscribers(Set<UserEntity> subscribers) {
+            this.subscribers = subscribers;
+            return this;
+        }
+
         public UserEntityBuilder withDetail(UserDetailEntity detail) {
             this.detail = detail;
             return this;
         }
 
-        public UserEntityBuilder withRecommendations(List<RecommendEntity> recommendations) {
-            this.recommendations = recommendations;
+        public UserEntityBuilder withRecommendationsFromUser(List<RecommendEntity> fromUser) {
+            this.fromUser = fromUser;
+            return this;
+        }
+
+        public UserEntityBuilder withRecommendationsToUser(List<RecommendEntity> toUser) {
+            this.toUser = toUser;
             return this;
         }
 
@@ -180,9 +230,11 @@ public class UserEntity {
             userEntity.setUsername(username);
             userEntity.setPassword(password);
             userEntity.setUuid(uuid);
+            userEntity.setSommelier(sommelier);
             userEntity.setRole(role);
             userEntity.setDetail(detail);
-            userEntity.setRecommendations(recommendations);
+            userEntity.setRecommendationsFromUser(fromUser);
+            userEntity.setRecommendationsToUser(toUser);
             return userEntity;
         }
     }

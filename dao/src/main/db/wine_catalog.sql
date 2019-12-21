@@ -41,8 +41,10 @@ create table wine (
 create table user (
   id   bigint primary key auto_increment,
   login varchar(64) not null unique,
+  sommelier_id bigint,
   role varchar(64) not null,
-  password varchar(64) not null
+  password varchar(64) not null,
+  constraint sommelier_id_fk foreign key (sommelier_id) references user (id)
 );
 
 create table auth_user (
@@ -73,9 +75,11 @@ create table bottle (
 
 create table recommendation (
   id   bigint primary key auto_increment,
+  sommelier_id bigint not null,
   user_id bigint not null,
   description varchar(1024),
-  constraint user_recommendation_id_fk foreign key (user_id) references user (id)
+  constraint user_recommendation_id_fk foreign key (user_id) references user (id),
+  constraint sommelier_recommendation_id_fk foreign key (sommelier_id) references user (id)
 );
 
 create table wine_recommendation (

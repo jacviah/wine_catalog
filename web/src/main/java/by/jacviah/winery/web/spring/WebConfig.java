@@ -2,10 +2,7 @@ package by.jacviah.winery.web.spring;
 
 
 import by.jacviah.winery.sevice.config.ServiceConfig;
-import by.jacviah.winery.web.controller.LoginController;
-import by.jacviah.winery.web.controller.LogoutController;
-import by.jacviah.winery.web.controller.UserController;
-import by.jacviah.winery.web.controller.WelcomeController;
+import by.jacviah.winery.web.controller.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -43,9 +40,21 @@ public class WebConfig implements WebMvcConfigurer {
     public UserController userController(){
         return new UserController(serviceConfig.userService());
     }
+
     @Bean
     public WelcomeController welcomeController(){
         return new WelcomeController();
+    }
+
+    @Bean
+    public SubscribeController subscribeController(){
+        return new SubscribeController(serviceConfig.userService());
+    }
+
+    @Bean
+    public RecommendationController recommendationController(){
+        return new RecommendationController(serviceConfig.userService(),
+                serviceConfig.recommendService(), serviceConfig.wineService());
     }
 
     @Bean

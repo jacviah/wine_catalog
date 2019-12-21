@@ -1,6 +1,7 @@
 package by.jacviah.winery.dao.impl;
 
 import by.jacviah.winery.dao.RecommendDAO;
+import by.jacviah.winery.dao.UserDAO;
 import by.jacviah.winery.dao.config.DaoConfig;
 import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.*;
@@ -20,16 +21,14 @@ import java.util.Set;
 public class DefaultRecommendDAOTest {
     @Autowired
     RecommendDAO dao;
+    @Autowired
+    UserDAO userDao;
 
     @Test
     @Transactional
     public void saveRecommendationTest() {
-        User sommelier = User.UserBuilder.anUser()
-                .withId(1L)
-                .withUsername("sommelier")
-                .withRole(Role.SOMMELIER)
-                .withDetail(null)
-                .build();
+        User sommelier = userDao.findUser("sommelier");
+        User subscriber = userDao.findUser("user");
         Wine wine1 = Wine.WineBuilder.aWine()
                 .withId(2L)
                 .withCountry(new Country(1L, "Italy"))
@@ -52,6 +51,7 @@ public class DefaultRecommendDAOTest {
         Recommendation rec = Recommendation.RecommendationBuilder.aRecommendation()
                 .withMessage("test message")
                 .withSommelier(sommelier)
+                .withSubscriber(subscriber)
                 .withWines(wines)
                 .build();
             Assertions.assertTrue(dao.addRecommendation(rec));

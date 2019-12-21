@@ -23,8 +23,12 @@ public class RecommendEntity {
     Long id;
 
     @ManyToOne
+    @JoinColumn(name = "sommelier_id")
+    UserEntity author;
+
+    @ManyToOne
     @JoinColumn(name = "user_id")
-    UserEntity sommelier;
+    UserEntity subscriber;
 
     @Column(name = "description")
     String message;
@@ -46,12 +50,20 @@ public class RecommendEntity {
         this.id = id;
     }
 
-    public UserEntity getSommelier() {
-        return sommelier;
+    public UserEntity getAuthor() {
+        return author;
     }
 
-    public void setSommelier(UserEntity sommelier) {
-        this.sommelier = sommelier;
+    public void setAuthor(UserEntity sommelier) {
+        this.author = sommelier;
+    }
+
+    public UserEntity getSubscriber() {
+        return subscriber;
+    }
+
+    public void setSubscriber(UserEntity subscriber) {
+        this.subscriber = subscriber;
     }
 
     public String getMessage() {
@@ -76,26 +88,27 @@ public class RecommendEntity {
         if (!(o instanceof RecommendEntity)) return false;
         RecommendEntity that = (RecommendEntity) o;
         return Objects.equals(getId(), that.getId()) &&
-                Objects.equals(getSommelier(), that.getSommelier());
+                Objects.equals(getAuthor(), that.getAuthor());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getSommelier());
+        return Objects.hash(getId(), getAuthor());
     }
 
     @Override
     public String toString() {
         return "Recommendation{" +
                 "id=" + id +
-                ", sommelier=" + sommelier.getUsername() +
+                ", sommelier=" + author.getUsername() +
                 ", message='" + message +
                 '}';
     }
 
     public static final class RecEntityBuilder {
         Long id;
-        UserEntity sommelier;
+        UserEntity author;
+        UserEntity subscriber;
         String message;
         Set<WineEntity> wines;
 
@@ -111,8 +124,13 @@ public class RecommendEntity {
             return this;
         }
 
-        public RecEntityBuilder withSommelier(UserEntity sommelier) {
-            this.sommelier = sommelier;
+        public RecEntityBuilder withAuthor(UserEntity sommelier) {
+            this.author = sommelier;
+            return this;
+        }
+
+        public RecEntityBuilder witSubscriber(UserEntity subscriber) {
+            this.subscriber = subscriber;
             return this;
         }
 
@@ -129,7 +147,8 @@ public class RecommendEntity {
         public RecommendEntity build() {
             RecommendEntity recEntity = new RecommendEntity();
             recEntity.setId(id);
-            recEntity.setSommelier(sommelier);
+            recEntity.setAuthor(author);
+            recEntity.setSubscriber(subscriber);
             recEntity.setMessage(message);
             recEntity.setWines(wines);
             return recEntity;

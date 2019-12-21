@@ -23,7 +23,7 @@ public class DefaultWineDAOTest {
 
    @Test
     public void testFindWine() throws Exception {
-       Assert.assertNotNull(dao.findWine("wine", "winery"));
+       Assert.assertNotNull(dao.findWine("wineItaly2", "winery"));
     }
 
     @Test
@@ -39,5 +39,11 @@ public class DefaultWineDAOTest {
                 .withRate(2d)
                 .build();
         Assert.assertTrue(dao.addWine(wine));
+    }
+
+    @Test
+    public void testGetWines() throws Exception {
+        Assert.assertNotNull(dao.getWines());
+        dao.getWines().stream().forEach(wine -> System.out.println(wine));
     }
 }

@@ -8,6 +8,10 @@ import by.jacviah.winery.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class DefaultWineDAO implements WineDAO {
 
@@ -31,5 +35,12 @@ public class DefaultWineDAO implements WineDAO {
         WineEntity entity = WineMapper.toEntity(wine);
         repository.save(entity);
         return repository.existsById(entity.getId());
+    }
+
+    @Override
+    public List<Wine> getWines() {
+        return repository.findAll(Sort.by(Sort.Direction.ASC, "region"))
+                .stream().map(entity -> WineMapper.toDTO(entity))
+                .collect(Collectors.toList());
     }
 }

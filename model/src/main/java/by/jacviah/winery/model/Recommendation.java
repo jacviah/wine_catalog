@@ -7,6 +7,7 @@ import java.util.Set;
 public class Recommendation {
     Long id;
     User sommelier;
+    User subscriber;
     String message;
     Set<Wine> wines;
 
@@ -27,6 +28,14 @@ public class Recommendation {
 
     public void setSommelier(User sommelier) {
         this.sommelier = sommelier;
+    }
+
+    public User getSubscriber() {
+        return subscriber;
+    }
+
+    public void setSubscriber(User subscriber) {
+        this.subscriber = subscriber;
     }
 
     public String getMessage() {
@@ -73,6 +82,7 @@ public class Recommendation {
     public static final class RecommendationBuilder {
         Long id;
         User sommelier;
+        User subscriber;
         String message;
         Set<Wine> wines;
 
@@ -93,6 +103,11 @@ public class Recommendation {
             return this;
         }
 
+        public RecommendationBuilder withSubscriber(User subscriber) {
+            this. subscriber =  subscriber;
+            return this;
+        }
+
         public RecommendationBuilder withMessage(String message) {
             this.message = message;
             return this;
@@ -107,6 +122,7 @@ public class Recommendation {
             Recommendation recommendation = new Recommendation();
             recommendation.setId(id);
             recommendation.setSommelier(sommelier);
+            recommendation.setSubscriber(subscriber);
             recommendation.setMessage(message);
             recommendation.setWines(wines);
             return recommendation;

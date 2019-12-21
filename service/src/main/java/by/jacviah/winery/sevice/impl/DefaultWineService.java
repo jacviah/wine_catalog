@@ -9,6 +9,8 @@ import by.jacviah.winery.model.Wine;
 import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.sevice.WineService;
 
+import java.util.List;
+
 public class DefaultWineService implements WineService {
 
     private final WineDAO wineDao;
@@ -23,6 +25,11 @@ public class DefaultWineService implements WineService {
     @Override
     public Wine findWine(String name, String winery) {
         return wineDao.findWine(name, winery);
+    }
+
+    @Override
+    public List<Wine> getWines() {
+        return wineDao.getWines();
     }
 
     @Override

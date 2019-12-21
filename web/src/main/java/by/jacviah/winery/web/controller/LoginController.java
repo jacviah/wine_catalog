@@ -47,14 +47,13 @@ public class LoginController {
             return "login";
         }
         log.info("user {} logged", user.getUsername());
-        Authentication auth = new UsernamePasswordAuthenticationToken(user, null, getAuthorities());
+        Authentication auth = new UsernamePasswordAuthenticationToken(user, null, getAuthorities(user.getRole().toString()));
         SecurityContextHolder.getContext().setAuthentication(auth);
 
         return "redirect:/home";
     }
 
-    private List<GrantedAuthority> getAuthorities() {
-        return Arrays.asList((GrantedAuthority) () -> "ROLE_USER",
-                (GrantedAuthority) () -> "ROLE_SOMMELIER");
+    private List<GrantedAuthority> getAuthorities(String role) {
+        return Arrays.asList((GrantedAuthority) () -> "ROLE_" + role);
     }
 }

@@ -3,6 +3,7 @@ package by.jacviah.winery.dao.util.mapper;
 import by.jacviah.winery.dao.entity.RecommendEntity;
 import by.jacviah.winery.dao.entity.WineEntity;
 import by.jacviah.winery.model.Recommendation;
+import by.jacviah.winery.model.User;
 import by.jacviah.winery.model.Wine;
 
 import java.util.HashSet;
@@ -20,7 +21,8 @@ public class RecommendMapper {
         return RecommendEntity.RecEntityBuilder.aRecEntity()
                 .withId(dto.getId())
                 .withMessage(dto.getMessage())
-                .withSommelier(UserMapper.toEntity(dto.getSommelier()))
+                .withAuthor(UserMapper.toEntity(dto.getSommelier()))
+                .witSubscriber(UserMapper.toEntity(dto.getSubscriber()))
                 .withWines(target)
                 .build();
     }
@@ -36,7 +38,8 @@ public class RecommendMapper {
         return Recommendation.RecommendationBuilder.aRecommendation()
                 .withId(entity.getId())
                 .withMessage(entity.getMessage())
-                .withSommelier(UserMapper.toDTO(entity.getSommelier()))
+                .withSommelier(UserMapper.toDTO(entity.getAuthor()))
+                .withSubscriber(UserMapper.toDTO(entity.getSubscriber()))
                 .withWines(target)
                 .build();
     }
