@@ -31,6 +31,12 @@ public class DefaultWineDAO implements WineDAO {
     }
 
     @Override
+    public Wine findWine(Long id) {
+        WineEntity entity = repository.findById(id).get();
+        return (entity != null) ? WineMapper.toDTO(entity) : null;
+    }
+
+    @Override
     public boolean addWine(Wine wine) {
         WineEntity entity = WineMapper.toEntity(wine);
         repository.save(entity);

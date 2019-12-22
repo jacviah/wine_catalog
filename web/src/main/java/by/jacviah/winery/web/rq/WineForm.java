@@ -3,12 +3,14 @@ package by.jacviah.winery.web.rq;
 import by.jacviah.winery.model.Wine;
 
 public class WineForm {
+    Long id;
     String name;
     String winery;
     String grape;
     String region;
 
     public WineForm(Wine wine) {
+        this.id = wine.getId();
         this.name = wine.getName();
         this.winery = wine.getWinery();
         this.grape = wine.getGrape().getName();

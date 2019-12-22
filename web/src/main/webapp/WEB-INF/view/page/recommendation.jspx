@@ -20,9 +20,9 @@
                 <tr>
                     <td>Wines :</td>
                     <td>
-                        <select multiple="multiple" name="wine"  size="6">
+                        <select multiple="multiple" name="wines"  size="6">
                             <c:forEach items="${wines}" var="wine">
-                                <option value="${wine}"
+                                <option value="${wine.id}"
                                         label="${wine.name} ${wine.winery} ${wine.region} ${wine.grape}"/>
                             </c:forEach>
                         </select>

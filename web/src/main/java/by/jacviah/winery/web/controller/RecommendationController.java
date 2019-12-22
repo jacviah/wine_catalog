@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -58,12 +59,11 @@ public class RecommendationController {
     @PostMapping("/recommendation")
     public String createRecommendation(@RequestParam String username,
                                        @RequestParam String description,
-                                       @RequestParam Set<WineForm> wine,
+                                       @RequestParam Set<Long> wineIds,
                                        UsernamePasswordAuthenticationToken authentication,
                                        ModelMap map)  {
-        Set<Wine> wines = new HashSet<>()/*= wineForms.stream()
-                .map(wineForm -> wineService.findWine(wineForm.getName(), wineForm.getWinery()))
-                .collect(Collectors.toSet())*/;
+        Set<Wine> wines = wineIds.stream()
+                .map(wineId -> wineService.findWine(wineId)).collect(Collectors.toSet());
         Recommendation rec = Recommendation.RecommendationBuilder.aRecommendation()
                 .withMessage(description)
                 .withSommelier(((User) authentication.getPrincipal()))

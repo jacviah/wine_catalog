@@ -28,6 +28,11 @@ public class DefaultWineService implements WineService {
     }
 
     @Override
+    public Wine findWine(Long id) {
+        return wineDao.findWine(id);
+    }
+
+    @Override
     public List<Wine> getWines() {
         return wineDao.getWines();
     }
