@@ -3,7 +3,6 @@ package by.jacviah.winery.dao.impl;
 import by.jacviah.winery.dao.RecommendDAO;
 import by.jacviah.winery.dao.UserDAO;
 import by.jacviah.winery.dao.config.DaoConfig;
-import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = DaoConfig.class)
@@ -64,7 +66,7 @@ public class DefaultRecommendDAOTest {
         User sommelier = userDao.findUser("sommelier");
         User subscriber = userDao.findUser("user");
         List<Recommendation> result = dao.findRecommendations(sommelier, subscriber);
-        Assertions.assertTrue(!result.isEmpty());
-        result.stream().forEach(rec -> System.out.println(rec));
+        assertThat(result, hasSize(1));
+        assertThat(result.get(0).getWines(), hasSize(2));
     }
 }

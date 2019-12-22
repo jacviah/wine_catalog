@@ -1,12 +1,9 @@
 package by.jacviah.winery.sevice.impl;
 
+import by.jacviah.winery.dao.UserDAO;
 import by.jacviah.winery.dao.config.DaoConfig;
 import by.jacviah.winery.model.Role;
 import by.jacviah.winery.model.User;
-import by.jacviah.winery.dao.UserDAO;
-import by.jacviah.winery.dao.exception.DaoException;
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.runner.JUnitPlatform;
@@ -18,6 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith({MockitoExtension.class, SpringExtension.class})
@@ -33,14 +31,14 @@ public class DefaultUserServiceTest {
     DefaultUserService service;
 
     @Test
-    public void testUserNotExist() throws DaoException {
+    public void testUserNotExist() {
        when(dao.findUser("admin")).thenReturn(null);
        User user = service.findUser("admin");
        assertNull(user);
     }
 
    @Test
-    public void testUserIsExist() throws DaoException {
+    public void testUserIsExist() {
 
         User user = new User("admin2", "pass");
         when(dao.findUser("admin2")).thenReturn(user);

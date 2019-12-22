@@ -76,8 +76,8 @@ public class RecommendationController {
 
     @GetMapping("/recommendations")
     public String getRecommendations(UsernamePasswordAuthenticationToken authentication, ModelMap map) {
-        List<Recommendation> recommendations = recService
-                .findUsersRecommendation(((User) authentication.getPrincipal()).getId());
+        List<Recommendation> recommendations = recService.findUsersRecommendation(
+                ((User) authentication.getPrincipal()).getId());
         List<RecommendForm> result = recommendations.stream().
                 map(recommendation -> new RecommendForm(recommendation)).collect(Collectors.toList());
         map.addAttribute("recommendations", result);

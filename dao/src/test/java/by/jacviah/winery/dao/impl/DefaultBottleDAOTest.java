@@ -2,9 +2,7 @@ package by.jacviah.winery.dao.impl;
 
 import by.jacviah.winery.dao.BottleDAO;
 import by.jacviah.winery.dao.config.DaoConfig;
-import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.model.*;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Year;
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
@@ -33,7 +29,7 @@ public class DefaultBottleDAOTest {
     @Transactional
     public void saveBottleTest() {
         Wine wine = Wine.WineBuilder.aWine()
-                .withId(2L)
+                .withId(1L)
                 .withCountry(new Country(1L, "Italy"))
                 .withRegion(new Region(1L, "Piedmont"))
                 .withGrape(new Grape(4L, "Syrah"))

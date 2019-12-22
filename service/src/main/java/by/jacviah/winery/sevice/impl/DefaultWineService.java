@@ -6,7 +6,6 @@ import by.jacviah.winery.model.Country;
 import by.jacviah.winery.model.Grape;
 import by.jacviah.winery.model.Region;
 import by.jacviah.winery.model.Wine;
-import by.jacviah.winery.dao.exception.DaoException;
 import by.jacviah.winery.sevice.WineService;
 
 import java.util.List;

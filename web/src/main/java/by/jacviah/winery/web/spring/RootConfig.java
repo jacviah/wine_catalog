@@ -16,7 +16,7 @@ public class RootConfig implements WebMvcConfigurer {
         return interceptor;
     }
 
-    @Override
+   @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
 

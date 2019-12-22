@@ -1,7 +1,6 @@
 package by.jacviah.winery.dao;
 
-import by.jacviah.winery.model.*;
-import by.jacviah.winery.dao.exception.DaoException;
+import by.jacviah.winery.model.Wine;
 
 import java.util.List;
 

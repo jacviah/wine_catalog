@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
@@ -74,10 +75,8 @@ public class DefaultBottleServiceTest {
                 .withYear(Year.now())
                 .build();
         Pageable pageable = PageRequest.of(0, 2);
-        List<Bottle> list = new ArrayList<>();
-        list.add(bottle1);
-        list.add(bottle2);
-        when(dao.getUserBottles(user,pageable)).thenReturn(list);
+        List<Bottle> list = Arrays.asList(new Bottle[]{bottle1, bottle2});
+        when(dao.getUserBottles(user, pageable)).thenReturn(list);
         List<Bottle> bottles = dao.getUserBottles(user, pageable);
         assertTrue(list.contains(bottle1));
         assertTrue(list.contains(bottle2));

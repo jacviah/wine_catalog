@@ -61,12 +61,22 @@ insert into bottle (wine_id, user_id, year, rate, status, date)
 values (1, 1, 2011, 3, 1, '2019-09-11'),
        (3, 1, 2012, 4, 1, '2019-09-12'),
        (4, 2, 2010, 2, 1, '2019-09-11'),
-       (3, 1, 2014, 2, 1, '2019-09-15'),
+       (3, 2, 2014, 2, 1, '2019-09-15'),
        (4, 1, 2011, 3, 1, '2019-09-11'),
-       (5, 1, 2012, 4, 1, '2019-09-12'),
-       (6, 2, 2010, 2, 1, '2019-09-11'),
-       (7, 1, 2014, 2, 1, '2019-09-15');
+       (5, 3, 2012, 4, 1, '2019-09-12'),
+       (6, 2, 2010, 2, 1, '2019-06-11'),
+       (4, 4, 2014, 2, 1, '2019-09-15'),
+       (3, 4, 2012, 4, 1, '2019-06-12'),
+       (5, 2, 2010, 2, 1, '2019-08-13'),
+       (6, 4, 2014, 2, 1, '2019-09-19');      
        
+insert into recommendation (id, sommelier_id, user_id, description)
+values (1, 1, 2, 'test description');
+
+insert into wine_recommendation (id, rec_id, wine_id)
+values (1, 1, 2),
+		(2, 1, 4);
+
 SET SQL_SAFE_UPDATES = 0;   
 update wine_catalog.wine w
 set w.avg_rate = 
