@@ -20,7 +20,7 @@
                 <tr>
                     <td>Wines :</td>
                     <td>
-                        <select multiple="multiple" name="wines"  size="6">
+                        <select multiple="multiple" required="required" name="wineIds"  size="8">
                             <c:forEach items="${wines}" var="wine">
                                 <option value="${wine.id}"
                                         label="${wine.name} ${wine.winery} ${wine.region} ${wine.grape}"/>

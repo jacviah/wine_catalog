@@ -6,6 +6,7 @@ import by.jacviah.winery.model.Wine;
 import by.jacviah.winery.sevice.RecommendService;
 import by.jacviah.winery.sevice.UserService;
 import by.jacviah.winery.sevice.WineService;
+import by.jacviah.winery.web.rq.RecommendForm;
 import by.jacviah.winery.web.rq.SimpleUserForm;
 import by.jacviah.winery.web.rq.WineForm;
 import org.slf4j.Logger;
@@ -18,8 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -49,15 +48,15 @@ public class RecommendationController {
 
     @GetMapping("/subscribers/{user}")
     public String getSubscribersAndWines(@PathVariable String user, ModelMap map) {
-        List<Wine> wines = wineService.getWines();
-        List<WineForm> result = wines.stream().map(wine -> new WineForm(wine)).collect(Collectors.toList());
+        List<Wine> allWines = wineService.getWines();
+        List<WineForm> result = allWines.stream().map(wine -> new WineForm(wine)).collect(Collectors.toList());
         map.addAttribute("username", user);
         map.addAttribute("wines", result);
         return "recommendation";
     }
 
     @PostMapping("/recommendation")
-    public String createRecommendation(@RequestParam String username,
+    public void createRecommendation(@RequestParam String username,
                                        @RequestParam String description,
                                        @RequestParam Set<Long> wineIds,
                                        UsernamePasswordAuthenticationToken authentication,
@@ -71,7 +70,17 @@ public class RecommendationController {
                 .withWines(wines)
                 .build();
         recService.createRecommendation(rec);
-        map.addAttribute("message", "Ok, " + username + "must receive your recommendation");
-        return "recommendation";
+        map.addAttribute("message", "Ok, " + username + " must receive your recommendation");
+        getSubscribersAndWines(username, map);
+    }
+
+    @GetMapping("/recommendations")
+    public String getRecommendations(UsernamePasswordAuthenticationToken authentication, ModelMap map) {
+        List<Recommendation> recommendations = recService
+                .findUsersRecommendation(((User) authentication.getPrincipal()).getId());
+        List<RecommendForm> result = recommendations.stream().
+                map(recommendation -> new RecommendForm(recommendation)).collect(Collectors.toList());
+        map.addAttribute("recommendations", result);
+        return "recommendations";
     }
 }

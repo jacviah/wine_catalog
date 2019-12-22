@@ -4,10 +4,12 @@
           xmlns:sec="http://www.springframework.org/security/tags"
           version="2.0"
           xmlns:spring="http://www.springframework.org/tags">
-    
-    <div style="background: #E0E0E0; height: 55px; padding: 5px;">
-        <div style="float: left">
-            <h1>My Site</h1>
-        </div>
-    </div>
+
+    <header style="background: #E0E0E0; height: 55px; padding: 5px;" class="clearfix">
+        <h2 style="float: left">
+            <spring:message code="site.title"/>
+        </h2>
+        <a href="${requestScope['javax.servlet.forward.request_uri']}?locale=ru" style="padding: 5px">RU</a>
+        <a href="${requestScope['javax.servlet.forward.request_uri']}?locale=en" style="padding: 5px">EN</a>
+    </header>
 </jsp:root>

@@ -1,9 +1,10 @@
-<div style="padding: 5px;" xmlns:sec="http://www.springframework.org/security/tags">
+<div color="gray" xmlns:sec="http://www.springframework.org/security/tags">
     <ul>
         <li><a href="${pageContext.request.contextPath}/bottle-list">My wines</a></li>
         <li><a href="${pageContext.request.contextPath}/bottle">Add bottle</a></li>
         <sec:authorize access ="hasAuthority('ROLE_USER')">
             <li><a href="${pageContext.request.contextPath}/subscribe">Subscribe</a></li>
+            <li><a href="${pageContext.request.contextPath}/recommendations">My recommendations</a></li>
         </sec:authorize>
         <sec:authorize access ="hasAuthority('ROLE_SOMMELIER')">
             <li><a href="${pageContext.request.contextPath}/subscribers">Subscribers</a></li>

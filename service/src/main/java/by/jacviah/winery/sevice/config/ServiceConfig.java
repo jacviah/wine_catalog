@@ -1,13 +1,11 @@
 package by.jacviah.winery.sevice.config;
 
 import by.jacviah.winery.dao.config.DaoConfig;
-import by.jacviah.winery.model.User;
 import by.jacviah.winery.sevice.*;
 import by.jacviah.winery.sevice.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Configuration
 public class ServiceConfig {
@@ -36,7 +34,7 @@ public class ServiceConfig {
 
     @Bean
     public RecommendService recommendService(){
-        return new DefaultRecommendService(daoConfig.recommendDao());
+        return new DefaultRecommendService(daoConfig.recommendDao(), daoConfig.userDao());
     }
 
     @Bean

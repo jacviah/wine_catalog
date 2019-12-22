@@ -14,6 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @ExtendWith(SpringExtension.class)
@@ -54,6 +55,16 @@ public class DefaultRecommendDAOTest {
                 .withSubscriber(subscriber)
                 .withWines(wines)
                 .build();
-            Assertions.assertTrue(dao.addRecommendation(rec));
+        Assertions.assertTrue(dao.addRecommendation(rec));
+    }
+
+    @Test
+    @Transactional
+    public void findRecommendationsTest() {
+        User sommelier = userDao.findUser("sommelier");
+        User subscriber = userDao.findUser("user");
+        List<Recommendation> result = dao.findRecommendations(sommelier, subscriber);
+        Assertions.assertTrue(!result.isEmpty());
+        result.stream().forEach(rec -> System.out.println(rec));
     }
 }

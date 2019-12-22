@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/bottle",
                         "/bottle-list**")
                 .hasAnyAuthority("ROLE_USER", "ROLE_SOMMELIER")
-                .antMatchers("/subscribe")
+                .antMatchers("/subscribe", "/recommendations")
                 .hasAuthority("ROLE_USER")
                 .antMatchers("/subscribers", "/recommendation")
                 .hasAuthority("ROLE_SOMMELIER")

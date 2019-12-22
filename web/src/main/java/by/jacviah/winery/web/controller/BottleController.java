@@ -6,6 +6,7 @@ import by.jacviah.winery.model.Wine;
 import by.jacviah.winery.sevice.BottleService;
 import by.jacviah.winery.sevice.MetadataService;
 import by.jacviah.winery.sevice.UserService;
+import by.jacviah.winery.web.controller.util.PagesCounter;
 import by.jacviah.winery.web.rq.BottleForm;
 import by.jacviah.winery.web.rq.CreateBottle;
 import org.slf4j.Logger;
@@ -13,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -44,17 +44,20 @@ public class BottleController {
     }
 
     @GetMapping("/bottle")
-    public String createBottlePage() {
+    public String createBottlePage(ModelMap map) {
+
         return "bottle";
     }
 
     @PostMapping("/bottle")
-    public String bottle(@Validated CreateBottle rq, BindingResult result,
+    public String createBottle(@Validated CreateBottle rq, BindingResult result,
                          ModelMap map, UsernamePasswordAuthenticationToken authentication) {
+
         if (result.hasErrors()) {
             log.info("create bottle errors: ", result.getAllErrors());
             return "bottle";
         }
+
         Wine wine = Wine.WineBuilder.aWine()
                 .withWinery(rq.getWinery())
                 .withName(rq.getWine())
@@ -62,8 +65,7 @@ public class BottleController {
                 .withRegion(metadataService.getRegion(rq.getRegion()))
                 .withGrape(metadataService.getGrape(rq.getGrape()))
                 .build();
-        User user = userService.findUser(
-                SecurityContextHolder.getContext().getAuthentication().getName());
+        User user = userService.findUser(authentication.getName());
         Bottle bottle = Bottle.BottleBuilder.aBottle()
                 .withWine(wine)
                 .withUser(user)
@@ -74,8 +76,9 @@ public class BottleController {
     }
 
     @GetMapping(value = {"/bottle-list", "/bottle-list/{pageNumber}"})
-    public String listBottles(@PathVariable Optional<Integer> pageNumber, UsernamePasswordAuthenticationToken authentication, ModelMap map) {
-        User auth = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public String listBottles(@PathVariable Optional<Integer> pageNumber,
+                              UsernamePasswordAuthenticationToken authentication, ModelMap map) {
+        User auth = (User) authentication.getPrincipal();
         User user = userService.findUser(auth.getUsername());
         Pageable page;
         int pageSize = 3;
@@ -85,7 +88,7 @@ public class BottleController {
             page = PageRequest.of(0, pageSize);
         }
 
-        int totalPages = bottleService.countAllUserBottles(user)/pageSize+1;
+        int totalPages = PagesCounter.countPages(bottleService.countAllUserBottles(user), pageSize);
         if(totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(0,totalPages-1).boxed().collect(Collectors.toList());
             map.addAttribute("pageNumbers", pageNumbers);

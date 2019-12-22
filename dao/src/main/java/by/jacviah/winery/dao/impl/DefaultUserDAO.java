@@ -28,6 +28,12 @@ public class DefaultUserDAO implements UserDAO {
     }
 
     @Override
+    public User findUser(Long id) {
+        final UserEntity entity = repository.findById(id).get();
+        return (entity != null) ? UserMapper.toDTO(entity) : null;
+    }
+
+    @Override
     public List<User> getUsersByRole(String role) {
         final List<User> users = repository.getByRole(role).stream().map(entity -> UserMapper.toDTO(entity))
                 .collect(Collectors.toList());

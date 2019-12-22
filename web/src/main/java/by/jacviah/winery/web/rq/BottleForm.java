@@ -10,13 +10,9 @@ public class BottleForm {
     private String region;
     private String grape;
     private String year;
-/*    private String rate;
-    private String date;
-    private String isDrunk;*/
 
     public BottleForm() {
     }
-
 
     public BottleForm(Bottle dto) {
         this.id = dto.getId();
