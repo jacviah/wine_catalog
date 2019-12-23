@@ -24,7 +24,9 @@ public class DefaultBottleService implements BottleService {
     @Override
     @Transactional
     public boolean addBottle(Bottle bottle) {
-        if (wineDao.findWine(bottle.getWine().getName(), bottle.getWine().getWinery()) != null) {
+        Wine wine = wineDao.findWine(bottle.getWine().getName(), bottle.getWine().getWinery());
+        if ( wine!= null) {
+            bottle.setWine(wine);
             return bottleDao.addBottle(bottle);
         } else {
             wineDao.addWine(bottle.getWine());
