@@ -7,7 +7,9 @@
         <h2 style="float: left">
             <spring:message code="site.title"/>
         </h2>
+        <div style="position: absolute; right: 40;">
         <a href="${requestScope['javax.servlet.forward.request_uri']}?locale=ru" style="padding: 5px">RU</a>
         <a href="${requestScope['javax.servlet.forward.request_uri']}?locale=en" style="padding: 5px">EN</a>
+        </div>
     </header>
 </jsp:root>

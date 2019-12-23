@@ -1,5 +1,5 @@
-<div color="gray" xmlns:sec="http://www.springframework.org/security/tags">
-    <ul>
+<div xmlns:sec="http://www.springframework.org/security/tags">
+    <ul style=" list-style-type: none; text-decoration: none; color=blue">
         <li><a href="${pageContext.request.contextPath}/bottle-list">My wines</a></li>
         <li><a href="${pageContext.request.contextPath}/bottle">Add bottle</a></li>
         <sec:authorize access ="hasAuthority('ROLE_USER')">

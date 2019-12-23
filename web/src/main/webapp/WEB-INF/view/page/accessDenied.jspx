@@ -9,7 +9,7 @@
     <body>
         <h2>Sorry, you do not have permission to view this page.</h2>
         <div>
-            If you are login, click to <a href="${pageContext.request.contextPath}/">Home</a> to go to home page.
+            If you are login, click to <a href="${pageContext.request.contextPath}/home">Home</a> to go to home page.
         </div>
         <div>
             Click to <a href="${pageContext.request.contextPath}/login">Login</a> to go to login page.

@@ -16,7 +16,7 @@
         <h3>My bottles</h3>
         <div>
             <c:if test="${bottles != null}">
-                <table class="table">
+                <table  border="1" >
                     <tr>
                         <th>wine</th>
                         <th>winery</th>
@@ -33,8 +33,9 @@
                             <td>${bottle.region}</td>
                             <td>${bottle.grape}</td>
                             <td>${bottle.year}</td>
+                            <td>${bottle.id}</td>
                             <td>
-                                <form action="bottle-list/${bottle.id}" method="POST">
+                                <form action="${pageContext.request.contextPath}/bottle/${bottle.id}" method="POST">
                                     <input type="hidden" name="_method" value="DELETE"/>
                                     <input type="submit" value="delete"/>
                                 </form>
@@ -47,7 +48,7 @@
                 <ul>
                     <c:if test="${not empty pageNumbers}">
                         <c:forEach items="${pageNumbers}" var="pageNumber">
-                            <li>
+                            <li style="display: inline; padding: 3px; list-style-type: none; text-decoration: none;">
                                 <a href="${pageContext.request.contextPath}/bottle-list/${pageNumber}">
                                     ${pageNumber}
                                 </a>

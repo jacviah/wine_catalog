@@ -29,7 +29,7 @@ public class ServiceConfig {
 
     @Bean
     public BottleService bottleService(){
-        return new DefaultBottleService(daoConfig.bottleDao());
+        return new DefaultBottleService(daoConfig.bottleDao(), daoConfig.wineDao());
     }
 
     @Bean

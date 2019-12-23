@@ -11,6 +11,7 @@ import by.jacviah.winery.web.rq.BottleForm;
 import by.jacviah.winery.web.rq.CreateBottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,6 +35,9 @@ public class BottleController {
     private final BottleService bottleService;
     private final MetadataService metadataService;
     private final UserService userService;
+
+    @Value("${page.size}")
+    int pageSize;
 
     public BottleController(BottleService bottleService,
                             MetadataService metadataService,
@@ -65,7 +69,7 @@ public class BottleController {
                 .withRegion(metadataService.getRegion(rq.getRegion()))
                 .withGrape(metadataService.getGrape(rq.getGrape()))
                 .build();
-        User user = userService.findUser(authentication.getName());
+        User user = (User)authentication.getPrincipal();
         Bottle bottle = Bottle.BottleBuilder.aBottle()
                 .withWine(wine)
                 .withUser(user)
@@ -81,7 +85,6 @@ public class BottleController {
         User auth = (User) authentication.getPrincipal();
         User user = userService.findUser(auth.getUsername());
         Pageable page;
-        int pageSize = 3;
         if (pageNumber.isPresent()) {
             page = PageRequest.of(pageNumber.get(), pageSize);
         } else {

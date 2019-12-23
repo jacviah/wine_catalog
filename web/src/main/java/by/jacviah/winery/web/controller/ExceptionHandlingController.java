@@ -7,7 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ExceptionHandlingController {
     @GetMapping(value = "/unauthorized")
-    public String handle(Model model) {
+    public String unauthorizHandle(Model model) {
+        return "accessDenied";
+    }
+
+    @GetMapping(value = "/accessDenied")
+    public String accessDeniedhandle(Model model) {
         return "accessDenied";
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -28,12 +29,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/subscribers", "/recommendation")
                 .hasAuthority("ROLE_SOMMELIER")
                 .anyRequest().authenticated()
-        .and().
-                exceptionHandling().authenticationEntryPoint(authenticationEntryPoint());
+                .and()
+                .exceptionHandling()
+                        .authenticationEntryPoint(authenticationEntryPoint())
+                        .accessDeniedHandler(accessDeniedHandler());
     }
 
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint(){
         return new CustomAuthenticationEntryPoint();
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(){
+        return new CustomAccessDeniedHandler();
     }
 }

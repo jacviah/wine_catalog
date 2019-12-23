@@ -5,16 +5,22 @@
           version="2.0">
 
     <h3>Login</h3>
+    <div style="padding=10%; margin=10%">
     <form action="${pageContext.request.contextPath}/login" method="post">
         <label for="login">login</label>
-        <input id="login" type="text" name="login"/> <br/>
-
-
+        <input id="login" type="text" name="login"/>
+        <br/>
         <label for="password">password</label>
-        <input id="password" type="password" name="password"/><br/>
-        <input type="submit"/>
+        <input id="password" type="password" name="password"/>
+        <br/>
+        <input type="submit" value="Login"/>
     </form>
-
+    </div>
     <p style="color: red">${error}</p>
-
+    <div >
+        <p>Or, you can</p>
+        <form style="display:inline-block;" action="${pageContext.request.contextPath}/signup" method="get">
+            <input type="submit" value="Sign Up"/>
+        </form>
+    </div>
 </jsp:root>

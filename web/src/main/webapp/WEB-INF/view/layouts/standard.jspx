@@ -9,29 +9,31 @@
                 doctype-root-element="html" omit-xml-declaration="false"/>
     <jsp:directive.page pageEncoding="UTF-8" contentType="text/html; UTF-8"/>
     <head>
-        <title><tiles:getAsString name="title" /></title>
+        <title>
+            <tiles:getAsString name="title"/>
+        </title>
     </head>
-
     <body>
-        <table width="100%">
-            <tr>
-                <td colspan="2">
-                    <tiles:insertAttribute name="header" />
-                </td>
-            </tr>
-            <tr>
-                <td width="20%" nowrap="nowrap">
-                    <tiles:insertAttribute name="menu" />
-                </td>
-                <td width="80%">
-                    <tiles:insertAttribute name="body" />
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <tiles:insertAttribute name="footer" />
-                </td>
-            </tr>
-        </table>
+        <div style="position: relative; min-height: 100vh; width=100">
+            <div style="padding-bottom: 2.5rem">
+                <div>
+                    <tiles:insertAttribute name="header"/>
+                </div>
+                <div style="white-space: nowrap;">
+                    <div nowrap="nowrap"
+                         style="float:left; width: 20%;  padding:5px; margin:3%;">
+                        <tiles:insertAttribute name="menu"/>
+                    </div>
+                    <div style="margin-left: 21%">
+                        <tiles:insertAttribute name="body"/>
+                    </div>
+                </div>
+            </div>
+            <div style="position: absolute; bottom: 0; width: 100%; height: 2.5rem; float:right;">
+                <div>
+                    <tiles:insertAttribute name="footer"/>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

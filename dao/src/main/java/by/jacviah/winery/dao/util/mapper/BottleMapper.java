@@ -9,15 +9,18 @@ import java.time.Year;
 public class BottleMapper {
 
     public static BottleEntity toEntity(Bottle dto) {
-        return BottleEntity.BottleEntityBuilder.aBottleEntity()
+        BottleEntity entity = BottleEntity.BottleEntityBuilder.aBottleEntity()
                 .withId(dto.getId())
                 .withWine(WineMapper.toEntity(dto.getWine()))
                 .withUser(UserMapper.toEntity(dto.getUser()))
                 .withIsDrunk(dto.isDrunk())
-                .withRate(dto.getRate().getValue())
-                .withDate(dto.getDate())
                 .withYear(dto.getYear().toString())
                 .build();
+                if (dto.getRate()!=null) {
+                    entity.setRate(dto.getRate().getValue());
+                    entity.setDate(dto.getDate());
+                }
+        return entity;
     }
 
     public static Bottle toDTO(BottleEntity entity) {

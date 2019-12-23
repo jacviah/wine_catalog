@@ -3,7 +3,10 @@
           xmlns:spring="http://www.springframework.org/tags"
           version="2.0">
     <div class="footer"
-            style="background: #E0E0E0; text-align: center; padding: 5px; margin-top: 10px;">
+            style="background: #E0E0E0; text-align: center; padding: 5px; margin-top: 10px; clear: both;
+    position: relative;
+    height: 20px;
+    margin-top: -20px;">
         @Copyright jacviah
     </div>
 </jsp:root>

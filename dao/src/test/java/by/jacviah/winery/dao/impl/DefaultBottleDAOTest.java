@@ -55,7 +55,7 @@ public class DefaultBottleDAOTest {
     @Test
     public void countUserBottlesTest() {
         Integer count = dao.countUserBottles(1l);
-        Assertions.assertTrue(count==3);
+        Assertions.assertTrue(count==4);
     }
 
     @Test
@@ -65,11 +65,11 @@ public class DefaultBottleDAOTest {
                 .withUsername("sommelier")
                 .withRole(Role.SOMMELIER)
                 .build();
-        Pageable firstPageWithTwoElements = PageRequest.of(0, 2);
-        Pageable secondPageWithTwoElements = PageRequest.of(1, 2);
+        Pageable firstPageWithTwoElements = PageRequest.of(0, 3);
+        Pageable secondPageWithTwoElements = PageRequest.of(1, 3);
 
         final List<Bottle> page0 = dao.getUserBottles(user, firstPageWithTwoElements);
-        Assertions.assertTrue(page0.size()==2);
+        Assertions.assertTrue(page0.size()==3);
         final List<Bottle> page1 = dao.getUserBottles(user, secondPageWithTwoElements);
         Assertions.assertTrue(page1.size()==1);
     }
